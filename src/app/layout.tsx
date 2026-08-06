@@ -27,9 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} dark antialiased scroll-smooth`}>
-      <body className="min-h-screen flex flex-col bg-black text-zinc-50 font-sans selection:bg-saas-cyan/30 selection:text-white relative">
-        {/* Subtle dot background */}
-        <div className="pointer-events-none fixed inset-0 z-[-1] h-full w-full bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-30"></div>
+      <body className="min-h-screen flex flex-col bg-background text-foreground font-sans transition-colors duration-300 relative">
+        {/* Ambient background grid pattern */}
+        <div className="pointer-events-none fixed inset-0 z-[-1] h-full w-full bg-[radial-gradient(var(--border)_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-30"></div>
         <LenisProvider>
           <Navbar />
           <main className="flex-1 flex flex-col relative z-0">

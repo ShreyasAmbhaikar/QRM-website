@@ -26,47 +26,68 @@ const row2 = [
 
 export function TechStackSection() {
   return (
-    <section className="py-20 relative z-10 overflow-hidden bg-black border-t border-white/10">
-      {/* Side Fade Mask Gradients */}
-      <div className="absolute top-0 bottom-0 left-0 w-36 bg-gradient-to-r from-black via-black/80 to-transparent z-20 pointer-events-none" />
-      <div className="absolute top-0 bottom-0 right-0 w-36 bg-gradient-to-l from-black via-black/80 to-transparent z-20 pointer-events-none" />
-
-      <div className="container mx-auto px-6 max-w-6xl mb-12 text-center">
-        <p className="text-xs font-mono font-bold uppercase tracking-widest text-saas-cyan mb-2">
-          ENGINEERED WITH INDUSTRY LEADERS
+    <section className="py-20 border-t border-purple-200 dark:border-white/5 bg-background relative z-10 overflow-hidden">
+      <div className="container max-w-6xl mx-auto px-6 text-center mb-12">
+        <p className="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 dark:text-saas-cyan mb-2">
+          ENGINEERED FOR EXCELLENCE
         </p>
-        <h2 className="text-2xl md:text-4xl font-sans font-bold text-white tracking-tight">
-          Powered by <span className="text-transparent bg-clip-text bg-gradient-to-r from-saas-cyan via-purple-400 to-saas-purple">Modern Tech Stack.</span>
-        </h2>
+        <h3 className="text-2xl md:text-3xl font-sans font-bold text-zinc-900 dark:text-white">
+          Powered by <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-purple-500 to-saas-purple dark:from-saas-cyan dark:via-purple-300 dark:to-saas-purple">Modern Tech Stack.</span>
+        </h3>
       </div>
 
-      {/* Dual Moving Marquee Rows */}
-      <div className="space-y-4">
-        {/* Row 1: Left to Right */}
-        <div className="relative w-full overflow-hidden flex gap-4">
-          <div className="animate-marquee flex gap-4">
-            {[...row1, ...row1, ...row1].map((tool, idx) => (
+      <div className="w-full relative space-y-4">
+        {/* Left & Right Gradient Fades */}
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-20 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-20 pointer-events-none" />
+
+        {/* Row 1 - Left Marquee */}
+        <div className="flex gap-4 overflow-hidden select-none">
+          <div className="flex gap-4 animate-marquee shrink-0">
+            {row1.map((tech, i) => (
               <div
-                key={idx}
-                className={`flex items-center gap-3 px-5 py-3 rounded-full border border-white/10 bg-zinc-950/80 backdrop-blur-xl transition-all duration-300 ${tool.glow} cursor-pointer group`}
+                key={`r1-1-${i}`}
+                className="px-5 py-2.5 rounded-full bg-card dark:bg-saas-surface border border-purple-200 dark:border-white/10 text-xs font-mono font-bold text-purple-950 dark:text-zinc-200 flex items-center gap-2.5 shadow-sm dark:shadow-none hover:border-purple-400 dark:hover:border-saas-cyan/40 transition-colors"
               >
-                <span className="text-zinc-300 group-hover:text-white transition-colors">{tool.icon}</span>
-                <span className="text-xs font-bold text-zinc-300 group-hover:text-white transition-colors tracking-wide whitespace-nowrap">{tool.name}</span>
+                <span>{tech.icon}</span>
+                <span>{tech.name}</span>
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-4 animate-marquee shrink-0" aria-hidden="true">
+            {row1.map((tech, i) => (
+              <div
+                key={`r1-2-${i}`}
+                className="px-5 py-2.5 rounded-full bg-card dark:bg-saas-surface border border-purple-200 dark:border-white/10 text-xs font-mono font-bold text-purple-950 dark:text-zinc-200 flex items-center gap-2.5 shadow-sm dark:shadow-none hover:border-purple-400 dark:hover:border-saas-cyan/40 transition-colors"
+              >
+                <span>{tech.icon}</span>
+                <span>{tech.name}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Row 2: Right to Left */}
-        <div className="relative w-full overflow-hidden flex gap-4">
-          <div className="animate-marquee-reverse flex gap-4">
-            {[...row2, ...row2, ...row2].map((tool, idx) => (
+        {/* Row 2 - Right Marquee */}
+        <div className="flex gap-4 overflow-hidden select-none">
+          <div className="flex gap-4 animate-marquee-reverse shrink-0">
+            {row2.map((tech, i) => (
               <div
-                key={idx}
-                className={`flex items-center gap-3 px-5 py-3 rounded-full border border-white/10 bg-zinc-950/80 backdrop-blur-xl transition-all duration-300 ${tool.glow} cursor-pointer group`}
+                key={`r2-1-${i}`}
+                className="px-5 py-2.5 rounded-full bg-card dark:bg-saas-surface border border-purple-200 dark:border-white/10 text-xs font-mono font-bold text-purple-950 dark:text-zinc-200 flex items-center gap-2.5 shadow-sm dark:shadow-none hover:border-purple-400 dark:hover:border-saas-cyan/40 transition-colors"
               >
-                <span className="text-zinc-300 group-hover:text-white transition-colors">{tool.icon}</span>
-                <span className="text-xs font-bold text-zinc-300 group-hover:text-white transition-colors tracking-wide whitespace-nowrap">{tool.name}</span>
+                <span>{tech.icon}</span>
+                <span>{tech.name}</span>
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-4 animate-marquee-reverse shrink-0" aria-hidden="true">
+            {row2.map((tech, i) => (
+              <div
+                key={`r2-2-${i}`}
+                className="px-5 py-2.5 rounded-full bg-card dark:bg-saas-surface border border-purple-200 dark:border-white/10 text-xs font-mono font-bold text-purple-950 dark:text-zinc-200 flex items-center gap-2.5 shadow-sm dark:shadow-none hover:border-purple-400 dark:hover:border-saas-cyan/40 transition-colors"
+              >
+                <span>{tech.icon}</span>
+                <span>{tech.name}</span>
               </div>
             ))}
           </div>

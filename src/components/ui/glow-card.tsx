@@ -20,7 +20,7 @@ export function GlowCard({ children, className }: { children: ReactNode; classNa
       ref={ref}
       onMouseMove={handleMouseMove}
       className={cn(
-        "group relative rounded-2xl border border-white/5 bg-[#0A0A0A] overflow-hidden",
+        "group relative rounded-2xl border border-border dark:border-white/10 bg-card dark:bg-[#0A0A0A] overflow-hidden shadow-[0_4px_20px_rgba(147,51,234,0.06)] dark:shadow-none transition-colors",
         className
       )}
     >
@@ -30,7 +30,7 @@ export function GlowCard({ children, className }: { children: ReactNode; classNa
           background: useMotionTemplate`
             radial-gradient(
               400px circle at ${mouseX}px ${mouseY}px,
-              rgba(6, 182, 212, 0.1),
+              rgba(147, 51, 234, 0.12),
               transparent 80%
             )
           `,

@@ -1,9 +1,9 @@
 import { HeroSection } from "@/components/sections/hero-section";
 import { ServicesSection } from "@/components/sections/services-section";
 import { WorkSection } from "@/components/sections/work-section";
+import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { AboutSection } from "@/components/sections/about-section";
 import { TechStackSection } from "@/components/sections/tech-stack-section";
-import { SEOPipelineSection } from "@/components/sections/seo-pipeline-section";
 
 export default function Home() {
   return (
@@ -13,13 +13,13 @@ export default function Home() {
       <div id="services">
         <ServicesSection />
       </div>
-
-      <SEOPipelineSection />
       
       <div id="work">
         <WorkSection />
       </div>
       
+      <TestimonialsSection />
+
       <div id="about">
         <AboutSection />
       </div>
