@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -12,11 +12,18 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-6 gap-12 mb-16">
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center gap-3 mb-6 group">
-              <div className="relative w-8 h-8 rounded-full overflow-hidden border border-purple-300 dark:border-white/10 group-hover:shadow-[0_0_15px_rgba(147,51,234,0.6)] transition-shadow">
-                <Image src="/qrm-logo.jpg" alt="Quantum Reach Media Logo" fill className="object-cover" />
-              </div>
-              <span className="font-sans font-extrabold text-lg tracking-tight bg-gradient-to-r from-purple-950 via-purple-700 to-saas-purple dark:from-white dark:via-zinc-200 dark:to-saas-cyan bg-clip-text text-transparent">
-                Quantum Reach Media
+              <Image 
+                src="/qrm-logo-transparent.webp" 
+                alt="QRM Logo" 
+                width={65} 
+                height={24} 
+                className="h-6 w-auto object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-[0_2px_8px_rgba(126,34,206,0.15)] dark:drop-shadow-[0_0_12px_rgba(168,85,247,0.45)] dark:brightness-110" 
+              />
+              <span className="font-sans font-extrabold text-base md:text-lg tracking-tight text-purple-950 dark:text-white flex flex-col leading-[1.2]">
+                <span>Quantum Reach</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] to-[#7E22CE] dark:from-[#38BDF8] dark:to-[#A855F7]">
+                  Media
+                </span>
               </span>
             </Link>
             <p className="text-purple-950/80 dark:text-zinc-400 text-sm mb-6 leading-relaxed font-medium">

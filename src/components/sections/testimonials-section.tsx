@@ -1,7 +1,8 @@
 "use client";
 
-import { GlowCard } from "@/components/ui/glow-card";
-import { Star, Quote, CheckCircle2, TrendingUp, Sparkles } from "lucide-react";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { Star, Sparkles } from "lucide-react";
 import Image from "next/image";
 
 interface Testimonial {
@@ -12,187 +13,218 @@ interface Testimonial {
   rating: number;
   text: string;
   metric: string;
-  badge: string;
 }
 
 const testimonialsRow1: Testimonial[] = [
   {
     name: "Dr. Varun",
-    role: "Founder & Chief Surgeon",
-    company: "Dr. Varun's Dental Clinic, Viman Nagar",
+    role: "Chief Surgeon",
+    company: "Dr. Varun's Dental, Viman Nagar",
     avatar: "/dr-varun-preview.jpg",
     rating: 5,
-    text: "Quantum Reach Media brought us from page 3 to #1 in the Google 3-Pack Map Pack for Viman Nagar dental searches. Monthly inquiries grew by +340% within 60 days!",
+    text: "Quantum Reach Media brought us from page 3 to #1 in Google Map Pack. Inquiries grew +340%!",
     metric: "+340% Local Calls",
-    badge: "Verified Partner ✓"
   },
   {
     name: "Dr. Poonam",
-    role: "Lead Cosmetic Dentist",
-    company: "Dr. Poonam's Cosmetic & Dental Clinic",
+    role: "Cosmetic Dentist",
+    company: "Cosmetic Dental Clinic",
     avatar: "/dr-varun-preview.jpg",
     rating: 5,
-    text: "Their Next.js web development is incredible. Sub-second page loads and our Google Business profile now generates patient bookings on autopilot.",
+    text: "Sub-second page loads and patient bookings on autopilot. Best web development team.",
     metric: "100/100 Speed Score",
-    badge: "Verified Partner ✓"
   },
   {
     name: "Rajiv Kulkarni",
-    role: "Head of Marketing",
+    role: "Marketing Head",
     company: "Rayya Pharma",
     avatar: "/tushar.jpg",
     rating: 5,
-    text: "The AEO strategy they engineered put Rayya Pharma as the top recommended pharmaceutical distributor inside ChatGPT and Gemini searches.",
-    metric: "Top GPTBot Citation",
-    badge: "Verified Enterprise ✓"
-  }
+    text: "Put us as top recommended distributor in ChatGPT and Gemini searches.",
+    metric: "Top AEO Citation",
+  },
 ];
 
 const testimonialsRow2: Testimonial[] = [
   {
     name: "Dr. Meera June",
     role: "Medical Director",
-    company: "June Women's Health Clinic",
+    company: "June Women's Health",
     avatar: "/shreyas.jpg",
     rating: 5,
-    text: "Tushar and Shreyas built a stunning website scoring 100/100 on Google Lighthouse. Professional, highly responsive, and ultra-knowledgeable in SEO.",
+    text: "Stunning website scoring 100/100 on Lighthouse. Professional and highly responsive.",
     metric: "+210% Organic Leads",
-    badge: "Verified Partner ✓"
   },
   {
-    name: "Vikramaditya Shinde",
+    name: "Vikramaditya S.",
     role: "Operations Lead",
     company: "Ariix Hair & Skin Clinic",
     avatar: "/tushar.jpg",
     rating: 5,
-    text: "Our Meta ad campaigns delivered a 4.2x ROAS within the first month. Quantum Reach Media is by far the best digital growth agency in Pune.",
+    text: "Our Meta ad campaigns delivered a 4.2x ROAS within the first month.",
     metric: "4.2x ROAS",
-    badge: "Verified Partner ✓"
   },
   {
     name: "Dr. Rajesh Sharma",
-    role: "Director of Operations",
-    company: "Apollo Dental Partner Clinic",
+    role: "Operations Director",
+    company: "Apollo Dental Partner",
     avatar: "/shreyas.jpg",
     rating: 5,
-    text: "Flawless analytics tracking and GMB optimization. We now track every phone call and patient appointment back to its exact Google keyword.",
+    text: "Flawless call tracking and GMB optimization. Every lead is mapped to keywords.",
     metric: "100% Attribution",
-    badge: "Verified Enterprise ✓"
-  }
+  },
 ];
 
 function TestimonialCard({ item }: { item: Testimonial }) {
   return (
-    <GlowCard className="w-[360px] md:w-[400px] p-6 transition-all flex flex-col justify-between shrink-0">
-      <div>
-        {/* Rating Stars & Metric Badge */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-1 text-yellow-500 dark:text-yellow-400">
-            {[...Array(item.rating)].map((_, i) => (
-              <Star key={i} size={14} className="fill-yellow-500 dark:fill-yellow-400 text-yellow-500 dark:text-yellow-400" />
-            ))}
-          </div>
-          <span className="text-[11px] font-mono font-bold px-2.5 py-1 rounded-full bg-purple-100 dark:bg-saas-cyan/10 border border-purple-300 dark:border-saas-cyan/30 text-purple-900 dark:text-saas-cyan">
-            {item.metric}
-          </span>
-        </div>
-
-        {/* Quote text */}
-        <p className="text-purple-950 dark:text-zinc-300 text-xs md:text-sm leading-relaxed mb-6 italic font-medium">
-          "{item.text}"
-        </p>
-      </div>
-
-      {/* Author Details */}
-      <div className="pt-4 border-t border-purple-200 dark:border-white/5 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="relative w-10 h-10 rounded-full overflow-hidden border border-purple-400 dark:border-saas-cyan/40 bg-zinc-900 flex-shrink-0">
+    <div className="w-full max-w-[340px] sm:max-w-[380px] p-4 sm:p-5 flex flex-col justify-between shrink-0 bg-white text-zinc-950 border border-zinc-200/90 rounded-2xl shadow-none hover:border-purple-300 transition-all duration-300">
+      {/* Header Row: Avatar, Name, Rating */}
+      <div className="flex items-center justify-between mb-2.5 gap-2.5">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="relative w-8 h-8 rounded-full overflow-hidden border border-purple-200 bg-zinc-100 shrink-0">
             <Image src={item.avatar} alt={item.name} fill className="object-cover" />
           </div>
-          <div>
-            <div className="text-xs font-extrabold text-purple-950 dark:text-white">{item.name}</div>
-            <div className="text-[11px] text-purple-900/80 dark:text-zinc-400 leading-none mt-0.5 font-medium">{item.company}</div>
+          <div className="min-w-0">
+            <h4 className="text-xs sm:text-sm font-extrabold text-zinc-950 dark:text-zinc-950 truncate">
+              {item.name}
+            </h4>
+            <p className="text-[11px] text-zinc-600 dark:text-zinc-600 truncate font-medium">
+              {item.company}
+            </p>
           </div>
         </div>
 
-        <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-300 dark:border-emerald-500/20 px-2 py-0.5 rounded">
-          {item.badge}
+        <div className="flex text-yellow-500 shrink-0">
+          {[...Array(item.rating)].map((_, i) => (
+            <Star key={i} size={13} className="fill-yellow-500 text-yellow-500" />
+          ))}
+        </div>
+      </div>
+
+      {/* Review Text - Always dark text on white card */}
+      <p className="text-xs sm:text-sm text-zinc-900 dark:text-zinc-900 leading-relaxed font-semibold mb-3 italic line-clamp-2">
+        &ldquo;{item.text}&rdquo;
+      </p>
+
+      {/* Bottom Metric Badge */}
+      <div className="flex items-center justify-between pt-2 border-t border-zinc-100 text-[11px]">
+        <span className="font-mono font-bold text-purple-950 dark:text-purple-950 bg-purple-100 dark:bg-purple-100 border border-purple-300 dark:border-purple-300 px-2.5 py-0.5 rounded-full text-[10px]">
+          {item.metric}
         </span>
       </div>
-    </GlowCard>
+    </div>
   );
 }
 
 export function TestimonialsSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    damping: 30,
+    stiffness: 150,
+  });
+
+  // Left Column moves UPWARDS as page scrolls down (starts shifted down +140px)
+  const y1 = useTransform(smoothProgress, [0, 1], [140, -100]);
+
+  // Right Column moves DOWNWARDS as page scrolls down (starts shifted up -120px)
+  const y2 = useTransform(smoothProgress, [0, 1], [-120, 120]);
+
   return (
-    <section id="reviews" className="py-28 relative z-10 overflow-hidden flex flex-col items-center">
+    <section id="reviews" ref={sectionRef} className="py-32 relative z-10 overflow-hidden flex flex-col items-center">
       {/* Background Ambient Glows */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-saas-purple/15 blur-[140px] rounded-full pointer-events-none" />
       <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-saas-cyan/15 blur-[140px] rounded-full pointer-events-none" />
 
-      <div className="container max-w-6xl mx-auto px-6 mb-16 text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-300 dark:border-saas-cyan/30 bg-purple-100/80 dark:bg-saas-cyan/10 text-xs font-mono font-bold uppercase tracking-widest text-purple-900 dark:text-saas-cyan mb-4 shadow-[0_0_20px_rgba(147,51,234,0.15)]">
-          <Sparkles size={14} /> CLIENT PROOF & VERIFIED REVIEWS
-        </div>
-        <h2 className="text-3xl md:text-5xl font-sans font-bold tracking-tight text-zinc-900 dark:text-white mb-4">
-          What Industry Leaders & <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-purple-500 to-saas-purple dark:from-saas-cyan dark:via-purple-300 dark:to-saas-purple">
-            Doctors Say About Us.
-          </span>
-        </h2>
-        <p className="text-purple-950/80 dark:text-zinc-400 text-sm md:text-base max-w-xl mx-auto font-medium">
-          Verified growth benchmarks from Pune's premier dental clinics, medical centers, and commercial enterprises.
-        </p>
+      <div className="container max-w-6xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+          
+          {/* Left Column: Shortened 2-Line Heading */}
+          <div className="lg:col-span-5 space-y-6 text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-300 dark:border-saas-cyan/30 bg-purple-100/80 dark:bg-saas-cyan/10 text-xs font-mono font-bold uppercase tracking-widest text-purple-900 dark:text-saas-cyan shadow-[0_0_20px_rgba(147,51,234,0.15)]">
+              <Sparkles size={14} /> CLIENT PROOF & REVIEWS
+            </div>
+            
+            <h2 className="text-2xl md:text-4xl font-sans font-bold tracking-tight text-purple-950 dark:text-white leading-tight">
+              Trusted by Founders & <br className="hidden sm:inline" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-purple-500 to-saas-purple dark:from-saas-cyan dark:via-purple-300 dark:to-saas-purple">
+                Enterprise Leaders.
+              </span>
+            </h2>
+            
+            <p className="text-purple-950/80 dark:text-zinc-400 text-sm md:text-base leading-relaxed font-medium">
+              Verified growth benchmarks from Pune&apos;s premier dental clinics, medical centers, and commercial enterprises.
+            </p>
 
-        {/* Rating Trust Bar */}
-        <div className="flex items-center justify-center gap-6 mt-8">
-          <div className="flex items-center gap-2 text-purple-950 dark:text-white font-bold text-sm">
-            <span className="text-yellow-600 dark:text-yellow-400 font-extrabold text-lg">4.9/5.0</span>
-            <div className="flex text-yellow-500 dark:text-yellow-400">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} size={14} className="fill-yellow-500 dark:fill-yellow-400 text-yellow-500 dark:text-yellow-400" />
-              ))}
+            {/* Rating Trust Bar */}
+            <div className="flex items-center justify-center lg:justify-start gap-4 pt-2">
+              <div className="flex items-center gap-2 text-purple-950 dark:text-white font-bold text-sm">
+                <span className="text-yellow-600 dark:text-yellow-400 font-extrabold text-lg">5.0/5.0</span>
+                <div className="flex text-yellow-500 dark:text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={14} className="fill-yellow-500 dark:fill-yellow-400 text-yellow-500 dark:text-yellow-400" />
+                  ))}
+                </div>
+              </div>
+              <div className="h-4 w-px bg-purple-300 dark:bg-white/10" />
+              <div className="text-xs text-purple-950/80 dark:text-zinc-400 font-mono font-medium">
+                Over <span className="text-purple-900 dark:text-saas-cyan font-bold">45+ Pune Brands</span> Scaled
+              </div>
+            </div>
+
+            {/* CTA Button */}
+            <div className="pt-4">
+              <a 
+                href="/contact" 
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-purple-950 text-white hover:bg-purple-900 dark:bg-white dark:text-black dark:hover:bg-zinc-200 font-bold text-sm transition-all shadow-md hover:scale-105"
+              >
+                Get Started
+              </a>
             </div>
           </div>
-          <div className="h-4 w-px bg-purple-300 dark:bg-white/10" />
-          <div className="text-xs text-purple-950/80 dark:text-zinc-400 font-mono font-medium">
-            Over <span className="text-purple-900 dark:text-saas-cyan font-bold">45+ Pune Brands</span> Scaled
-          </div>
-        </div>
-      </div>
 
-      {/* Dual Row Marquee Carousels */}
-      <div className="w-full relative space-y-6">
-        {/* Left & Right Gradient Fades */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-saas-base to-transparent z-20 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-saas-base to-transparent z-20 pointer-events-none" />
+          {/* Right Column: Scroll-Driven Cards with Silky Smooth Gradient Viewport Mask */}
+          <div 
+            className="lg:col-span-7 relative h-[600px] overflow-hidden"
+            style={{
+              maskImage: "linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%)"
+            }}
+          >
+            {/* Top & Bottom Ambient Fade Blend Overlays */}
+            <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-background via-background/70 to-transparent pointer-events-none z-20" />
+            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-background via-background/70 to-transparent pointer-events-none z-20" />
 
-        {/* Marquee Row 1 */}
-        <div className="group/row1 flex gap-6 overflow-hidden select-none [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
-          <div className="flex gap-6 animate-marquee shrink-0 group-hover/row1:[animation-play-state:paused]">
-            {testimonialsRow1.map((item, idx) => (
-              <TestimonialCard key={`r1-1-${idx}`} item={item} />
-            ))}
-          </div>
-          <div className="flex gap-6 animate-marquee shrink-0 group-hover/row1:[animation-play-state:paused]" aria-hidden="true">
-            {testimonialsRow1.map((item, idx) => (
-              <TestimonialCard key={`r1-2-${idx}`} item={item} />
-            ))}
-          </div>
-        </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 h-full items-start">
+              
+              {/* Column 1: Left column moves UPWARDS as page scrolls down */}
+              <motion.div 
+                className="flex flex-col gap-6"
+                style={{ y: y1 }}
+              >
+                {testimonialsRow1.map((item, idx) => (
+                  <TestimonialCard key={`col1-${idx}`} item={item} />
+                ))}
+              </motion.div>
 
-        {/* Marquee Row 2 */}
-        <div className="group/row2 flex gap-6 overflow-hidden select-none [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
-          <div className="flex gap-6 animate-marquee-reverse shrink-0 group-hover/row2:[animation-play-state:paused]">
-            {testimonialsRow2.map((item, idx) => (
-              <TestimonialCard key={`r2-1-${idx}`} item={item} />
-            ))}
+              {/* Column 2: Right column moves DOWNWARDS as page scrolls down */}
+              <motion.div 
+                className="flex flex-col gap-6"
+                style={{ y: y2 }}
+              >
+                {testimonialsRow2.map((item, idx) => (
+                  <TestimonialCard key={`col2-${idx}`} item={item} />
+                ))}
+              </motion.div>
+
+            </div>
           </div>
-          <div className="flex gap-6 animate-marquee-reverse shrink-0 group-hover/row2:[animation-play-state:paused]" aria-hidden="true">
-            {testimonialsRow2.map((item, idx) => (
-              <TestimonialCard key={`r2-2-${idx}`} item={item} />
-            ))}
-          </div>
+
         </div>
       </div>
     </section>

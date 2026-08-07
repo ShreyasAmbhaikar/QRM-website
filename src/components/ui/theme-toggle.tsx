@@ -38,7 +38,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="w-8 h-8 rounded-full bg-purple-500/20 border border-purple-500/30 animate-pulse" />
+      <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-white/10 animate-pulse" />
     );
   }
 
@@ -47,13 +47,13 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       type="button"
       aria-label="Toggle theme"
-      title={isDark ? "Switch to Light Purple Mode" : "Switch to Dark Mode"}
-      className="relative p-2 rounded-full border border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 dark:text-purple-300 backdrop-blur-md hover:scale-105 active:scale-95 transition-all shadow-[0_0_15px_rgba(168,85,247,0.3)] flex items-center justify-center cursor-pointer group"
+      title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+      className="relative p-2 rounded-full border border-zinc-200 dark:border-white/10 bg-zinc-50 dark:bg-zinc-900/50 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white backdrop-blur-md hover:scale-105 active:scale-95 transition-all shadow-sm flex items-center justify-center cursor-pointer group"
     >
       {isDark ? (
-        <Sun size={15} className="text-yellow-300 group-hover:rotate-45 transition-transform" />
+        <Sun size={15} className="group-hover:rotate-45 transition-transform" />
       ) : (
-        <Moon size={15} className="text-purple-700 group-hover:-rotate-12 transition-transform" />
+        <Moon size={15} className="group-hover:-rotate-12 transition-transform" />
       )}
     </button>
   );

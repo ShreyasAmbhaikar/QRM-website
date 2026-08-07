@@ -112,6 +112,14 @@ html:not(.dark), .light {
     0% { transform: translateX(-50%); }
     100% { transform: translateX(0%); }
   }
+  @keyframes marquee-vertical {
+    0% { transform: translateY(0%); }
+    100% { transform: translateY(-50%); }
+  }
+  @keyframes marquee-vertical-reverse {
+    0% { transform: translateY(-50%); }
+    100% { transform: translateY(0%); }
+  }
   .animate-marquee {
     display: flex;
     width: max-content;
@@ -122,6 +130,31 @@ html:not(.dark), .light {
     width: max-content;
     animation: marquee-reverse 25s linear infinite;
   }
+  .animate-marquee-vertical {
+    display: flex;
+    flex-direction: column;
+    height: max-content;
+    animation: marquee-vertical 30s linear infinite;
+  }
+  .animate-marquee-vertical-reverse {
+    display: flex;
+    flex-direction: column;
+    height: max-content;
+    animation: marquee-vertical-reverse 30s linear infinite;
+  }
+  @keyframes ripple {
+    0%, 100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(0.9);
+    }
+  }
+
+  .animate-ripple {
+    animation: ripple 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+
   .animate-marquee:hover, .animate-marquee-reverse:hover {
     animation-play-state: paused;
   }

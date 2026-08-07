@@ -27,15 +27,32 @@ export function Navbar() {
             : "max-w-6xl rounded-full bg-transparent border-transparent px-6 py-3"
         )}
       >
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative w-8 h-8 rounded-full overflow-hidden border border-purple-300 dark:border-white/20 group-hover:shadow-[0_0_20px_rgba(147,51,234,0.8)] transition-shadow">
-            <Image src="/qrm-logo.jpg" alt="Quantum Reach Media Logo" fill className="object-cover" />
-          </div>
-          <span className="font-sans font-extrabold text-base tracking-tight bg-gradient-to-r from-purple-950 via-purple-700 to-saas-purple dark:from-white dark:via-zinc-100 dark:to-saas-cyan bg-clip-text text-transparent hidden sm:block">
-            Quantum Reach Media
+        <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
+          <Image 
+            src="/qrm-logo-transparent.webp" 
+            alt="QRM Logo" 
+            width={65} 
+            height={24} 
+            className={cn(
+              "w-auto object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-[0_2px_8px_rgba(126,34,206,0.15)] dark:drop-shadow-[0_0_12px_rgba(168,85,247,0.45)] dark:brightness-110",
+              scrolled ? "h-5" : "h-6"
+            )}
+            priority
+          />
+          <span className="font-sans font-extrabold text-base tracking-tight text-purple-950 dark:text-white hidden lg:inline-block">
+            Quantum Reach{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] to-[#7E22CE] dark:from-[#38BDF8] dark:to-[#A855F7]">
+              Media
+            </span>
+          </span>
+          <span className="font-sans font-extrabold text-base tracking-tight text-purple-950 dark:text-white inline-block lg:hidden">
+            QR
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] to-[#7E22CE] dark:from-[#38BDF8] dark:to-[#A855F7]">
+              M
+            </span>
           </span>
         </Link>
-        <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+        <nav className="hidden md:flex items-center gap-5 lg:gap-8 mx-auto">
           <Link href="/#services" className="text-sm font-bold text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white transition-colors">
             Services
           </Link>
