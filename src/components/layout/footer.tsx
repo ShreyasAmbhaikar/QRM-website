@@ -11,13 +11,13 @@ export function Footer() {
       <div className="container max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-12 mb-16">
           <div className="md:col-span-2">
-            <Link href="/" className="flex items-center gap-3 mb-6 group">
+            <Link href="/" className="flex items-center gap-4 sm:gap-5 mb-6 group">
               <Image 
                 src="/qrm-logo-transparent.webp" 
                 alt="QRM Logo" 
-                width={65} 
-                height={24} 
-                className="h-6 w-auto object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-[0_2px_8px_rgba(126,34,206,0.15)] dark:drop-shadow-[0_0_12px_rgba(168,85,247,0.45)] dark:brightness-110" 
+                width={50} 
+                height={18} 
+                className="h-5 w-auto object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-[0_2px_8px_rgba(126,34,206,0.15)] dark:drop-shadow-[0_0_12px_rgba(168,85,247,0.45)] dark:brightness-110" 
               />
               <span className="font-sans font-extrabold text-base md:text-lg tracking-tight text-purple-950 dark:text-white flex flex-col leading-[1.2]">
                 <span>Quantum Reach</span>

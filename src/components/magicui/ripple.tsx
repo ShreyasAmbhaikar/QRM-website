@@ -11,7 +11,7 @@ export interface RippleProps extends ComponentPropsWithoutRef<"div"> {
 }
 
 export const Ripple = React.memo(function Ripple({
-  mainCircleSize = 210,
+  mainCircleSize = 200,
   mainCircleOpacity = 0.5,
   numCircles = 8,
   className,
@@ -20,7 +20,7 @@ export const Ripple = React.memo(function Ripple({
   return (
     <div
       className={cn(
-        "pointer-events-none absolute inset-0 select-none overflow-hidden [mask-image:radial-gradient(circle_at_center,white_75%,transparent_98%)]",
+        "pointer-events-none absolute inset-0 select-none overflow-hidden [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black_20%,transparent_80%)] [webkit-mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black_20%,transparent_80%)]",
         className
       )}
       {...props}
@@ -32,7 +32,7 @@ export const Ripple = React.memo(function Ripple({
             transform: translate(-50%, -50%) scale(1);
           }
           50% {
-            transform: translate(-50%, -50%) scale(0.9);
+            transform: translate(-50%, -50%) scale(0.92);
           }
         }
         .magic-ripple-ring {
@@ -42,27 +42,26 @@ export const Ripple = React.memo(function Ripple({
 
       {/* Ambient Violet/Purple Central Gradient Aura */}
       <div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none bg-[radial-gradient(circle,rgba(168,85,247,0.22)_0%,rgba(126,34,206,0.12)_45%,rgba(56,189,248,0.05)_70%,transparent_100%)] blur-2xl"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none bg-[radial-gradient(circle,rgba(168,85,247,0.25)_0%,rgba(126,34,206,0.12)_45%,rgba(56,189,248,0.05)_70%,transparent_100%)] blur-3xl"
         style={{
-          width: `${mainCircleSize + (numCircles - 1) * 70}px`,
-          height: `${mainCircleSize + (numCircles - 1) * 70}px`,
+          width: `${mainCircleSize + (numCircles - 1) * 65}px`,
+          height: `${mainCircleSize + (numCircles - 1) * 65}px`,
         }}
       />
 
       {Array.from({ length: numCircles }, (_, i) => {
-        const size = mainCircleSize + i * 70;
-        const opacity = Math.max(mainCircleOpacity - i * 0.04, 0.08);
+        const size = mainCircleSize + i * 65;
+        const opacity = Math.max(mainCircleOpacity - i * 0.05, 0.05);
         const animationDelay = `${i * 0.06}s`;
         const borderStyle = i === numCircles - 1 ? "dashed" : "solid";
         
-        // Rich Violet & Purple Gradient fill + stroke combination matching Magic UI demo video
-        const borderAlpha = Math.max(0.65 - i * 0.06, 0.15);
-        const fillAlpha = Math.max(0.12 - i * 0.012, 0.02);
+        const borderAlpha = Math.max(0.6 - i * 0.06, 0.12);
+        const fillAlpha = Math.max(0.1 - i * 0.012, 0.015);
 
         return (
           <div
             key={i}
-            className="absolute rounded-full border magic-ripple-ring shadow-[0_0_30px_rgba(168,85,247,0.2)]"
+            className="absolute rounded-full border magic-ripple-ring shadow-[0_0_25px_rgba(168,85,247,0.15)]"
             style={
               {
                 width: `${size}px`,

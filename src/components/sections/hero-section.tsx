@@ -69,8 +69,8 @@ export function HeroSection() {
           ref={badgeRef} 
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-300 dark:border-white/15 bg-purple-100/80 dark:bg-zinc-900/80 text-xs font-mono font-bold text-purple-950 dark:text-zinc-200 mb-8 backdrop-blur-md shadow-[0_0_20px_rgba(147,51,234,0.15)] transition-all hover:scale-105 cursor-pointer"
         >
-          <Sparkles size={13} className="text-purple-600 dark:text-purple-400" />
-          <span>Introducing Quantum Reach Media 2.0</span>
+          <Sparkles size={13} className="text-yellow-500 dark:text-yellow-400" />
+          <span>Best SEO Agency in Pune</span>
           <ArrowRight size={13} className="text-purple-600 dark:text-purple-400" />
         </div>
         

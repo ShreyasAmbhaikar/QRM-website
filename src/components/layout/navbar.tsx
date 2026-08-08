@@ -27,25 +27,25 @@ export function Navbar() {
             : "max-w-6xl rounded-full bg-transparent border-transparent px-6 py-3"
         )}
       >
-        <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
+        <Link href="/" className="flex items-center gap-4 sm:gap-5 group flex-shrink-0">
           <Image 
             src="/qrm-logo-transparent.webp" 
             alt="QRM Logo" 
-            width={65} 
-            height={24} 
+            width={50} 
+            height={18} 
             className={cn(
               "w-auto object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-[0_2px_8px_rgba(126,34,206,0.15)] dark:drop-shadow-[0_0_12px_rgba(168,85,247,0.45)] dark:brightness-110",
-              scrolled ? "h-5" : "h-6"
+              scrolled ? "h-4.5" : "h-5"
             )}
             priority
           />
-          <span className="font-sans font-extrabold text-base tracking-tight text-purple-950 dark:text-white hidden lg:inline-block">
+          <span className="font-sans font-extrabold text-sm sm:text-base tracking-tight text-purple-950 dark:text-white hidden lg:inline-block">
             Quantum Reach{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] to-[#7E22CE] dark:from-[#38BDF8] dark:to-[#A855F7]">
               Media
             </span>
           </span>
-          <span className="font-sans font-extrabold text-base tracking-tight text-purple-950 dark:text-white inline-block lg:hidden">
+          <span className="font-sans font-extrabold text-sm sm:text-base tracking-tight text-purple-950 dark:text-white inline-block lg:hidden">
             QR
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] to-[#7E22CE] dark:from-[#38BDF8] dark:to-[#A855F7]">
               M

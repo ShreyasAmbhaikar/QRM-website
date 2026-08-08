@@ -15,16 +15,20 @@ export function RippleCtaSection() {
   ];
 
   return (
-    <section className="relative py-24 px-4 overflow-hidden bg-transparent flex flex-col items-center justify-center min-h-[520px]">
+    <section className="relative py-36 md:py-44 px-4 overflow-hidden bg-transparent flex flex-col items-center justify-center min-h-[580px]">
+      {/* Top & Bottom Flawless Background Blend Overlays */}
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background via-background/80 to-transparent pointer-events-none z-10" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none z-10" />
+
       {/* Background Ripple Animation */}
-      <Ripple mainCircleSize={210} mainCircleOpacity={0.7} numCircles={8} />
+      <Ripple mainCircleSize={200} mainCircleOpacity={0.65} numCircles={8} />
 
       {/* Subtle center ambient radial aura */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/10 dark:bg-purple-600/15 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-purple-600/15 blur-[150px] rounded-full pointer-events-none" />
 
-      <div className="relative z-10 max-w-2xl mx-auto text-center flex flex-col items-center">
-        {/* Glowing Vibrant Category Pill Badge */}
-        <span className="text-[11px] font-mono tracking-widest uppercase text-purple-700 dark:text-purple-300 mb-6 bg-purple-100/90 dark:bg-purple-950/70 border border-purple-300 dark:border-purple-500/40 px-4 py-1.5 rounded-full backdrop-blur-md shadow-[0_0_20px_rgba(168,85,247,0.25)] font-bold">
+      <div className="relative z-20 max-w-2xl mx-auto text-center flex flex-col items-center">
+        {/* Refined Glassmorphism Category Pill Badge */}
+        <span className="text-[11px] font-mono tracking-widest uppercase text-purple-200 mb-6 bg-purple-950/80 border border-purple-400/40 px-4.5 py-1.5 rounded-full backdrop-blur-md shadow-[0_0_20px_rgba(168,85,247,0.3)] font-bold">
           COMMUNITY & PARTNERS
         </span>
 
@@ -38,7 +42,7 @@ export function RippleCtaSection() {
           {avatars.map((avatar, idx) => (
             <div
               key={idx}
-              className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white dark:border-zinc-900 shadow-md hover:scale-110 hover:z-20 transition-all duration-200 cursor-pointer"
+              className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white dark:border-purple-950 shadow-md hover:scale-110 hover:z-30 transition-all duration-200 cursor-pointer"
               title={avatar.name}
             >
               <Image
@@ -51,12 +55,12 @@ export function RippleCtaSection() {
           ))}
         </div>
 
-        {/* High-Contrast Glowing CTA Button */}
+        {/* Cohesive Vibrant Purple-to-Fuchsia CTA Button */}
         <Link
           href="/contact"
-          className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#0052FF] via-[#7E22CE] to-[#9333EA] text-white font-bold text-sm tracking-wide shadow-[0_10px_35px_rgba(147,51,234,0.4)] hover:shadow-[0_12px_45px_rgba(147,51,234,0.65)] hover:scale-105 active:scale-95 transition-all duration-300 group border border-white/20"
+          className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-gradient-to-r from-purple-700 via-purple-600 to-saas-purple hover:from-purple-600 hover:to-fuchsia-500 text-white font-bold text-sm tracking-wide shadow-[0_10px_35px_rgba(147,51,234,0.45)] hover:shadow-[0_12px_45px_rgba(168,85,247,0.7)] hover:scale-105 active:scale-95 transition-all duration-300 group border border-white/20"
         >
-          <Sparkles className="w-4 h-4 text-cyan-300 group-hover:rotate-12 transition-transform" />
+          <Sparkles className="w-4 h-4 text-purple-200 group-hover:rotate-12 transition-transform" />
           <span>Become a Partner</span>
           <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
         </Link>
