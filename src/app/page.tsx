@@ -5,6 +5,7 @@ import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { RippleCtaSection } from "@/components/sections/ripple-cta-section";
 import { AboutSection } from "@/components/sections/about-section";
 import { TechStackSection } from "@/components/sections/tech-stack-section";
+import { FaqSection } from "@/components/sections/faq-section";
 
 export default function Home() {
   return (
@@ -15,6 +16,10 @@ export default function Home() {
         <ServicesSection />
       </div>
       
+      <TechStackSection />
+
+      <AboutSection />
+      
       <div id="work">
         <WorkSection />
       </div>
@@ -23,11 +28,7 @@ export default function Home() {
 
       <RippleCtaSection />
 
-      <div id="about">
-        <AboutSection />
-      </div>
-      
-      <TechStackSection />
+      <FaqSection />
     </main>
   );
 }

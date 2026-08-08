@@ -123,8 +123,8 @@ function PortfolioCardItem({ site }: { site: (typeof portfolioSites)[0] }) {
           </Link>
         </div>
 
-        {/* Natural 16:9 Aspect Video Desktop Viewport */}
-        <div className="relative w-full aspect-video overflow-hidden bg-zinc-950">
+        {/* Slightly Taller 16:11 Aspect Desktop Viewport */}
+        <div className="relative w-full aspect-[16/11] overflow-hidden bg-zinc-950">
           <PortfolioCardIframe url={site.url} name={site.name} isHovered={isHovered} />
         </div>
       </GlowCard>

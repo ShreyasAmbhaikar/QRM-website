@@ -11,7 +11,7 @@ export function Footer() {
       <div className="container max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-12 mb-16">
           <div className="md:col-span-2">
-            <Link href="/" className="flex items-center gap-4 sm:gap-5 mb-6 group">
+            <Link href="/" className="flex items-center gap-3.5 sm:gap-4 mb-6 group">
               <Image 
                 src="/qrm-logo-transparent.webp" 
                 alt="QRM Logo" 

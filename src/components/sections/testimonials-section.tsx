@@ -77,7 +77,7 @@ const testimonialsRow2: Testimonial[] = [
 
 function TestimonialCard({ item }: { item: Testimonial }) {
   return (
-    <div className="w-full max-w-[340px] sm:max-w-[380px] p-4 sm:p-5 flex flex-col justify-between shrink-0 bg-white text-zinc-950 border border-zinc-200/90 rounded-2xl shadow-none hover:border-purple-300 transition-all duration-300">
+    <div className="w-full max-w-[340px] sm:max-w-[380px] p-4 sm:p-5 flex flex-col justify-between shrink-0 bg-zinc-50 text-zinc-700 border border-zinc-200/80 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.08),0_12px_48px_rgba(0,0,0,0.06)] hover:border-purple-300 transition-all duration-300">
       {/* Header Row: Avatar, Name, Rating */}
       <div className="flex items-center justify-between mb-2.5 gap-2.5">
         <div className="flex items-center gap-2.5 min-w-0">
@@ -85,10 +85,10 @@ function TestimonialCard({ item }: { item: Testimonial }) {
             <Image src={item.avatar} alt={item.name} fill className="object-cover" />
           </div>
           <div className="min-w-0">
-            <h4 className="text-xs sm:text-sm font-extrabold text-zinc-950 dark:text-zinc-950 truncate">
+            <h4 className="text-xs sm:text-sm font-extrabold text-zinc-800 dark:text-zinc-800 truncate">
               {item.name}
             </h4>
-            <p className="text-[11px] text-zinc-600 dark:text-zinc-600 truncate font-medium">
+            <p className="text-[11px] text-zinc-500 dark:text-zinc-500 truncate font-medium">
               {item.company}
             </p>
           </div>
@@ -102,13 +102,13 @@ function TestimonialCard({ item }: { item: Testimonial }) {
       </div>
 
       {/* Review Text - Always dark text on white card */}
-      <p className="text-xs sm:text-sm text-zinc-900 dark:text-zinc-900 leading-relaxed font-semibold mb-3 italic line-clamp-2">
+      <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-700 leading-relaxed font-medium mb-3 italic line-clamp-2">
         &ldquo;{item.text}&rdquo;
       </p>
 
       {/* Bottom Metric Badge */}
       <div className="flex items-center justify-between pt-2 border-t border-zinc-100 text-[11px]">
-        <span className="font-mono font-bold text-purple-950 dark:text-purple-950 bg-purple-100 dark:bg-purple-100 border border-purple-300 dark:border-purple-300 px-2.5 py-0.5 rounded-full text-[10px]">
+        <span className="font-mono font-bold text-purple-800 dark:text-purple-800 bg-purple-100 dark:bg-purple-100 border border-purple-200 dark:border-purple-200 px-2.5 py-0.5 rounded-full text-[10px]">
           {item.metric}
         </span>
       </div>
@@ -188,40 +188,47 @@ export function TestimonialsSection() {
             </div>
           </div>
 
-          {/* Right Column: Scroll-Driven Cards with Silky Smooth Gradient Viewport Mask */}
-          <div 
-            className="lg:col-span-7 relative h-[600px] overflow-hidden"
-            style={{
-              maskImage: "linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%)",
-              WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%)"
-            }}
-          >
-            {/* Top & Bottom Ambient Fade Blend Overlays */}
-            <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-background via-background/70 to-transparent pointer-events-none z-20" />
-            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-background via-background/70 to-transparent pointer-events-none z-20" />
+          {/* Right Column: Scroll-Driven Cards Container */}
+          <div className="lg:col-span-7 relative h-[600px]">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 h-full items-start">
-              
-              {/* Column 1: Left column moves UPWARDS as page scrolls down */}
-              <motion.div 
-                className="flex flex-col gap-6"
-                style={{ y: y1 }}
-              >
-                {testimonialsRow1.map((item, idx) => (
-                  <TestimonialCard key={`col1-${idx}`} item={item} />
-                ))}
-              </motion.div>
+            {/* 
+              Single CSS mask handles the top & bottom fade-out.
+              Using the page background color (transparent → visible → transparent) ensures 
+              the card edges dissolve seamlessly into whatever is behind — purple glow, 
+              dark background, etc. No opaque overlays that create visible bands.
+            */}
+            <div
+              className="relative h-full overflow-hidden rounded-2xl bg-transparent p-3"
+              style={{
+                maskImage: "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+                WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+              }}
+            >
+              <div className="grid h-full grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+                {/* Column 1: Left column moves UPWARDS */}
+                <div className="relative h-full overflow-visible">
+                  <motion.div
+                    className="flex flex-col gap-6"
+                    style={{ y: y1 }}
+                  >
+                    {testimonialsRow1.map((item, idx) => (
+                      <TestimonialCard key={`col1-${idx}`} item={item} />
+                    ))}
+                  </motion.div>
+                </div>
 
-              {/* Column 2: Right column moves DOWNWARDS as page scrolls down */}
-              <motion.div 
-                className="flex flex-col gap-6"
-                style={{ y: y2 }}
-              >
-                {testimonialsRow2.map((item, idx) => (
-                  <TestimonialCard key={`col2-${idx}`} item={item} />
-                ))}
-              </motion.div>
-
+                {/* Column 2: Right column moves DOWNWARDS */}
+                <div className="relative h-full overflow-visible">
+                  <motion.div
+                    className="flex flex-col gap-6"
+                    style={{ y: y2 }}
+                  >
+                    {testimonialsRow2.map((item, idx) => (
+                      <TestimonialCard key={`col2-${idx}`} item={item} />
+                    ))}
+                  </motion.div>
+                </div>
+              </div>
             </div>
           </div>
 

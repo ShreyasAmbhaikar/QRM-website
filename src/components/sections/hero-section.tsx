@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { GlowCard } from "@/components/ui/glow-card";
 import { Particles } from "@/components/magicui/particles";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, Trophy } from "lucide-react";
 import Image from "next/image";
 
 export function HeroSection() {
@@ -64,14 +64,16 @@ export function HeroSection() {
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-fuchsia-500/15 blur-[110px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10 text-center flex flex-col items-center">
-        {/* Magic UI Style Badge Pill */}
+        {/* Magic UI Style Badge Pill with Moving Glare Shimmer */}
         <div 
           ref={badgeRef} 
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-300 dark:border-white/15 bg-purple-100/80 dark:bg-zinc-900/80 text-xs font-mono font-bold text-purple-950 dark:text-zinc-200 mb-8 backdrop-blur-md shadow-[0_0_20px_rgba(147,51,234,0.15)] transition-all hover:scale-105 cursor-pointer"
+          className="relative overflow-hidden inline-flex items-center gap-2 px-4.5 py-1.5 rounded-full border border-purple-300 dark:border-white/15 bg-purple-100/80 dark:bg-zinc-900/80 text-xs font-mono font-bold text-purple-950 dark:text-zinc-200 mb-8 backdrop-blur-md shadow-[0_0_20px_rgba(147,51,234,0.15)] transition-all hover:scale-105 cursor-pointer group"
         >
-          <Sparkles size={13} className="text-yellow-500 dark:text-yellow-400" />
-          <span>Best SEO Agency in Pune</span>
-          <ArrowRight size={13} className="text-purple-600 dark:text-purple-400" />
+          {/* Moving Glare Shimmer Streak */}
+          <div className="absolute inset-0 -translate-x-full animate-chip-shimmer bg-gradient-to-r from-transparent via-white/30 dark:via-purple-300/25 to-transparent pointer-events-none" />
+          
+          <Trophy size={14} className="text-yellow-500 dark:text-yellow-400 shrink-0 relative z-10" />
+          <span className="relative z-10">Best SEO Agency in Pune</span>
         </div>
         
         {/* Magic UI Style Headline */}
@@ -89,9 +91,9 @@ export function HeroSection() {
         
         {/* Magic UI CTA Buttons */}
         <div ref={buttonsRef} className="flex flex-wrap items-center justify-center gap-4 mb-16">
-          <MagneticButton className="px-8 py-3.5 rounded-full bg-purple-950 text-white dark:bg-white dark:text-black hover:bg-purple-900 dark:hover:bg-zinc-200 font-bold text-sm shadow-lg inline-flex items-center gap-2 whitespace-nowrap shrink-0">
-            <span>Get Started</span>
-            <ArrowRight size={15} className="shrink-0" />
+          <MagneticButton className="px-8 py-3.5 rounded-full bg-purple-950 text-white dark:bg-white dark:text-black hover:bg-purple-900 dark:hover:bg-zinc-200 font-bold text-sm shadow-lg whitespace-nowrap inline-flex flex-row items-center justify-center gap-2.5 shrink-0 min-w-[160px]">
+            <span className="whitespace-nowrap">Get Started</span>
+            <ArrowRight size={16} className="shrink-0 inline-block" />
           </MagneticButton>
           <MagneticButton className="px-8 py-3.5 rounded-full border border-purple-300 dark:border-white/15 text-purple-950 dark:text-white hover:bg-purple-100/50 dark:hover:bg-white/10 font-bold text-sm backdrop-blur-sm">
             Book a Demo
@@ -102,7 +104,7 @@ export function HeroSection() {
         <div ref={mockupRef} className="w-full max-w-5xl mx-auto mt-6 relative [perspective:1000px]">
           <GlowCard className="p-2 bg-saas-base border-saas-border shadow-[0_0_100px_rgba(147,51,234,0.2)] relative overflow-hidden rounded-2xl">
             <div 
-              className="relative rounded-xl overflow-hidden aspect-video border border-white/10 bg-saas-surface"
+              className="relative rounded-xl overflow-hidden aspect-[16/11] border border-white/10 bg-saas-surface"
               style={{
                 maskImage: "linear-gradient(to bottom, black 0%, black 50%, transparent 98%)",
                 WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 50%, transparent 98%)"

@@ -151,8 +151,17 @@ html:not(.dark), .light {
     }
   }
 
+  @keyframes chip-shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+  }
+
   .animate-ripple {
     animation: ripple 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+
+  .animate-chip-shimmer {
+    animation: chip-shimmer 2.5s infinite linear;
   }
 
   .animate-marquee:hover, .animate-marquee-reverse:hover {
