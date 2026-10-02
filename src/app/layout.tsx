@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} dark antialiased scroll-smooth`}>
-      <body className="min-h-screen flex flex-col bg-background text-foreground font-sans transition-colors duration-300 relative">
+      <body className="min-h-screen flex flex-col bg-background text-foreground font-sans relative">
         <LenisProvider>
           <Navbar />
           <main className="flex-1 flex flex-col relative z-0">

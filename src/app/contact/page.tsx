@@ -41,7 +41,7 @@ export default function ContactPage() {
               <div className="w-12 h-12 rounded-xl bg-saas-cyan/10 border border-saas-cyan/30 flex items-center justify-center text-saas-cyan mb-6 group-hover:scale-110 transition-transform">
                 <MapPin size={24} />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">Pune Headquarters</h3>
+              <h3 className="text-lg font-bold text-white mb-2">Pune Office</h3>
               <p className="text-zinc-400 text-xs leading-relaxed mb-6">
                 Survey Number 43, Lohar Arcade, Somnath Nagar, Wadgaon Sheri, Pune, Maharashtra 411014
               </p>
@@ -134,7 +134,7 @@ export default function ContactPage() {
                       <input
                         type="text"
                         required
-                        placeholder="Dr. Varun / John Doe"
+                        placeholder="Dr. Varun"
                         className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-white/10 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-saas-cyan/50"
                       />
                     </div>

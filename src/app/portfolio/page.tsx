@@ -79,6 +79,13 @@ const portfolioSites = [
     location: "Lucknow",
   },
   {
+    name: "Dr. Deepika Lalwani",
+    domain: "drdeepikalalwani.pages.dev",
+    url: "https://drdeepikalalwani.pages.dev/best-gynecologist-in-kalyani-nagar/",
+    type: "Gynecology & Women's Health",
+    location: "Kalyani Nagar, Pune",
+  },
+  {
     name: "Ariix Hair & Skin Clinic",
     domain: "ariixhairandskinclinic.pages.dev",
     url: "https://ariixhairandskinclinic.pages.dev/best-skin-care-clinic-in-pune/",

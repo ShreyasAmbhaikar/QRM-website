@@ -233,6 +233,114 @@ const serviceDetailsMap: Record<string, ServiceDetail> = {
     ],
     accentColor: "from-yellow-400 to-orange-500",
     motionType: "pr"
+  },
+  "google-ads-ppc": {
+    slug: "google-ads-ppc",
+    badge: "HIGH-INTENT PAID SEARCH",
+    title: "Google Ads (PPC) Management",
+    subtitle: "Drive Instant Inbound Conversions & High-Intent Search Traffic",
+    tagline: "Capture buyers at the exact moment they search for your solutions.",
+    description: "We architect hyper-targeted Google Search, Performance Max, Display, and Remarketing campaigns engineered for maximum impression share and lowest Cost Per Acquisition (CPA).",
+    metrics: [
+      { value: "5.4x", label: "Average Google Ads ROAS" },
+      { value: "-35%", label: "Reduction in Cost Per Click" },
+      { value: "98%", label: "Conversion Tracking Accuracy" }
+    ],
+    deliverables: [
+      "Targeted Google Search & Performance Max Campaign Setup",
+      "Negative Keyword Sculpting & Quality Score Optimization",
+      "Direct-Response Ad Copywriting & Dynamic Extensions",
+      "Competitor Keyword Bidding & SERP Hegemony Strategy",
+      "Full Conversion Tracking & Automated Bid Strategy"
+    ],
+    workflowSteps: [
+      { step: "01", title: "Search Intent Mining", desc: "Isolating high-converting transactional search terms with zero ad waste." },
+      { step: "02", title: "Campaign Architecture", desc: "Structuring tightly themed ad groups with optimized landing page match." },
+      { step: "03", title: "Daily Bid Optimization", desc: "Scaling high-performing keywords and eliminating low-converting clicks." }
+    ],
+    accentColor: "from-amber-400 to-orange-500",
+    motionType: "ads"
+  },
+  "social-media-marketing": {
+    slug: "social-media-marketing",
+    badge: "COMMUNITY & BRAND ENGAGEMENT",
+    title: "Social Media Marketing",
+    subtitle: "Build Highly Engaged Audiences & Multi-Platform Brand Authority",
+    tagline: "Turn passive social scrollers into loyal brand advocates and customers.",
+    description: "Strategic content creation, viral reels/shorts production, community management, and paid social amplification across LinkedIn, Instagram, X, and YouTube to dominate your industry niche.",
+    metrics: [
+      { value: "+420%", label: "Social Engagement Growth" },
+      { value: "2.8M+", label: "Organic Brand Impressions" },
+      { value: "3.2x", label: "Inbound Social Lead Lift" }
+    ],
+    deliverables: [
+      "Custom Social Media Content Calendar & Strategy",
+      "High-Production Video Reels & Carousel Graphic Design",
+      "Platform-Specific Community Engagement & DM Automation",
+      "Influencer Outreach & Strategic Collaboration Funnels",
+      "Monthly Social Analytics & Audience Growth Reports"
+    ],
+    workflowSteps: [
+      { step: "01", title: "Brand Voice Alignment", desc: "Establishing your unique visual tone and high-engagement content pillars." },
+      { step: "02", title: "Content Engine", desc: "Producing monthly batches of scroll-stopping creative assets and reels." },
+      { step: "03", title: "Community Amplification", desc: "Engaging followers and driving qualified inbound traffic to conversion pages." }
+    ],
+    accentColor: "from-purple-500 to-pink-500",
+    motionType: "content"
+  },
+  "email-marketing": {
+    slug: "email-marketing",
+    badge: "LIFECYCLE RETENTION & CONVERSION",
+    title: "Email Marketing & Automation",
+    subtitle: "Nurture, Convert, and Retain High-Value Customers on Autopilot",
+    tagline: "Turn your subscriber list into a predictable, automated revenue channel.",
+    description: "We engineer high-converting automated email funnels, behavioral trigger sequences, weekly value newsletters, and dynamic drip campaigns that drive repeat sales and boost customer lifetime value (LTV).",
+    metrics: [
+      { value: "42.8%", label: "Average Email Open Rate" },
+      { value: "8.4%", label: "Click-Through Rate (CTR)" },
+      { value: "+260%", label: "Automated Lifecycle Revenue" }
+    ],
+    deliverables: [
+      "Automated Welcome, Abandoned & Post-Purchase Sequences",
+      "High-Deliverability Domain & SPF/DKIM Authentication",
+      "Persuasive Direct-Response Copywriting & Clean HTML Templates",
+      "Audience Segmentation & Behavioral Tagging Systems",
+      "A/B Split Testing for Subject Lines, Timing & Offers"
+    ],
+    workflowSteps: [
+      { step: "01", title: "Funnel Mapping", desc: "Designing automated lifecycle trigger workflows tailored to customer actions." },
+      { step: "02", title: "Copywriting & Design", desc: "Writing psychologically compelling copy with mobile-optimized layouts." },
+      { step: "03", title: "Optimization & Scaling", desc: "Iterating based on open and click metrics to maximize revenue per contact." }
+    ],
+    accentColor: "from-blue-500 to-purple-600",
+    motionType: "analytics"
+  },
+  "branding-design": {
+    slug: "branding-design",
+    badge: "CONVERSION UI/UX & BRAND IDENTITY",
+    title: "Branding & Conversion Design",
+    subtitle: "Stand Out from Competitors with Iconic Visuals & High-Converting UI",
+    tagline: "Elevate your market perception with premium design that commands respect.",
+    description: "We craft unmistakable brand identities, design systems, glassmorphic UI components, and psychology-backed conversion layouts that establish instant credibility and maximize user action.",
+    metrics: [
+      { value: "+210%", label: "Brand Recall & Trust Score" },
+      { value: "65%", label: "Lower Bounce Rates" },
+      { value: "3.8x", label: "Landing Page Conversion Lift" }
+    ],
+    deliverables: [
+      "Comprehensive Brand Identity Systems & Logo Architecture",
+      "Glassmorphic & High-End Conversion UI/UX Layouts",
+      "Design Systems & Reusable Component Guidelines",
+      "High-Impact Marketing Collateral & Social Kits",
+      "Interactive Prototyping & User Flow Optimization"
+    ],
+    workflowSteps: [
+      { step: "01", title: "Visual Discovery", desc: "Auditing competitor aesthetics and defining your standout visual language." },
+      { step: "02", title: "Identity Crafting", desc: "Designing typography, color palettes, vector assets, and design systems." },
+      { step: "03", title: "Component Delivery", desc: "Deploying high-converting web and marketing assets for live application." }
+    ],
+    accentColor: "from-fuchsia-500 to-purple-600",
+    motionType: "code"
   }
 };
 
@@ -246,6 +354,10 @@ export function generateStaticParams() {
     { slug: "analytics-tracking" },
     { slug: "content-architecture" },
     { slug: "authority-building" },
+    { slug: "google-ads-ppc" },
+    { slug: "social-media-marketing" },
+    { slug: "email-marketing" },
+    { slug: "branding-design" },
   ];
 }
 

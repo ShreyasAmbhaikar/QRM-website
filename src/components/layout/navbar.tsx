@@ -2,14 +2,35 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { Menu, X } from "lucide-react";
+import { 
+  Menu, 
+  X, 
+  ChevronDown, 
+  Search, 
+  TrendingUp, 
+  Users, 
+  Mail, 
+  Code2, 
+  Palette, 
+  FileText, 
+  Award, 
+  MapPin, 
+  Megaphone, 
+  BarChart3,
+  ArrowRight,
+  Sparkles
+} from "lucide-react";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const servicesDropdownRef = useRef<HTMLDivElement>(null);
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,11 +40,135 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Handle click outside for services dropdown
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        servicesDropdownRef.current && 
+        !servicesDropdownRef.current.contains(event.target as Node)
+      ) {
+        setServicesOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setServicesOpen(false);
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setServicesOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setServicesOpen(false);
+    }, 180);
+  };
+
+  const serviceCategories = [
+    {
+      title: "DIGITAL MARKETING",
+      items: [
+        {
+          title: "SEO Services",
+          desc: "Rank higher on Google",
+          href: "/services/traditional-seo",
+          icon: <Search className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+        },
+        {
+          title: "Google Ads (PPC)",
+          desc: "Get instant inbound traffic",
+          href: "/services/google-ads-ppc",
+          icon: <TrendingUp className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+        },
+        {
+          title: "Social Media Marketing",
+          desc: "Build engaged audiences",
+          href: "/services/social-media-marketing",
+          icon: <Users className="w-4 h-4 text-pink-500 dark:text-pink-400" />
+        },
+        {
+          title: "Email Marketing",
+          desc: "Nurture and convert leads",
+          href: "/services/email-marketing",
+          icon: <Mail className="w-4 h-4 text-blue-500 dark:text-blue-400" />
+        }
+      ]
+    },
+    {
+      title: "WEBSITE & CONTENT",
+      items: [
+        {
+          title: "Website Development",
+          desc: "Fast, modern Next.js websites",
+          href: "/services/seo-web-development",
+          icon: <Code2 className="w-4 h-4 text-saas-purple dark:text-saas-cyan" />
+        },
+        {
+          title: "Branding & Design",
+          desc: "Stand out from competitors",
+          href: "/services/branding-design",
+          icon: <Palette className="w-4 h-4 text-fuchsia-500 dark:text-fuchsia-400" />
+        },
+        {
+          title: "Content Marketing",
+          desc: "High-ranking content that converts",
+          href: "/services/content-architecture",
+          icon: <FileText className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+        },
+        {
+          title: "Authority & Digital PR",
+          desc: "High-DA backlinks and press",
+          href: "/services/authority-building",
+          icon: <Award className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+        }
+      ]
+    },
+    {
+      title: "SPECIALIZED GROWTH",
+      items: [
+        {
+          title: "Google My Business",
+          desc: "Dominate local 3-pack search",
+          href: "/services/local-seo-gmb",
+          icon: <MapPin className="w-4 h-4 text-rose-500 dark:text-rose-400" />
+        },
+        {
+          title: "Meta Ads",
+          desc: "Facebook & Instagram ads",
+          href: "/services/meta-advertisements",
+          icon: <Megaphone className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
+        },
+        {
+          title: "Analytics & Tracking",
+          desc: "Server-side GTM & GA4 attribution",
+          href: "/services/analytics-tracking",
+          icon: <BarChart3 className="w-4 h-4 text-purple-600 dark:text-saas-cyan" />
+        }
+      ]
+    }
+  ];
+
   return (
     <header className="fixed top-0 w-full z-50 pt-6 px-4 md:px-0 pointer-events-none">
       <div
         className={cn(
-          "mx-auto transition-all duration-500 border pointer-events-auto flex items-center justify-between relative",
+          "mx-auto transition-all duration-250 border pointer-events-auto flex items-center justify-between relative",
           scrolled
             ? "max-w-4xl rounded-full bg-card/90 dark:bg-saas-surface/85 backdrop-blur-xl border-purple-200 dark:border-white/15 shadow-[0_10px_30px_rgba(147,51,234,0.12)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.8)] px-5 py-2.5"
             : "max-w-6xl rounded-full bg-transparent border-transparent px-6 py-3"
@@ -52,28 +197,133 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-5 lg:gap-8 mx-auto">
-          <Link href="/#services" className="text-sm font-bold text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white transition-colors">
-            Services
+        <nav className="hidden md:flex items-center gap-5 lg:gap-7 mx-auto">
+          <Link 
+            href="/" 
+            className="text-sm font-bold text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white transition-colors"
+          >
+            Home
           </Link>
-          <Link href="/portfolio" className="text-sm font-bold text-purple-700 dark:text-saas-cyan hover:text-purple-950 dark:hover:text-white transition-colors">
+
+          <Link 
+            href="/about" 
+            className="text-sm font-bold text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white transition-colors"
+          >
+            About Us
+          </Link>
+
+          {/* Services Mega Menu Trigger */}
+          <div 
+            ref={servicesDropdownRef}
+            className="relative"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <button
+              onClick={() => setServicesOpen(!servicesOpen)}
+              className={cn(
+                "inline-flex items-center gap-1.5 text-sm font-bold transition-colors py-1 cursor-pointer",
+                servicesOpen
+                  ? "text-purple-700 dark:text-saas-cyan"
+                  : "text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white"
+              )}
+              aria-expanded={servicesOpen}
+            >
+              <span>Our Services</span>
+              <ChevronDown 
+                size={14} 
+                className={cn(
+                  "transition-transform duration-200",
+                  servicesOpen ? "rotate-180 text-purple-700 dark:text-saas-cyan" : ""
+                )} 
+              />
+            </button>
+
+            {/* Services Mega Menu Dropdown */}
+            {servicesOpen && (
+              <div 
+                className="absolute left-1/2 -translate-x-1/2 top-[calc(100%+14px)] w-[820px] max-w-[90vw] p-6 rounded-3xl border border-purple-200/90 dark:border-white/15 bg-card/98 dark:bg-zinc-950/98 backdrop-blur-2xl shadow-[0_20px_60px_rgba(147,51,234,0.2)] dark:shadow-[0_25px_70px_rgba(0,0,0,0.95)] animate-in fade-in zoom-in-95 duration-200 z-50 pointer-events-auto"
+              >
+                <div className="grid grid-cols-3 gap-6">
+                  {serviceCategories.map((category, idx) => (
+                    <div key={idx} className="space-y-3">
+                      <div className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-purple-800 dark:text-saas-cyan/90 border-b border-purple-100 dark:border-white/10 pb-2">
+                        {category.title}
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        {category.items.map((item, itemIdx) => (
+                          <Link
+                            key={itemIdx}
+                            href={item.href}
+                            onClick={() => setServicesOpen(false)}
+                            className="group flex items-start gap-3 p-2 rounded-xl hover:bg-purple-50 dark:hover:bg-white/5 transition-all"
+                          >
+                            <div className="mt-0.5 w-7 h-7 rounded-lg bg-purple-100 dark:bg-zinc-900 border border-purple-200/70 dark:border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-purple-400 dark:group-hover:border-saas-cyan/50 transition-all">
+                              {item.icon}
+                            </div>
+                            <div className="flex flex-col">
+                              <span className="text-xs font-bold text-purple-950 dark:text-zinc-100 group-hover:text-purple-700 dark:group-hover:text-saas-cyan transition-colors">
+                                {item.title}
+                              </span>
+                              <span className="text-[11px] text-purple-900/70 dark:text-zinc-400 font-medium line-clamp-1">
+                                {item.desc}
+                              </span>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom Highlight Bar in Mega Menu */}
+                <div className="mt-5 pt-4 border-t border-purple-100 dark:border-white/10 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2 text-purple-950/80 dark:text-zinc-300 font-medium">
+                    <Sparkles size={14} className="text-purple-600 dark:text-saas-cyan" />
+                    <span>Looking for custom multi-channel growth architecture?</span>
+                  </div>
+                  <Link
+                    href="/contact"
+                    onClick={() => setServicesOpen(false)}
+                    className="inline-flex items-center gap-1.5 font-bold text-purple-700 dark:text-saas-cyan hover:underline group"
+                  >
+                    <span>Schedule Strategy Audit</span>
+                    <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <Link 
+            href="/portfolio" 
+            className="text-sm font-bold text-purple-700 dark:text-saas-cyan hover:text-purple-950 dark:hover:text-white transition-colors"
+          >
             Portfolio
           </Link>
-          <Link href="/blog" className="text-sm font-bold text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white transition-colors">
+
+          <Link 
+            href="/blog" 
+            className="text-sm font-bold text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white transition-colors"
+          >
             Blog
           </Link>
-          <Link href="/contact" className="text-sm font-bold text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white transition-colors">
+
+          <Link 
+            href="/contact" 
+            className="text-sm font-bold text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white transition-colors"
+          >
             Contact
-          </Link>
-          <Link href="/#about" className="text-sm font-bold text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white transition-colors">
-            About
           </Link>
         </nav>
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
-          <Link href="/contact" className="px-4 py-2 bg-purple-950 text-white hover:bg-purple-900 dark:bg-white dark:text-black dark:hover:bg-zinc-200 text-xs font-bold rounded-full transition-colors shadow-sm">
+          <Link 
+            href="/contact" 
+            className="px-4 py-2 bg-purple-950 text-white hover:bg-purple-900 dark:bg-white dark:text-black dark:hover:bg-zinc-200 text-xs font-bold rounded-full transition-colors shadow-sm"
+          >
             Get Started
           </Link>
         </div>
@@ -87,44 +337,94 @@ export function Navbar() {
           {isOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
 
-        {/* Mobile Navigation Dropdown Card */}
+        {/* Mobile Navigation Dropdown Drawer */}
         {isOpen && (
-          <div className="absolute top-[calc(100%+12px)] left-4 right-4 p-5 rounded-3xl border border-purple-200 dark:border-white/10 bg-card/95 dark:bg-saas-surface/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(147,51,234,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col gap-4 animate-in fade-in slide-in-from-top-4 duration-300 md:hidden pointer-events-auto">
+          <div className="absolute top-[calc(100%+12px)] left-4 right-4 p-5 rounded-3xl border border-purple-200 dark:border-white/10 bg-card/95 dark:bg-saas-surface/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(147,51,234,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col gap-3 animate-in fade-in slide-in-from-top-4 duration-300 md:hidden pointer-events-auto max-h-[80vh] overflow-y-auto">
             <Link 
-              href="/#services" 
+              href="/" 
               onClick={() => setIsOpen(false)} 
-              className="text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1 transition-colors"
+              className="text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1.5 transition-colors"
             >
-              Services
+              Home
             </Link>
+
+            <Link 
+              href="/about" 
+              onClick={() => setIsOpen(false)} 
+              className="text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1.5 transition-colors"
+            >
+              About Us
+            </Link>
+
+            {/* Mobile Services Accordion */}
+            <div className="flex flex-col">
+              <button
+                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                className="flex items-center justify-between text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1.5 text-left transition-colors"
+              >
+                <span>Our Services</span>
+                <ChevronDown 
+                  size={15} 
+                  className={cn(
+                    "transition-transform duration-200", 
+                    mobileServicesOpen ? "rotate-180 text-purple-700 dark:text-saas-cyan" : ""
+                  )} 
+                />
+              </button>
+
+              {mobileServicesOpen && (
+                <div className="pl-3 pr-1 py-2 flex flex-col gap-3 my-1 border-l-2 border-purple-200 dark:border-white/10">
+                  {serviceCategories.map((category, catIdx) => (
+                    <div key={catIdx} className="space-y-1.5">
+                      <span className="text-[10px] font-mono font-bold text-purple-800 dark:text-saas-cyan uppercase">
+                        {category.title}
+                      </span>
+                      <div className="flex flex-col gap-1 pl-1">
+                        {category.items.map((item, itemIdx) => (
+                          <Link
+                            key={itemIdx}
+                            href={item.href}
+                            onClick={() => {
+                              setIsOpen(false);
+                              setMobileServicesOpen(false);
+                            }}
+                            className="text-xs font-semibold text-purple-950/70 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white py-1 flex items-center gap-2"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-purple-500/70 shrink-0" />
+                            <span>{item.title}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <Link 
               href="/portfolio" 
               onClick={() => setIsOpen(false)} 
-              className="text-sm font-bold text-purple-700 dark:text-saas-cyan hover:text-purple-950 dark:hover:text-white py-1 transition-colors"
+              className="text-sm font-bold text-purple-700 dark:text-saas-cyan hover:text-purple-950 dark:hover:text-white py-1.5 transition-colors"
             >
               Portfolio
             </Link>
+
             <Link 
               href="/blog" 
               onClick={() => setIsOpen(false)} 
-              className="text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1 transition-colors"
+              className="text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1.5 transition-colors"
             >
               Blog
             </Link>
+
             <Link 
               href="/contact" 
               onClick={() => setIsOpen(false)} 
-              className="text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1 transition-colors"
+              className="text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1.5 transition-colors"
             >
               Contact
             </Link>
-            <Link 
-              href="/#about" 
-              onClick={() => setIsOpen(false)} 
-              className="text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1 transition-colors"
-            >
-              About
-            </Link>
+
             <div className="h-px bg-purple-100 dark:bg-white/10 my-1" />
             <div className="flex items-center justify-between py-1">
               <span className="text-xs font-bold text-purple-950/60 dark:text-zinc-500">Theme Mode</span>
