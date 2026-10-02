@@ -9,56 +9,56 @@ import { MapPin, Code, Bot, Search, Megaphone, LineChart, FileText, TrendingUp, 
 
 const services = [
   {
-    slug: "local-seo-gmb",
+    slug: "local-seo-gmb-pune",
     title: "Local SEO & GMB Optimization",
     description: "Capture the #1 spot in Google 3-Pack Map Results across Pune, Wadgaon Sheri, Viman Nagar, and Baner with geo-tagged schema.",
     tag: "+340% Local Calls",
     icon: <MapPin className="w-5 h-5 text-saas-cyan" />
   },
   {
-    slug: "seo-web-development",
+    slug: "seo-web-development-pune",
     title: "SEO Website Development",
     description: "Lightning-fast Next.js architectures scoring 90+ on Google PageSpeed with sub-500ms Core Web Vitals for maximum crawlability.",
     tag: "90+ Web Speed",
     icon: <Code className="w-5 h-5 text-saas-purple" />
   },
   {
-    slug: "aeo-geo-optimization",
+    slug: "aeo-geo-optimization-pune",
     title: "AEO & GEO AI Optimization",
     description: "Train generative LLMs (ChatGPT, Gemini, Perplexity) to cite your brand as the canonical authority for industry searches.",
     tag: "AI Engine Citations",
     icon: <Bot className="w-5 h-5 text-emerald-400" />
   },
   {
-    slug: "traditional-seo",
+    slug: "traditional-seo-pune",
     title: "Traditional SEO Mastery",
     description: "Technical audits, crawl budget optimization, and keyword clustering to dominate competitive Pune & national search results.",
     tag: "Top 3 Rankings",
     icon: <Search className="w-5 h-5 text-yellow-400" />
   },
   {
-    slug: "meta-advertisements",
+    slug: "meta-advertisements-pune",
     title: "Meta & Instagram Ads",
     description: "High-converting creative funnels and CAPI tracking delivering predictable ROAS and qualified B2B/B2C leads.",
     tag: "4.8x Avg ROAS",
     icon: <Megaphone className="w-5 h-5 text-saas-cyan" />
   },
   {
-    slug: "analytics-tracking",
+    slug: "analytics-tracking-pune",
     title: "Analytics & Conversion Tracking",
     description: "Server-side GTM, GA4 attribution, and custom revenue dashboards to track true CAC, LTV, and pipeline ROI.",
     tag: "100% Attribution",
     icon: <LineChart className="w-5 h-5 text-saas-purple" />
   },
   {
-    slug: "content-architecture",
+    slug: "content-architecture-pune",
     title: "Semantic Content Architecture",
     description: "Intent-driven editorial clusters optimized for both human decision-makers and Google search NLP algorithms.",
     tag: "Topic Authority",
     icon: <FileText className="w-5 h-5 text-emerald-400" />
   },
   {
-    slug: "authority-building",
+    slug: "authority-building-pune",
     title: "Authority Building & PR",
     description: "Tier-1 editorial backlinks, digital PR outreach, and high-DA placements that permanently elevate domain trust.",
     tag: "High-DA Backlinks",
@@ -131,6 +131,20 @@ export function ServicesSection() {
               </GlowCard>
             </Link>
           ))}
+        </div>
+
+        {/* Full Protocols Directory CTA */}
+        <div className="mt-14 text-center">
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold bg-purple-600 hover:bg-purple-700 text-white shadow-[0_0_25px_rgba(147,51,234,0.35)] transition-all group"
+          >
+            <span>Explore All 12 Growth Protocols &amp; Deliverables</span>
+            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+          </Link>
+          <p className="text-xs text-purple-900/70 dark:text-zinc-400 mt-3 font-medium">
+            Next.js Web Speed Guarantee, GMB 3-Pack Framework, AEO / GEO AI Search, Meta CAPI &amp; GA4 Telemetry.
+          </p>
         </div>
       </div>
     </section>

@@ -183,7 +183,7 @@ export function TestimonialsSection() {
                 href="/contact" 
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-purple-950 text-white hover:bg-purple-900 dark:bg-white dark:text-black dark:hover:bg-zinc-200 font-bold text-sm transition-all shadow-md hover:scale-105"
               >
-                Get Started
+                Get Quote
               </a>
             </div>
           </div>

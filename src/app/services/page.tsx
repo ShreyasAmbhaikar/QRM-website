@@ -41,52 +41,68 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "Best SEO & Digital Marketing Services in Pune",
-    description:
-      "Comprehensive directory of 12 systematized search engine optimization and digital marketing protocols by Quantum Reach Media.",
-    url: "https://quantumreachmedia.com/services",
-    provider: {
-      "@type": "LocalBusiness",
-      name: "Quantum Reach Media",
-      image: "https://quantumreachmedia.com/qrm-logo.jpg",
-      telephone: "+91-9172314470",
-      email: "quantumreachmedia@gmail.com",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Kharadi",
-        addressLocality: "Pune",
-        addressRegion: "Maharashtra",
-        postalCode: "411014",
-        addressCountry: "IN"
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://quantumreachmedia.com/services#page",
+        url: "https://quantumreachmedia.com/services",
+        name: "Best SEO & Digital Marketing Services in Pune | 12 Growth Protocols",
+        description:
+          "Comprehensive directory of 12 systematized search engine optimization, paid media, and web development protocols by Quantum Reach Media in Pune.",
+        publisher: {
+          "@id": "https://quantumreachmedia.com/#organization"
+        },
+        provider: {
+          "@id": "https://quantumreachmedia.com/#localbusiness"
+        },
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: ALL_SERVICES.map((service, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: service.title,
+            url: `https://quantumreachmedia.com/services/${service.slug}`
+          }))
+        }
       },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: "18.5514",
-        longitude: "73.9348"
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://quantumreachmedia.com"
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Services",
+            item: "https://quantumreachmedia.com/services"
+          }
+        ]
       },
-      areaServed: [
-        "Pune",
-        "Kharadi",
-        "Viman Nagar",
-        "Baner",
-        "Hinjawadi",
-        "Koregaon Park",
-        "Kothrud",
-        "Kalyani Nagar"
-      ]
-    },
-    hasPart: ALL_SERVICES.map((service) => ({
-      "@type": "Service",
-      name: service.title,
-      description: service.simpleExplainer,
-      url: `https://quantumreachmedia.com/services/${service.slug}`,
-      serviceType: service.pillarLabel,
-      provider: {
-        "@type": "LocalBusiness",
-        name: "Quantum Reach Media"
-      }
-    }))
+      ...ALL_SERVICES.map((service) => ({
+        "@type": "Service",
+        "@id": `https://quantumreachmedia.com/services/${service.slug}#service`,
+        name: service.title,
+        description: service.simpleExplainer,
+        url: `https://quantumreachmedia.com/services/${service.slug}`,
+        serviceType: service.pillarLabel,
+        provider: {
+          "@id": "https://quantumreachmedia.com/#localbusiness"
+        },
+        areaServed: [
+          { "@type": "City", name: "Pune" },
+          { "@type": "City", name: "Baner" },
+          { "@type": "City", name: "Hinjawadi" },
+          { "@type": "City", name: "Viman Nagar" },
+          { "@type": "City", name: "Kharadi" },
+          { "@type": "City", name: "Wadgaon Sheri" },
+          { "@type": "City", name: "Kothrud" }
+        ]
+      }))
+    ]
   };
 
   return (

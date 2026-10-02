@@ -135,12 +135,12 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/services" className="text-purple-950/70 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-saas-cyan transition-colors font-medium">
-                  Our Services
+                  Services
                 </Link>
               </li>
               <li>
                 <Link href="/portfolio" className="text-purple-950/70 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-saas-cyan transition-colors font-medium">
-                  Portfolio
+                  Our Work
                 </Link>
               </li>
               <li>

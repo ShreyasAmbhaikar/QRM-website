@@ -20,6 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/services`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/portfolio`,
       lastModified: currentDate,
       changeFrequency: "weekly",
@@ -40,18 +46,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const serviceSlugs = [
-    "local-seo-gmb",
-    "seo-web-development",
-    "aeo-geo-optimization",
-    "traditional-seo",
-    "meta-advertisements",
-    "analytics-tracking",
-    "content-architecture",
-    "authority-building",
-    "google-ads-ppc",
-    "social-media-marketing",
-    "email-marketing",
-    "branding-design",
+    "traditional-seo-pune",
+    "google-ads-ppc-pune",
+    "social-media-marketing-pune",
+    "email-marketing-pune",
+    "seo-web-development-pune",
+    "branding-design-pune",
+    "content-architecture-pune",
+    "authority-building-pune",
+    "local-seo-gmb-pune",
+    "meta-advertisements-pune",
+    "aeo-geo-optimization-pune",
+    "analytics-tracking-pune",
   ];
 
   const serviceRoutes: MetadataRoute.Sitemap = serviceSlugs.map((slug) => ({

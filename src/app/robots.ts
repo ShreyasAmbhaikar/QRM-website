@@ -25,7 +25,11 @@ export default function robots(): MetadataRoute.Robots {
           "GPTBot",
           "Claude-Web",
           "AnthropicAI",
-          "CCBot"
+          "CCBot",
+          "Google-Extended",
+          "Meta-ExternalAgent",
+          "Amazonbot",
+          "Bytespider"
         ],
         allow: "/",
       }

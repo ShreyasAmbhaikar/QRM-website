@@ -95,25 +95,25 @@ export function Navbar() {
         {
           title: "SEO Services",
           desc: "Rank higher on Google",
-          href: "/services/traditional-seo",
+          href: "/services/traditional-seo-pune",
           icon: <Search className="w-4 h-4 text-purple-600 dark:text-purple-400" />
         },
         {
           title: "Google Ads (PPC)",
           desc: "Get instant inbound traffic",
-          href: "/services/google-ads-ppc",
+          href: "/services/google-ads-ppc-pune",
           icon: <TrendingUp className="w-4 h-4 text-amber-500 dark:text-amber-400" />
         },
         {
           title: "Social Media Marketing",
           desc: "Build engaged audiences",
-          href: "/services/social-media-marketing",
+          href: "/services/social-media-marketing-pune",
           icon: <Users className="w-4 h-4 text-pink-500 dark:text-pink-400" />
         },
         {
           title: "Email Marketing",
           desc: "Nurture and convert leads",
-          href: "/services/email-marketing",
+          href: "/services/email-marketing-pune",
           icon: <Mail className="w-4 h-4 text-blue-500 dark:text-blue-400" />
         }
       ]
@@ -124,25 +124,25 @@ export function Navbar() {
         {
           title: "Website Development",
           desc: "Fast, modern Next.js websites",
-          href: "/services/seo-web-development",
+          href: "/services/seo-web-development-pune",
           icon: <Code2 className="w-4 h-4 text-saas-purple dark:text-saas-cyan" />
         },
         {
           title: "Branding & Design",
           desc: "Stand out from competitors",
-          href: "/services/branding-design",
+          href: "/services/branding-design-pune",
           icon: <Palette className="w-4 h-4 text-fuchsia-500 dark:text-fuchsia-400" />
         },
         {
           title: "Content Marketing",
           desc: "High-ranking content that converts",
-          href: "/services/content-architecture",
+          href: "/services/content-architecture-pune",
           icon: <FileText className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
         },
         {
           title: "Authority & Digital PR",
           desc: "High-DA backlinks and press",
-          href: "/services/authority-building",
+          href: "/services/authority-building-pune",
           icon: <Award className="w-4 h-4 text-amber-500 dark:text-amber-400" />
         }
       ]
@@ -153,25 +153,25 @@ export function Navbar() {
         {
           title: "Google My Business",
           desc: "Dominate local 3-pack search",
-          href: "/services/local-seo-gmb",
+          href: "/services/local-seo-gmb-pune",
           icon: <MapPin className="w-4 h-4 text-rose-500 dark:text-rose-400" />
         },
         {
           title: "Meta Ads",
           desc: "Facebook & Instagram ads",
-          href: "/services/meta-advertisements",
+          href: "/services/meta-advertisements-pune",
           icon: <Megaphone className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
         },
         {
           title: "AEO / GEO Optimization",
           desc: "Rank in ChatGPT & Gemini",
-          href: "/services/aeo-geo-optimization",
+          href: "/services/aeo-geo-optimization-pune",
           icon: <Bot className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
         },
         {
           title: "Analytics & Tracking",
           desc: "Server-side GTM & GA4 attribution",
-          href: "/services/analytics-tracking",
+          href: "/services/analytics-tracking-pune",
           icon: <BarChart3 className="w-4 h-4 text-purple-600 dark:text-saas-cyan" />
         }
       ]
@@ -243,17 +243,17 @@ export function Navbar() {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <button
-              onClick={() => setServicesOpen(!servicesOpen)}
+            <Link
+              href="/services"
+              onClick={() => setServicesOpen(false)}
               className={cn(
                 "inline-flex items-center gap-1.5 text-xs lg:text-sm font-bold transition-all py-1.5 px-3 rounded-full cursor-pointer whitespace-nowrap",
                 pathname.startsWith("/services") || servicesOpen
                   ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] dark:shadow-[0_0_15px_rgba(56,189,248,0.25)]"
                   : "text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white hover:bg-purple-100/50 dark:hover:bg-white/5 border border-transparent"
               )}
-              aria-expanded={servicesOpen}
             >
-              <span>Our Services</span>
+              <span>Services</span>
               <ChevronDown 
                 size={13} 
                 className={cn(
@@ -261,7 +261,7 @@ export function Navbar() {
                   servicesOpen ? "rotate-180 text-purple-700 dark:text-saas-cyan" : ""
                 )} 
               />
-            </button>
+            </Link>
 
             {/* Services Mega Menu Dropdown */}
             {servicesOpen && (
@@ -333,7 +333,7 @@ export function Navbar() {
                 : "text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white hover:bg-purple-100/50 dark:hover:bg-white/5 border border-transparent"
             )}
           >
-            Portfolio
+            Our Work
           </Link>
 
           <Link 
@@ -368,7 +368,7 @@ export function Navbar() {
             href="/contact" 
             className="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-purple-950 text-white hover:bg-purple-900 dark:bg-white dark:text-black dark:hover:bg-zinc-200 text-xs font-bold rounded-full transition-colors shadow-sm whitespace-nowrap"
           >
-            Get Started
+            Get Quote
           </Link>
         </div>
 
@@ -383,7 +383,7 @@ export function Navbar() {
 
         {/* Mobile Navigation Dropdown Drawer */}
         {isOpen && (
-          <div className="absolute top-[calc(100%+12px)] left-4 right-4 p-5 rounded-3xl border border-purple-200 dark:border-white/10 bg-card/95 dark:bg-saas-surface/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(147,51,234,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col gap-2.5 animate-in fade-in slide-in-from-top-4 duration-300 md:hidden pointer-events-auto max-h-[80vh] overflow-y-auto">
+          <div data-lenis-prevent className="absolute top-[calc(100%+12px)] left-4 right-4 p-5 rounded-3xl border border-purple-200 dark:border-white/10 bg-card/95 dark:bg-saas-surface/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(147,51,234,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col gap-2.5 animate-in fade-in slide-in-from-top-4 duration-300 md:hidden pointer-events-auto max-h-[80vh] overflow-y-auto">
             <Link 
               href="/" 
               onClick={() => setIsOpen(false)} 
@@ -412,24 +412,37 @@ export function Navbar() {
 
             {/* Mobile Services Accordion */}
             <div className="flex flex-col">
-              <button
-                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                className={cn(
-                  "flex items-center justify-between text-sm font-bold py-2 px-3 rounded-xl text-left transition-colors",
-                  pathname.startsWith("/services")
-                    ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/30"
-                    : "text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white"
-                )}
-              >
-                <span>Our Services</span>
-                <ChevronDown 
-                  size={15} 
+              <div className="flex items-center justify-between">
+                <Link
+                  href="/services"
+                  onClick={() => setIsOpen(false)}
                   className={cn(
-                    "transition-transform duration-200", 
-                    mobileServicesOpen ? "rotate-180 text-purple-700 dark:text-saas-cyan" : ""
-                  )} 
-                />
-              </button>
+                    "flex-1 text-sm font-bold py-2 px-3 rounded-xl transition-all",
+                    pathname.startsWith("/services")
+                      ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/30"
+                      : "text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white"
+                  )}
+                >
+                  Services
+                </Link>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMobileServicesOpen(!mobileServicesOpen);
+                  }}
+                  className="p-2 text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white rounded-xl"
+                  aria-label="Toggle services list"
+                >
+                  <ChevronDown 
+                    size={16} 
+                    className={cn(
+                      "transition-transform duration-200", 
+                      mobileServicesOpen ? "rotate-180 text-purple-700 dark:text-saas-cyan" : ""
+                    )} 
+                  />
+                </button>
+              </div>
 
               {mobileServicesOpen && (
                 <div className="pl-3 pr-1 py-2 flex flex-col gap-3 my-1 border-l-2 border-purple-200 dark:border-white/10">
@@ -489,7 +502,7 @@ export function Navbar() {
                   : "text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white"
               )}
             >
-              Portfolio
+              Our Work
             </Link>
 
             <Link 
@@ -528,7 +541,7 @@ export function Navbar() {
               onClick={() => setIsOpen(false)} 
               className="w-full text-center py-2.5 bg-purple-950 text-white hover:bg-purple-900 dark:bg-white dark:text-black dark:hover:bg-zinc-200 text-xs font-bold rounded-full transition-all shadow-sm mt-1"
             >
-              Get Started
+              Get Quote
             </Link>
           </div>
         )}

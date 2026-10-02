@@ -1,431 +1,106 @@
-import { GlowCard } from "@/components/ui/glow-card";
-import { CheckCircle2, Sparkles, MapPin, ArrowRight } from "lucide-react";
-import Link from "next/link";
-import { ServiceMotionGraphic } from "@/components/services/service-motion-graphic";
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
+import { 
+  Sparkles, 
+  ArrowRight, 
+  ChevronRight,
+  CheckCircle2
+} from "lucide-react";
 
-interface ServiceDetail {
-  slug: string;
-  badge: string;
-  title: string;
-  subtitle: string;
-  tagline: string;
-  description: string;
-  metrics: { value: string; label: string }[];
-  deliverables: string[];
-  workflowSteps: { step: string; title: string; desc: string }[];
-  accentColor: string;
-  motionType: "radar" | "code" | "ai" | "search" | "ads" | "analytics" | "content" | "pr";
+import { SERVICE_DETAILS_DATA, type ServiceDetailFull } from "@/data/service-details-data";
+import { ServiceFrameworksGrid } from "@/components/services/service-frameworks-grid";
+import { ServiceConfidenceSection } from "@/components/services/service-confidence-section";
+import { ServiceSplitSpecification } from "@/components/services/service-split-specification";
+import { ServiceEditorialProcess } from "@/components/services/service-editorial-process";
+import { ServiceFaqAccordion } from "@/components/services/service-faq-accordion";
+
+interface Props {
+  params: Promise<{ slug: string }>;
 }
 
-const serviceDetailsMap: Record<string, ServiceDetail> = {
-  "local-seo-gmb": {
-    slug: "local-seo-gmb",
-    badge: "MAP PACK DOMINANCE",
-    title: "Local SEO & GMB Optimization",
-    subtitle: "Capture High-Intent Local Searches in Pune & Regional Markets",
-    tagline: "Put your business at the top of the Google 3-Pack Map Results.",
-    description: "Our Local SEO framework optimizes your Google Business Profile (GMB), local entity citations, geo-targeted schema markup, and regional authority signals to turn nearby searches into paying clients.",
-    metrics: [
-      { value: "+340%", label: "Increase in Phone Calls" },
-      { value: "#1", label: "Google Map Pack Ranking" },
-      { value: "5.0 ★", label: "Review Velocity Signal" }
-    ],
-    deliverables: [
-      "Complete Google Business Profile (GMB) Optimization",
-      "Local Entity & NAP Citation Network (100+ Directories)",
-      "Geo-Targeted Local Schema & Structured Data Markup",
-      "Local Map Pack Rank Tracking & Review Management",
-      "Competitor Local Proximity & Radius Analysis"
-    ],
-    workflowSteps: [
-      { step: "01", title: "GMB Audit & Radius Scan", desc: "Mapping your current local search proximity and identifying missing citation signals." },
-      { step: "02", title: "Geo-Entity Optimization", desc: "Injecting local structured data and geo-coded media tags into your digital properties." },
-      { step: "03", title: "Citation & Review Velocity", desc: "Building local domain trust and automating customer review acquisition." }
-    ],
-    accentColor: "from-saas-cyan to-blue-500",
-    motionType: "radar"
-  },
-  "seo-web-development": {
-    slug: "seo-web-development",
-    badge: "90+ LIGHTHOUSE PERFORMANCE",
-    title: "SEO Website Development",
-    subtitle: "High-Performance Next.js & React Architectures",
-    tagline: "Sub-second load times engineered for maximum search engine crawlability.",
-    description: "We build custom, lightning-fast web applications using Next.js, Tailwind CSS, and edge CDN architecture. Every line of code is structured for sub-500ms response times and perfect mobile Core Web Vitals.",
-    metrics: [
-      { value: "90+", label: "PageSpeed Performance" },
-      { value: "< 0.5s", label: "Largest Contentful Paint (LCP)" },
-      { value: "+180%", label: "Mobile Conversion Rate" }
-    ],
-    deliverables: [
-      "Custom Next.js 16 App Router & React Architecture",
-      "Sub-Second Edge Rendering & Global CDN Deployment",
-      "90+ Core Web Vitals Guarantee",
-      "Dynamic OpenGraph & Automated Meta Architecture",
-      "Mobile-First Glassmorphic & Responsive UI/UX"
-    ],
-    workflowSteps: [
-      { step: "01", title: "UI/UX & Codebase Blueprinting", desc: "Designing high-conversion layouts with strict semantic HTML and zero bloat." },
-      { step: "02", title: "Next.js Edge Engineering", desc: "Building modular React components optimized for instant server rendering." },
-      { step: "03", title: "Performance & CWV Tuning", desc: "Achieving 90+ speed scores and deploying on global edge networks." }
-    ],
-    accentColor: "from-saas-purple to-fuchsia-500",
-    motionType: "code"
-  },
-  "aeo-geo-optimization": {
-    slug: "aeo-geo-optimization",
-    badge: "AI LLM RANKING ENGINE",
-    title: "AEO / GEO Optimization",
-    subtitle: "Rank Inside ChatGPT, Claude, Gemini & Perplexity",
-    tagline: "Future-proof your brand for the Generative AI search era.",
-    description: "Artificial Engine Optimization (AEO) and Generative Engine Optimization (GEO) structure your brand's data so large language models (LLMs) cite your business when users ask AI tools for recommendations.",
-    metrics: [
-      { value: "#1 Recommended", label: "Inside GPTBot & Gemini" },
-      { value: "+450%", label: "AI Citation Mentions" },
-      { value: "100%", label: "Semantic Entity Indexing" }
-    ],
-    deliverables: [
-      "LLM Crawler Optimization (GPTBot, ClaudeBot, Gemini)",
-      "Knowledge Graph & Semantic Entity Structuring",
-      "Conversational QA & Intent Data Ingestion",
-      "AI Citation Tracking & Perplexity Brand Audits",
-      "JSON-LD Schema Graph Injection"
-    ],
-    workflowSteps: [
-      { step: "01", title: "Entity Extraction", desc: "Defining your brand's core factual relationships in AI-readable JSON-LD format." },
-      { step: "02", title: "LLM Corpus Ingestion", desc: "Optimizing content formatting for direct consumption by Generative Search crawlers." },
-      { step: "03", title: "Citation Auditing", desc: "Continuously testing and tracking AI recommendations across ChatGPT and Gemini." }
-    ],
-    accentColor: "from-emerald-400 to-teal-500",
-    motionType: "ai"
-  },
-  "traditional-seo": {
-    slug: "traditional-seo",
-    badge: "ALGORITHMIC DOMINANCE",
-    title: "Traditional SEO Mastery",
-    subtitle: "Comprehensive Technical & On-Page Search Engineering",
-    tagline: "Dominating competitive Google search engine algorithm updates.",
-    description: "Deep technical audits, crawl budget optimization, semantic keyword grouping, and structural on-page SEO that propel your domain to page 1 for high-value commercial keywords.",
-    metrics: [
-      { value: "Page 1", label: "Target Commercial Keywords" },
-      { value: "0 Crawl Errors", label: "Technical Health Index" },
-      { value: "+210%", label: "Organic Search Growth" }
-    ],
-    deliverables: [
-      "Deep Technical Site Health & Crawl Audit",
-      "Semantic Topic Clustering & Keyword Architecture",
-      "On-Page Heading, Content & Internal Linking Strategy",
-      "XML Sitemap, Robots.txt & Canonical Engineering",
-      "Monthly SERP Tracking & Competitor Disruption Reports"
-    ],
-    workflowSteps: [
-      { step: "01", title: "Technical Diagnostic", desc: "Eliminating indexation bottlenecks, duplicate content, and redirect chains." },
-      { step: "02", title: "Topic Clusters", desc: "Mapping commercial keyword groups into high-authority pillar content hubs." },
-      { step: "03", title: "SERP Scalper", desc: "Continuous on-page optimization to outrank competitor positions." }
-    ],
-    accentColor: "from-yellow-400 to-amber-500",
-    motionType: "search"
-  },
-  "meta-advertisements": {
-    slug: "meta-advertisements",
-    badge: "HIGH-INTENT LEAD GEN",
-    title: "Meta Advertisements",
-    subtitle: "Data-Driven Facebook & Instagram Performance Marketing",
-    tagline: "Turn ad spend into predictable, high-converting active leads.",
-    description: "We design high-converting visual ad creative, write psychological sales copy, and engineer laser-targeted Meta ad funnels that generate qualified calls and customer inquiries.",
-    metrics: [
-      { value: "4.2x", label: "Average Campaign ROAS" },
-      { value: "-40%", label: "Cost Per Acquisition (CPA)" },
-      { value: "100%", label: "CAPI & Pixel Tracking" }
-    ],
-    deliverables: [
-      "Meta Conversions API (CAPI) & Pixel Setup",
-      "High-Converting Graphic & Video Ad Creative",
-      "Copywriting & Direct-Response Funnel Architecture",
-      "Lookalike & Custom Audience Retargeting Sequences",
-      "Daily A/B Split Testing & Budget Scaling"
-    ],
-    workflowSteps: [
-      { step: "01", title: "Audience Profiling", desc: "Identifying your ideal customer persona and high-intent demographic triggers." },
-      { step: "02", title: "Creative Engine", desc: "Designing thumb-stopping ad visuals and high-converting landing pages." },
-      { step: "03", title: "Scaling & CAPI Tracking", desc: "Scaling winning ad sets while maintaining low cost per lead." }
-    ],
-    accentColor: "from-saas-cyan to-indigo-500",
-    motionType: "ads"
-  },
-  "analytics-tracking": {
-    slug: "analytics-tracking",
-    badge: "REAL-TIME INTELLIGENCE",
-    title: "Analytics & Tracking",
-    subtitle: "Flawless Data Attribution & Real-Time Dashboards",
-    tagline: "Never guess where your leads come from again.",
-    description: "We install end-to-end event tracking using Google Tag Manager (GTM), GA4, and custom Looker Studio dashboards so you can measure every click, call, and conversion with surgical precision.",
-    metrics: [
-      { value: "100%", label: "Data Attribution Accuracy" },
-      { value: "Real-Time", label: "Executive ROI Dashboard" },
-      { value: "0 Loss", label: "Server-Side Tagging" }
-    ],
-    deliverables: [
-      "GA4 Custom Event & Conversion Funnel Setup",
-      "Google Tag Manager (GTM) Server-Side Container",
-      "Real-Time Executive ROI & Traffic Dashboards",
-      "UTM Parameter & Channel Attribution Tracking",
-      "Heatmap & User Session Recording Integration"
-    ],
-    workflowSteps: [
-      { step: "01", title: "Tracking Audit", desc: "Cleaning up broken tags and configuring server-side data containers." },
-      { step: "02", title: "Funnel Mapping", desc: "Instrumenting event triggers for forms, button clicks, and phone calls." },
-      { step: "03", title: "Dashboard Delivery", desc: "Building a custom live dashboard for real-time revenue visibility." }
-    ],
-    accentColor: "from-saas-purple to-pink-500",
-    motionType: "analytics"
-  },
-  "content-architecture": {
-    slug: "content-architecture",
-    badge: "INTENT-DRIVEN ASSETS",
-    title: "Content Architecture",
-    subtitle: "Content Engineered for Readers & AI Search Crawlers",
-    tagline: "Informative, engaging content that ranks and converts.",
-    description: "We plan, write, and format high-authority articles, service pages, and case studies that solve search intent, capture long-tail traffic, and establish your brand as an industry leader.",
-    metrics: [
-      { value: "+300%", label: "Organic Organic Impressions" },
-      { value: "#1 Ranking", label: "Long-Tail Keywords" },
-      { value: "100%", label: "EEAT Authority Score" }
-    ],
-    deliverables: [
-      "Search Intent & Content Gap Analysis",
-      "High-Authority Blog & Service Page Copywriting",
-      "EEAT (Experience, Expertise, Authoritativeness, Trust) Optimization",
-      "Semantic NLP Keyword Optimization (Surfer/Clearscope Style)",
-      "Automated Internal Linking & Pillar Structuring"
-    ],
-    workflowSteps: [
-      { step: "01", title: "Intent Mining", desc: "Discovering what your customers are actively searching for online." },
-      { step: "02", title: "Expert Writing", desc: "Drafting engaging, authoritative content backed by industry research." },
-      { step: "03", title: "Optimization & Publish", desc: "Structuring headers, meta tags, and internal links for search algorithms." }
-    ],
-    accentColor: "from-emerald-400 to-green-600",
-    motionType: "content"
-  },
-  "authority-building": {
-    slug: "authority-building",
-    badge: "DOMINANT LINK EQUITY",
-    title: "Authority Building & Digital PR",
-    subtitle: "High-Quality Backlinks & Industry Press Coverage",
-    tagline: "Skyrocket your domain rating with legitimate editorial link equity.",
-    description: "We build high-DA editorial backlinks, orchestrate digital PR campaigns, and earn contextual brand mentions from respected publications to make your website an unstoppable search authority.",
-    metrics: [
-      { value: "+40 DR", label: "Average Domain Rating Boost" },
-      { value: "100%", label: "Do-Follow White-Hat Backlinks" },
-      { value: "#1 SERP", label: "High-Competition Keywords" }
-    ],
-    deliverables: [
-      "White-Hat Editorial Backlink Acquisition",
-      "Digital PR & Press Release Campaigns",
-      "Competitor Backlink Profile Scalping",
-      "Unlinked Brand Mention Conversion",
-      "Broken Link Building & Contextual Outreach"
-    ],
-    workflowSteps: [
-      { step: "01", title: "Link Gap Analysis", desc: "Identifying high-authority domains linking to your top competitors." },
-      { step: "02", title: "Digital PR Outreach", desc: "Pitching data-driven stories to journalists and authoritative industry blogs." },
-      { step: "03", title: "Equity Tracking", desc: "Monitoring link indexation and domain authority growth." }
-    ],
-    accentColor: "from-yellow-400 to-orange-500",
-    motionType: "pr"
-  },
-  "google-ads-ppc": {
-    slug: "google-ads-ppc",
-    badge: "HIGH-INTENT PAID SEARCH",
-    title: "Google Ads (PPC) Management",
-    subtitle: "Drive Instant Inbound Conversions & High-Intent Search Traffic",
-    tagline: "Capture buyers at the exact moment they search for your solutions.",
-    description: "We architect hyper-targeted Google Search, Performance Max, Display, and Remarketing campaigns engineered for maximum impression share and lowest Cost Per Acquisition (CPA).",
-    metrics: [
-      { value: "5.4x", label: "Average Google Ads ROAS" },
-      { value: "-35%", label: "Reduction in Cost Per Click" },
-      { value: "98%", label: "Conversion Tracking Accuracy" }
-    ],
-    deliverables: [
-      "Targeted Google Search & Performance Max Campaign Setup",
-      "Negative Keyword Sculpting & Quality Score Optimization",
-      "Direct-Response Ad Copywriting & Dynamic Extensions",
-      "Competitor Keyword Bidding & SERP Hegemony Strategy",
-      "Full Conversion Tracking & Automated Bid Strategy"
-    ],
-    workflowSteps: [
-      { step: "01", title: "Search Intent Mining", desc: "Isolating high-converting transactional search terms with zero ad waste." },
-      { step: "02", title: "Campaign Architecture", desc: "Structuring tightly themed ad groups with optimized landing page match." },
-      { step: "03", title: "Daily Bid Optimization", desc: "Scaling high-performing keywords and eliminating low-converting clicks." }
-    ],
-    accentColor: "from-amber-400 to-orange-500",
-    motionType: "ads"
-  },
-  "social-media-marketing": {
-    slug: "social-media-marketing",
-    badge: "COMMUNITY & BRAND ENGAGEMENT",
-    title: "Social Media Marketing",
-    subtitle: "Build Highly Engaged Audiences & Multi-Platform Brand Authority",
-    tagline: "Turn passive social scrollers into loyal brand advocates and customers.",
-    description: "Strategic content creation, viral reels/shorts production, community management, and paid social amplification across LinkedIn, Instagram, X, and YouTube to dominate your industry niche.",
-    metrics: [
-      { value: "+420%", label: "Social Engagement Growth" },
-      { value: "2.8M+", label: "Organic Brand Impressions" },
-      { value: "3.2x", label: "Inbound Social Lead Lift" }
-    ],
-    deliverables: [
-      "Custom Social Media Content Calendar & Strategy",
-      "High-Production Video Reels & Carousel Graphic Design",
-      "Platform-Specific Community Engagement & DM Automation",
-      "Influencer Outreach & Strategic Collaboration Funnels",
-      "Monthly Social Analytics & Audience Growth Reports"
-    ],
-    workflowSteps: [
-      { step: "01", title: "Brand Voice Alignment", desc: "Establishing your unique visual tone and high-engagement content pillars." },
-      { step: "02", title: "Content Engine", desc: "Producing monthly batches of scroll-stopping creative assets and reels." },
-      { step: "03", title: "Community Amplification", desc: "Engaging followers and driving qualified inbound traffic to conversion pages." }
-    ],
-    accentColor: "from-purple-500 to-pink-500",
-    motionType: "content"
-  },
-  "email-marketing": {
-    slug: "email-marketing",
-    badge: "LIFECYCLE RETENTION & CONVERSION",
-    title: "Email Marketing & Automation",
-    subtitle: "Nurture, Convert, and Retain High-Value Customers on Autopilot",
-    tagline: "Turn your subscriber list into a predictable, automated revenue channel.",
-    description: "We engineer high-converting automated email funnels, behavioral trigger sequences, weekly value newsletters, and dynamic drip campaigns that drive repeat sales and boost customer lifetime value (LTV).",
-    metrics: [
-      { value: "42.8%", label: "Average Email Open Rate" },
-      { value: "8.4%", label: "Click-Through Rate (CTR)" },
-      { value: "+260%", label: "Automated Lifecycle Revenue" }
-    ],
-    deliverables: [
-      "Automated Welcome, Abandoned & Post-Purchase Sequences",
-      "High-Deliverability Domain & SPF/DKIM Authentication",
-      "Persuasive Direct-Response Copywriting & Clean HTML Templates",
-      "Audience Segmentation & Behavioral Tagging Systems",
-      "A/B Split Testing for Subject Lines, Timing & Offers"
-    ],
-    workflowSteps: [
-      { step: "01", title: "Funnel Mapping", desc: "Designing automated lifecycle trigger workflows tailored to customer actions." },
-      { step: "02", title: "Copywriting & Design", desc: "Writing psychologically compelling copy with mobile-optimized layouts." },
-      { step: "03", title: "Optimization & Scaling", desc: "Iterating based on open and click metrics to maximize revenue per contact." }
-    ],
-    accentColor: "from-blue-500 to-purple-600",
-    motionType: "analytics"
-  },
-  "branding-design": {
-    slug: "branding-design",
-    badge: "CONVERSION UI/UX & BRAND IDENTITY",
-    title: "Branding & Conversion Design",
-    subtitle: "Stand Out from Competitors with Iconic Visuals & High-Converting UI",
-    tagline: "Elevate your market perception with premium design that commands respect.",
-    description: "We craft unmistakable brand identities, design systems, glassmorphic UI components, and psychology-backed conversion layouts that establish instant credibility and maximize user action.",
-    metrics: [
-      { value: "+210%", label: "Brand Recall & Trust Score" },
-      { value: "65%", label: "Lower Bounce Rates" },
-      { value: "3.8x", label: "Landing Page Conversion Lift" }
-    ],
-    deliverables: [
-      "Comprehensive Brand Identity Systems & Logo Architecture",
-      "Glassmorphic & High-End Conversion UI/UX Layouts",
-      "Design Systems & Reusable Component Guidelines",
-      "High-Impact Marketing Collateral & Social Kits",
-      "Interactive Prototyping & User Flow Optimization"
-    ],
-    workflowSteps: [
-      { step: "01", title: "Visual Discovery", desc: "Auditing competitor aesthetics and defining your standout visual language." },
-      { step: "02", title: "Identity Crafting", desc: "Designing typography, color palettes, vector assets, and design systems." },
-      { step: "03", title: "Component Delivery", desc: "Deploying high-converting web and marketing assets for live application." }
-    ],
-    accentColor: "from-fuchsia-500 to-purple-600",
-    motionType: "code"
-  }
-};
+export async function generateStaticParams() {
+  const slugs = Object.keys(SERVICE_DETAILS_DATA);
+  return slugs.map((slug) => ({ slug }));
+}
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const resolvedParams = await params;
-  const service = serviceDetailsMap[resolvedParams.slug] || serviceDetailsMap["local-seo-gmb"];
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const service = SERVICE_DETAILS_DATA[slug];
+
+  if (!service) {
+    return {
+      title: "Service Not Found | Quantum Reach Media",
+      description: "The requested digital marketing or SEO service could not be found.",
+    };
+  }
+
+  const canonicalUrl = `https://quantumreachmedia.com/services/${service.canonicalSlug}`;
 
   return {
-    title: `${service.title} in Pune | Quantum Reach Media`,
-    description: `${service.description} Engineered for #1 Google rankings, Google Map Pack dominance, and high ROI in Pune, Maharashtra.`,
+    title: `${service.title} | Quantum Reach Media`,
+    description: service.heroDescription,
     alternates: {
-      canonical: `https://quantumreachmedia.com/services/${service.slug}`,
+      canonical: canonicalUrl,
     },
     openGraph: {
-      title: `${service.title} in Pune | Quantum Reach Media`,
-      description: service.description,
-      url: `https://quantumreachmedia.com/services/${service.slug}`,
+      title: `${service.title} | Quantum Reach Media`,
+      description: service.heroDescription,
+      url: canonicalUrl,
       siteName: "Quantum Reach Media",
       locale: "en_IN",
-      type: "website",
+      type: "article",
       images: [
         {
-          url: "/qrm-logo-transparent.webp",
+          url: service.image,
           width: 1200,
           height: 630,
-          alt: `${service.title} - Best SEO & Digital Marketing Agency in Pune`,
+          alt: `${service.title} - Pune Growth Architecture`,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${service.title} in Pune | Quantum Reach Media`,
-      description: service.description,
-      images: ["/qrm-logo-transparent.webp"],
+      title: `${service.title} | Quantum Reach Media`,
+      description: service.heroDescription,
+      images: [service.image],
     },
   };
 }
 
-export function generateStaticParams() {
-  return [
-    { slug: "local-seo-gmb" },
-    { slug: "seo-web-development" },
-    { slug: "aeo-geo-optimization" },
-    { slug: "traditional-seo" },
-    { slug: "meta-advertisements" },
-    { slug: "analytics-tracking" },
-    { slug: "content-architecture" },
-    { slug: "authority-building" },
-    { slug: "google-ads-ppc" },
-    { slug: "social-media-marketing" },
-    { slug: "email-marketing" },
-    { slug: "branding-design" },
-  ];
-}
+export default async function ServiceDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const service = SERVICE_DETAILS_DATA[slug];
 
-export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = await params;
-  const service = serviceDetailsMap[resolvedParams.slug] || serviceDetailsMap["local-seo-gmb"];
+  if (!service) {
+    notFound();
+  }
 
-  const serviceSchema = {
+  // Schema.org Structured Data
+  const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Service",
-        "@id": `https://quantumreachmedia.com/services/${service.slug}#service`,
+        "@id": `https://quantumreachmedia.com/services/${service.canonicalSlug}#service`,
         name: service.title,
-        description: service.description,
-        serviceType: service.badge,
-        url: `https://quantumreachmedia.com/services/${service.slug}`,
+        serviceType: service.title,
+        description: service.heroDescription,
         provider: {
-          "@id": "https://quantumreachmedia.com/#localbusiness",
+          "@type": "LocalBusiness",
+          name: "Quantum Reach Media",
+          url: "https://quantumreachmedia.com",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Pune",
+            addressRegion: "Maharashtra",
+            addressCountry: "IN",
+          },
         },
         areaServed: [
-          { "@type": "City", "name": "Pune" },
-          { "@type": "City", "name": "Baner" },
-          { "@type": "City", "name": "Hinjawadi" },
-          { "@type": "City", "name": "Viman Nagar" },
-          { "@type": "City", "name": "Kharadi" },
-          { "@type": "City", "name": "Wadgaon Sheri" },
-          { "@type": "City", "name": "Kothrud" },
+          { "@type": "City", name: "Pune" },
+          { "@type": "City", name: "Pimpri-Chinchwad" },
         ],
       },
       {
@@ -441,168 +116,258 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             "@type": "ListItem",
             position: 2,
             name: "Services",
-            item: "https://quantumreachmedia.com/#services",
+            item: "https://quantumreachmedia.com/services",
           },
           {
             "@type": "ListItem",
             position: 3,
             name: service.title,
-            item: `https://quantumreachmedia.com/services/${service.slug}`,
+            item: `https://quantumreachmedia.com/services/${service.canonicalSlug}`,
           },
         ],
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: service.faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.a,
+          },
+        })),
       },
     ],
   };
 
   return (
-    <main className="flex flex-col min-h-screen pt-32 pb-28 relative z-10">
-      {/* Schema.org Service & Breadcrumb JSON-LD */}
+    <main className="relative min-h-screen pt-20 md:pt-24 pb-8 sm:pb-10 overflow-hidden text-purple-950 dark:text-zinc-100 bg-background transition-colors duration-300">
+      {/* Inject Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="container max-w-6xl mx-auto px-6">
+      {/* Ambient Lighting Spots */}
+      <div className="absolute top-10 left-[-10%] w-[550px] h-[550px] bg-purple-500/10 dark:bg-purple-600/15 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-32 right-[-10%] w-[550px] h-[550px] bg-rose-500/10 dark:bg-cyan-600/15 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="container max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         
-        {/* Breadcrumb Navigation */}
-        <div className="mb-8">
-          <Link href="/services" className="text-xs font-mono text-zinc-400 hover:text-saas-cyan transition-colors flex items-center gap-2">
-            ← Back to All Services
-          </Link>
-        </div>
-
-        {/* Hero Section with Motion Graphic */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
-          <div className="space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-saas-cyan/30 bg-saas-cyan/10 text-xs font-mono font-bold uppercase tracking-widest text-saas-cyan">
-              <Sparkles size={14} /> {service.badge}
-            </div>
-            <h1 className="text-4xl md:text-6xl font-sans font-bold tracking-tight text-white leading-tight">
+        {/* 1. HERO SECTION - Dedicated full-screen viewport container with balanced breathing room */}
+        <section className="min-h-[calc(100vh-5rem)] flex flex-col justify-center pt-4 sm:pt-6 pb-12 sm:pb-16">
+          {/* Breadcrumb Navigation */}
+          <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs font-mono text-purple-900/60 dark:text-zinc-400">
+            <Link href="/" className="hover:text-purple-900 dark:hover:text-white transition-colors">
+              Home
+            </Link>
+            <ChevronRight size={12} className="opacity-50" />
+            <Link href="/services" className="hover:text-purple-900 dark:hover:text-white transition-colors">
+              Services
+            </Link>
+            <ChevronRight size={12} className="opacity-50" />
+            <span className="text-purple-950 dark:text-white font-semibold truncate max-w-[200px] sm:max-w-none">
               {service.title}
-            </h1>
-            <p className="text-xl font-medium text-saas-cyan">
-              {service.subtitle}
-            </p>
-            <p className="text-zinc-400 text-base leading-relaxed">
-              {service.description}
-            </p>
-            <div className="pt-4 flex flex-wrap gap-4">
-              <Link
-                href="/contact"
-                className="px-6 py-3 rounded-full bg-white text-black font-bold text-sm hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)] inline-flex items-center gap-2"
-              >
-                <span>Book Strategy Consultation</span>
-                <ArrowRight size={15} />
-              </Link>
-              <Link
-                href="/portfolio"
-                className="px-6 py-3 rounded-full bg-saas-surface border border-white/10 text-white font-bold text-sm hover:bg-white/10 transition-colors"
-              >
-                View Case Studies ↗
-              </Link>
+            </span>
+          </nav>
+
+          {/* Hero Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center my-auto">
+            
+            <div className="lg:col-span-7 space-y-6">
+              {/* H1 Heading with Italic Accent */}
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-sans font-extrabold tracking-tight text-purple-950 dark:text-white leading-[1.15]">
+                {service.heroHeading} <br />
+                <span className="italic font-serif font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-pink-600 to-rose-600 dark:from-saas-cyan dark:via-purple-300 dark:to-pink-400">
+                  {service.heroHeadingAccent}
+                </span>
+              </h1>
+
+              {/* Description */}
+              <p className="text-sm sm:text-base md:text-lg text-purple-950/80 dark:text-zinc-300 leading-relaxed">
+                {service.heroDescription}
+              </p>
+
+              {/* 3 Outcome Checklist Badges / Pills */}
+              <div className="flex flex-wrap gap-2.5 pt-1">
+                {service.heroPills.map((pill, idx) => (
+                  <div
+                    key={idx}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-purple-100/70 dark:bg-white/[0.05] border border-purple-200/70 dark:border-white/10 text-xs font-medium text-purple-950 dark:text-zinc-200"
+                  >
+                    <CheckCircle2 size={13} className="text-emerald-500 flex-shrink-0" />
+                    <span>{pill}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Dual Action Buttons (Strictly NO WhatsApp button) */}
+              <div className="pt-2 flex flex-wrap gap-4 items-center">
+                <Link
+                  href="/contact"
+                  className="px-7 py-3.5 rounded-full bg-purple-950 text-white hover:bg-purple-900 dark:bg-white dark:text-black dark:hover:bg-zinc-200 font-bold text-sm transition-all shadow-[0_4px_20px_rgba(147,51,234,0.25)] inline-flex items-center gap-2 hover:scale-[1.02]"
+                >
+                  <span>Book Strategy Consultation</span>
+                  <ArrowRight size={15} />
+                </Link>
+                <Link
+                  href="/portfolio"
+                  className="px-6 py-3.5 rounded-full bg-card/80 border border-purple-200 dark:border-white/10 text-purple-950 dark:text-white font-bold text-sm hover:bg-purple-100/50 dark:hover:bg-white/10 transition-colors inline-flex items-center gap-2"
+                >
+                  <span>View Case Studies</span>
+                  <span className="text-purple-600 dark:text-saas-cyan">↗</span>
+                </Link>
+              </div>
+
             </div>
-          </div>
 
-          {/* Motion Graphic Client Component */}
-          <div>
-            <ServiceMotionGraphic type={service.motionType} />
-          </div>
-        </div>
+            {/* Visual Operational Architecture Image Preview */}
+            <div className="lg:col-span-5 relative group rounded-3xl overflow-hidden border border-purple-200/80 dark:border-white/15 bg-card/90 dark:bg-zinc-950/85 shadow-[0_10px_40px_rgba(147,51,234,0.08)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.9)] p-2.5">
+              <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-purple-100 dark:bg-zinc-900 border border-purple-100 dark:border-white/10">
+                <Image
+                  src={service.image}
+                  alt={`${service.title} - Operational Architecture Preview`}
+                  fill
+                  priority
+                  className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-transparent to-transparent dark:from-zinc-950/95 dark:via-transparent pointer-events-none" />
+                
+                <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md border border-purple-200 dark:border-white/20 text-[11px] font-mono font-bold text-purple-700 dark:text-saas-cyan flex items-center gap-1.5 pointer-events-none shadow-md">
+                  <Sparkles size={12} />
+                  <span>ACTIVE SPECIFICATION</span>
+                </div>
 
-        {/* Key Performance Metrics Bar */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24">
+                <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs pointer-events-none">
+                  <span className="font-mono text-[10px] uppercase font-bold text-white dark:text-zinc-300 bg-purple-950/90 dark:bg-zinc-950/85 px-2.5 py-1 rounded-full border border-purple-400/30 dark:border-white/10 backdrop-blur-md">
+                    Pune Enterprise Delivery
+                  </span>
+                  <span className="font-mono text-[10px] text-emerald-300 dark:text-emerald-400 font-bold bg-emerald-950/90 px-2 py-0.5 rounded border border-emerald-500/30 backdrop-blur-md">
+                    ● Verified Protocol
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* 2. 4-COLUMN PERFORMANCE METRICS BAR */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-7 sm:p-9 rounded-3xl border border-purple-200/80 dark:border-white/10 bg-purple-50/40 dark:bg-zinc-950/60 backdrop-blur-sm my-16 md:my-20 divide-y sm:divide-y-0 sm:divide-x divide-purple-200/60 dark:divide-white/10 shadow-sm">
           {service.metrics.map((metric, idx) => (
-            <GlowCard key={idx} className="p-8 bg-saas-surface text-center">
-              <div className="text-4xl font-sans font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-saas-cyan to-saas-purple mb-2">
+            <div key={idx} className="text-center px-4 py-2 first:pt-0 sm:first:pt-2">
+              <div className="text-3xl sm:text-4xl font-sans font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-pink-600 to-rose-600 dark:from-saas-cyan dark:via-purple-300 dark:to-pink-400 mb-1.5">
                 {metric.value}
               </div>
-              <div className="text-zinc-400 text-sm font-medium">{metric.label}</div>
-            </GlowCard>
+              <div className="text-purple-950 dark:text-white font-bold text-xs sm:text-sm mb-1 leading-snug">
+                {metric.label}
+              </div>
+              {metric.sublabel && (
+                <div className="text-[11px] font-mono text-purple-900/60 dark:text-zinc-400">
+                  {metric.sublabel}
+                </div>
+              )}
+            </div>
           ))}
         </div>
 
-        {/* Deliverables Checklist Section */}
-        <div className="mb-24">
+        {/* 3. SIX SPECIALIZED FRAMEWORKS (With generous vertical spacing) */}
+        <ServiceFrameworksGrid
+          title={service.frameworksSection.title}
+          titleAccent={service.frameworksSection.titleAccent}
+          subtitle={service.frameworksSection.subtitle}
+          frameworks={service.frameworksSection.frameworks}
+        />
+
+        {/* 4. HIGH-CONTRAST CONFIDENCE SECTION (Deep wine/purple gradient break) */}
+        <ServiceConfidenceSection
+          badge={service.confidenceSection.badge}
+          title={service.confidenceSection.title}
+          titleAccent={service.confidenceSection.titleAccent}
+          subtitle={service.confidenceSection.subtitle}
+          cards={service.confidenceSection.cards}
+          trustRating={service.confidenceSection.trustRating}
+        />
+
+        {/* 5. SPECIFICATION MATRIX & OUTCOMES (Clean centered layout, sidebar removed) */}
+        <ServiceSplitSpecification
+          currentSlug={service.canonicalSlug}
+          narrativeHeading={service.splitSection.narrativeHeading}
+          narrativeHeadingAccent={service.splitSection.narrativeHeadingAccent}
+          narrativeText={service.splitSection.narrativeText}
+          outcomes={service.splitSection.outcomes}
+          specificationTable={service.splitSection.specificationTable}
+          strategyQuote={service.splitSection.strategyQuote}
+          corridorFocus={service.splitSection.corridorFocus}
+        />
+
+        {/* 6. EDITORIAL ASYMMETRICAL PROCESS (Italic numbered list) */}
+        <ServiceEditorialProcess
+          subhead={service.processSection.subhead}
+          title={service.processSection.title}
+          titleAccent={service.processSection.titleAccent}
+          description={service.processSection.description}
+          steps={service.processSection.steps}
+        />
+
+        {/* 7. FREQUENTLY ASKED QUESTIONS (With complete circle numbering) */}
+        <section className="my-16 md:my-20 max-w-4xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <h2 className="text-3xl font-sans font-bold text-white mb-4">Core Deliverables &amp; Architecture</h2>
-            <p className="text-zinc-400 text-sm md:text-base">What you get when Quantum Reach Media engineers your growth strategy.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {service.deliverables.map((item, idx) => (
-              <GlowCard key={idx} className="p-6 bg-saas-surface flex items-start gap-4">
-                <CheckCircle2 className="w-5 h-5 text-saas-cyan flex-shrink-0 mt-0.5" />
-                <span className="text-zinc-200 font-medium text-sm leading-relaxed">{item}</span>
-              </GlowCard>
-            ))}
-          </div>
-        </div>
-
-        {/* Step-by-Step Execution Workflow */}
-        <div className="mb-24">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <h2 className="text-3xl font-sans font-bold text-white mb-4">3-Step Execution Blueprint</h2>
-            <p className="text-zinc-400 text-sm">Our proven roadmap to market dominance.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {service.workflowSteps.map((step, idx) => (
-              <GlowCard key={idx} className="p-8 bg-saas-surface flex flex-col justify-between">
-                <div>
-                  <div className="text-saas-cyan font-mono font-bold text-2xl mb-4">{step.step}</div>
-                  <h3 className="text-xl font-sans font-bold text-white mb-3">{step.title}</h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed">{step.desc}</p>
-                </div>
-              </GlowCard>
-            ))}
-          </div>
-        </div>
-
-        {/* Hyper-Local Pune Corridor Coverage Section */}
-        <div className="mb-24 p-8 sm:p-12 rounded-3xl bg-purple-950/20 border border-purple-500/20 backdrop-blur-xl">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <span className="text-xs font-mono font-bold text-saas-cyan uppercase tracking-widest block mb-2">
-              LOCAL SEARCH FOOTPRINT • PUNE &amp; PCMC
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-sans font-bold text-white mb-3">
-              Deploying {service.title} Across Key Pune Corridors
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-sans font-extrabold text-purple-950 dark:text-white tracking-tight mb-3">
+              Frequently Asked Questions &mdash;{" "}
+              <span className="italic font-serif font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-pink-600 to-rose-600 dark:from-saas-cyan dark:via-purple-300 dark:to-pink-400">
+                Clarity &amp; Transparency
+              </span>
             </h2>
-            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Our dedicated strategy desks deliver localized search dominance and paid media scaling across Pune&apos;s premier commercial and industrial hubs:
+            <p className="text-purple-950/75 dark:text-zinc-400 text-sm sm:text-base">
+              Clear, transparent answers about deploying {service.title} with Quantum Reach Media in Pune.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center">
-            {[
-              { name: "Hinjawadi IT Park", desc: "SaaS & Tech Corridors" },
-              { name: "Baner & Balewadi", desc: "High-Growth Startups" },
-              { name: "Viman Nagar", desc: "Clinics & Professional" },
-              { name: "Kharadi EON", desc: "Enterprise & IT Parks" },
-              { name: "Wadgaon Sheri", desc: "HQ & Local Services" },
-              { name: "Kothrud & Deccan", desc: "Retail & Institutions" },
-            ].map((hub, i) => (
-              <div key={i} className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex flex-col items-center justify-center">
-                <MapPin size={16} className="text-saas-cyan mb-1.5" />
-                <span className="text-xs font-bold text-white mb-1">{hub.name}</span>
-                <span className="text-[10px] text-zinc-400 font-medium">{hub.desc}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+          <ServiceFaqAccordion faqs={service.faqs} serviceTitle={service.title} />
+        </section>
 
-        {/* Bottom Call to Action */}
-        <div className="text-center bg-gradient-to-r from-saas-cyan/10 via-saas-purple/10 to-saas-cyan/10 border border-white/10 rounded-3xl p-10 backdrop-blur-xl">
-          <h2 className="text-3xl font-sans font-bold text-white mb-4">Ready to deploy {service.title}?</h2>
-          <p className="text-zinc-400 max-w-xl mx-auto mb-8 text-sm md:text-base">
-            Partner with Pune&apos;s premier SEO &amp; digital marketing agency to outrank competitors on Google, ChatGPT, and Gemini.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white text-black font-bold text-sm hover:bg-zinc-200 transition-colors shadow-[0_0_25px_rgba(255,255,255,0.3)]"
-          >
-            Schedule Your Pune Growth Audit
-          </Link>
-        </div>
+        {/* 8. SIMPLIFIED HIGH-IMPACT CONVERSION CALL TO ACTION BANNER */}
+        <section className="relative mt-16 md:mt-20 mb-6 md:mb-8 overflow-hidden rounded-3xl p-8 sm:p-12 lg:p-14 border border-purple-400/40 dark:border-purple-500/30 bg-gradient-to-b from-purple-100/95 via-purple-50/70 to-white/95 dark:from-[#1b062c] dark:via-[#13031f] dark:to-[#0a0112] shadow-2xl">
+          {/* Subtle Ambient Radial Glows */}
+          <div className="absolute -top-24 -left-24 w-80 h-80 bg-purple-500/20 dark:bg-purple-600/25 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute -bottom-24 -right-24 w-80 h-80 bg-pink-500/20 dark:bg-rose-600/20 rounded-full blur-[100px] pointer-events-none" />
+
+          <div className="relative z-10 max-w-3xl mx-auto text-center space-y-6">
+            {/* Main Headline */}
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-sans font-extrabold text-purple-950 dark:text-white tracking-tight leading-[1.15]">
+              Ready to Make Your Digital Presence{" "}
+              <span className="italic font-serif font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-pink-600 to-rose-600 dark:from-saas-cyan dark:via-purple-300 dark:to-pink-400">
+                Work Harder in Pune?
+              </span>
+            </h2>
+
+            {/* Narrative description */}
+            <p className="text-sm sm:text-base md:text-lg text-purple-950/80 dark:text-zinc-300 leading-relaxed max-w-2xl mx-auto">
+              Partner with Pune&apos;s premier SEO &amp; digital growth engineering team to outrank entrenched competitors on Google, ChatGPT, and Gemini.
+            </p>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+              <Link
+                href="/contact"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-purple-950 text-white hover:bg-purple-900 dark:bg-white dark:text-black dark:hover:bg-zinc-200 font-bold text-sm transition-all shadow-[0_4px_25px_rgba(147,51,234,0.3)] hover:scale-[1.02]"
+              >
+                <span>Schedule Your Pune Growth Audit</span>
+                <ArrowRight size={15} />
+              </Link>
+
+              <Link
+                href="/services"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-white/80 dark:bg-zinc-900/80 border border-purple-300 dark:border-white/15 text-purple-950 dark:text-white font-bold text-sm hover:bg-purple-100/70 dark:hover:bg-white/10 transition-colors shadow-sm"
+              >
+                <span>Explore All 12 Services</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+        </section>
 
       </div>
     </main>

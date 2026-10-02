@@ -680,6 +680,13 @@ export function AboutPageView() {
                 </Link>
 
                 <Link
+                  href="/services"
+                  className="px-7 py-3 rounded-full bg-purple-600/70 hover:bg-purple-600 border border-purple-400/40 text-white font-bold text-xs sm:text-sm transition-all shadow-sm"
+                >
+                  Explore 12 Growth Protocols ↗
+                </Link>
+
+                <Link
                   href="/portfolio"
                   className="px-7 py-3 rounded-full bg-zinc-900/90 border border-white/15 text-white hover:bg-white/10 font-bold text-xs sm:text-sm transition-all shadow-sm"
                 >

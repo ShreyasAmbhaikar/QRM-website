@@ -345,10 +345,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {/* Strategic Internal Links Block */}
         <div className="mt-14 p-6 rounded-2xl bg-purple-950/20 border border-purple-500/20">
-          <span className="text-xs font-mono font-bold text-saas-cyan uppercase tracking-wider block mb-2">
-            RECOMMENDED GROWTH WORKFLOWS
-          </span>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <span className="text-xs font-mono font-bold text-saas-cyan uppercase tracking-wider block">
+              RECOMMENDED GROWTH PROTOCOLS
+            </span>
+            <Link href="/services" className="text-xs font-bold text-purple-400 hover:text-saas-cyan transition-colors flex items-center gap-1 group">
+              <span>View All 12 Growth Protocols</span>
+              <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
             <Link href="/services/local-seo-gmb" className="p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-saas-cyan/40 transition-colors group">
               <span className="text-xs font-bold text-white group-hover:text-saas-cyan transition-colors block mb-1">Local SEO &amp; GMB</span>
               <span className="text-[11px] text-zinc-400 block">Dominate Pune 3-Pack</span>
