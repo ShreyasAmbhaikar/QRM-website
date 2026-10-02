@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -21,16 +22,23 @@ import {
   Megaphone, 
   BarChart3,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  Bot
 } from "lucide-react";
 
 export function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const servicesDropdownRef = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const isLinkActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(href + "/");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -155,6 +163,12 @@ export function Navbar() {
           icon: <Megaphone className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
         },
         {
+          title: "AEO / GEO Optimization",
+          desc: "Rank in ChatGPT & Gemini",
+          href: "/services/aeo-geo-optimization",
+          icon: <Bot className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+        },
+        {
           title: "Analytics & Tracking",
           desc: "Server-side GTM & GA4 attribution",
           href: "/services/analytics-tracking",
@@ -165,17 +179,17 @@ export function Navbar() {
   ];
 
   return (
-    <header className="fixed top-0 w-full z-50 pt-6 px-4 md:px-0 pointer-events-none">
+    <header className="fixed top-0 w-full z-50 pt-4 sm:pt-6 px-3 sm:px-6 pointer-events-none">
       <div
         className={cn(
-          "mx-auto transition-all duration-250 border pointer-events-auto flex items-center justify-between relative",
+          "mx-auto transition-all duration-300 border pointer-events-auto flex items-center justify-between relative",
           scrolled
-            ? "max-w-4xl rounded-full bg-card/90 dark:bg-saas-surface/85 backdrop-blur-xl border-purple-200 dark:border-white/15 shadow-[0_10px_30px_rgba(147,51,234,0.12)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.8)] px-5 py-2.5"
-            : "max-w-6xl rounded-full bg-transparent border-transparent px-6 py-3"
+            ? "w-full max-w-5xl xl:max-w-6xl rounded-full bg-card/90 dark:bg-saas-surface/85 backdrop-blur-xl border-purple-200 dark:border-white/15 shadow-[0_10px_30px_rgba(147,51,234,0.12)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.8)] px-4 sm:px-6 py-2 sm:py-2.5"
+            : "w-full max-w-6xl rounded-full bg-transparent border-transparent px-4 sm:px-6 py-3"
         )}
       >
-        {/* Brand Logo Link - Hide text on smallest screens to prevent double logo issues */}
-        <Link href="/" className="flex items-center gap-3.5 sm:gap-4 group flex-shrink-0">
+        {/* Brand Logo Link - Clean responsive logo and text */}
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0">
           <Image 
             src="/qrm-logo-transparent.webp" 
             alt="QRM Logo" 
@@ -183,12 +197,12 @@ export function Navbar() {
             height={18} 
             className={cn(
               "w-auto object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-[0_2px_8px_rgba(126,34,206,0.15)] dark:drop-shadow-[0_0_12px_rgba(168,85,247,0.45)] dark:brightness-110",
-              scrolled ? "h-4.5" : "h-5"
+              scrolled ? "h-4 sm:h-4.5" : "h-4.5 sm:h-5"
             )}
             priority
           />
-          {/* Desktop/Tablet name */}
-          <span className="font-sans font-extrabold text-sm sm:text-base tracking-tight text-purple-950 dark:text-white hidden sm:inline-block">
+          {/* Brand Name: Shown on larger displays to guarantee no overlapping */}
+          <span className="font-sans font-extrabold text-sm sm:text-base tracking-tight text-purple-950 dark:text-white hidden lg:inline-block whitespace-nowrap">
             Quantum Reach{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] to-[#7E22CE] dark:from-[#38BDF8] dark:to-[#A855F7]">
               Media
@@ -197,17 +211,27 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-5 lg:gap-7 mx-auto">
+        <nav className="hidden md:flex items-center gap-1.5 lg:gap-2 xl:gap-3 shrink-0">
           <Link 
             href="/" 
-            className="text-sm font-bold text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white transition-colors"
+            className={cn(
+              "text-xs lg:text-sm font-bold transition-all whitespace-nowrap px-3 py-1.5 rounded-full",
+              isLinkActive("/")
+                ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] dark:shadow-[0_0_15px_rgba(56,189,248,0.25)]"
+                : "text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white hover:bg-purple-100/50 dark:hover:bg-white/5 border border-transparent"
+            )}
           >
             Home
           </Link>
 
           <Link 
             href="/about" 
-            className="text-sm font-bold text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white transition-colors"
+            className={cn(
+              "text-xs lg:text-sm font-bold transition-all whitespace-nowrap px-3 py-1.5 rounded-full",
+              isLinkActive("/about")
+                ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] dark:shadow-[0_0_15px_rgba(56,189,248,0.25)]"
+                : "text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white hover:bg-purple-100/50 dark:hover:bg-white/5 border border-transparent"
+            )}
           >
             About Us
           </Link>
@@ -222,16 +246,16 @@ export function Navbar() {
             <button
               onClick={() => setServicesOpen(!servicesOpen)}
               className={cn(
-                "inline-flex items-center gap-1.5 text-sm font-bold transition-colors py-1 cursor-pointer",
-                servicesOpen
-                  ? "text-purple-700 dark:text-saas-cyan"
-                  : "text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white"
+                "inline-flex items-center gap-1.5 text-xs lg:text-sm font-bold transition-all py-1.5 px-3 rounded-full cursor-pointer whitespace-nowrap",
+                pathname.startsWith("/services") || servicesOpen
+                  ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] dark:shadow-[0_0_15px_rgba(56,189,248,0.25)]"
+                  : "text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white hover:bg-purple-100/50 dark:hover:bg-white/5 border border-transparent"
               )}
               aria-expanded={servicesOpen}
             >
               <span>Our Services</span>
               <ChevronDown 
-                size={14} 
+                size={13} 
                 className={cn(
                   "transition-transform duration-200",
                   servicesOpen ? "rotate-180 text-purple-700 dark:text-saas-cyan" : ""
@@ -278,10 +302,15 @@ export function Navbar() {
 
                 {/* Bottom Highlight Bar in Mega Menu */}
                 <div className="mt-5 pt-4 border-t border-purple-100 dark:border-white/10 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2 text-purple-950/80 dark:text-zinc-300 font-medium">
-                    <Sparkles size={14} className="text-purple-600 dark:text-saas-cyan" />
-                    <span>Looking for custom multi-channel growth architecture?</span>
-                  </div>
+                  <Link
+                    href="/services"
+                    onClick={() => setServicesOpen(false)}
+                    className="inline-flex items-center gap-1.5 font-bold px-3 py-1.5 rounded-full bg-purple-100 dark:bg-white/10 hover:bg-purple-200 dark:hover:bg-white/15 text-purple-900 dark:text-saas-cyan transition-colors"
+                  >
+                    <Sparkles size={13} className="text-purple-600 dark:text-saas-cyan" />
+                    <span>View All 12 Services Hub</span>
+                    <ArrowRight size={12} />
+                  </Link>
                   <Link
                     href="/contact"
                     onClick={() => setServicesOpen(false)}
@@ -297,32 +326,47 @@ export function Navbar() {
 
           <Link 
             href="/portfolio" 
-            className="text-sm font-bold text-purple-700 dark:text-saas-cyan hover:text-purple-950 dark:hover:text-white transition-colors"
+            className={cn(
+              "text-xs lg:text-sm font-bold transition-all whitespace-nowrap px-3 py-1.5 rounded-full",
+              isLinkActive("/portfolio")
+                ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] dark:shadow-[0_0_15px_rgba(56,189,248,0.25)]"
+                : "text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white hover:bg-purple-100/50 dark:hover:bg-white/5 border border-transparent"
+            )}
           >
             Portfolio
           </Link>
 
           <Link 
             href="/blog" 
-            className="text-sm font-bold text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white transition-colors"
+            className={cn(
+              "text-xs lg:text-sm font-bold transition-all whitespace-nowrap px-3 py-1.5 rounded-full",
+              isLinkActive("/blog")
+                ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] dark:shadow-[0_0_15px_rgba(56,189,248,0.25)]"
+                : "text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white hover:bg-purple-100/50 dark:hover:bg-white/5 border border-transparent"
+            )}
           >
             Blog
           </Link>
 
           <Link 
             href="/contact" 
-            className="text-sm font-bold text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white transition-colors"
+            className={cn(
+              "text-xs lg:text-sm font-bold transition-all whitespace-nowrap px-3 py-1.5 rounded-full",
+              isLinkActive("/contact")
+                ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] dark:shadow-[0_0_15px_rgba(56,189,248,0.25)]"
+                : "text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white hover:bg-purple-100/50 dark:hover:bg-white/5 border border-transparent"
+            )}
           >
-            Contact
+            Contact Us
           </Link>
         </nav>
 
         {/* Desktop Actions */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2.5 sm:gap-3 shrink-0">
           <ThemeToggle />
           <Link 
             href="/contact" 
-            className="px-4 py-2 bg-purple-950 text-white hover:bg-purple-900 dark:bg-white dark:text-black dark:hover:bg-zinc-200 text-xs font-bold rounded-full transition-colors shadow-sm"
+            className="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-purple-950 text-white hover:bg-purple-900 dark:bg-white dark:text-black dark:hover:bg-zinc-200 text-xs font-bold rounded-full transition-colors shadow-sm whitespace-nowrap"
           >
             Get Started
           </Link>
@@ -339,11 +383,16 @@ export function Navbar() {
 
         {/* Mobile Navigation Dropdown Drawer */}
         {isOpen && (
-          <div className="absolute top-[calc(100%+12px)] left-4 right-4 p-5 rounded-3xl border border-purple-200 dark:border-white/10 bg-card/95 dark:bg-saas-surface/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(147,51,234,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col gap-3 animate-in fade-in slide-in-from-top-4 duration-300 md:hidden pointer-events-auto max-h-[80vh] overflow-y-auto">
+          <div className="absolute top-[calc(100%+12px)] left-4 right-4 p-5 rounded-3xl border border-purple-200 dark:border-white/10 bg-card/95 dark:bg-saas-surface/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(147,51,234,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col gap-2.5 animate-in fade-in slide-in-from-top-4 duration-300 md:hidden pointer-events-auto max-h-[80vh] overflow-y-auto">
             <Link 
               href="/" 
               onClick={() => setIsOpen(false)} 
-              className="text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1.5 transition-colors"
+              className={cn(
+                "text-sm font-bold py-2 px-3 rounded-xl transition-all",
+                isLinkActive("/")
+                  ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/30"
+                  : "text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white"
+              )}
             >
               Home
             </Link>
@@ -351,7 +400,12 @@ export function Navbar() {
             <Link 
               href="/about" 
               onClick={() => setIsOpen(false)} 
-              className="text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1.5 transition-colors"
+              className={cn(
+                "text-sm font-bold py-2 px-3 rounded-xl transition-all",
+                isLinkActive("/about")
+                  ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/30"
+                  : "text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white"
+              )}
             >
               About Us
             </Link>
@@ -360,7 +414,12 @@ export function Navbar() {
             <div className="flex flex-col">
               <button
                 onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                className="flex items-center justify-between text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1.5 text-left transition-colors"
+                className={cn(
+                  "flex items-center justify-between text-sm font-bold py-2 px-3 rounded-xl text-left transition-colors",
+                  pathname.startsWith("/services")
+                    ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/30"
+                    : "text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white"
+                )}
               >
                 <span>Our Services</span>
                 <ChevronDown 
@@ -374,6 +433,17 @@ export function Navbar() {
 
               {mobileServicesOpen && (
                 <div className="pl-3 pr-1 py-2 flex flex-col gap-3 my-1 border-l-2 border-purple-200 dark:border-white/10">
+                  <Link
+                    href="/services"
+                    onClick={() => {
+                      setIsOpen(false);
+                      setMobileServicesOpen(false);
+                    }}
+                    className="text-xs font-bold text-purple-700 dark:text-saas-cyan flex items-center justify-between pb-1.5 mb-1 border-b border-purple-200/50 dark:border-white/10"
+                  >
+                    <span>View All 12 Services Hub</span>
+                    <ArrowRight size={12} />
+                  </Link>
                   {serviceCategories.map((category, catIdx) => (
                     <div key={catIdx} className="space-y-1.5">
                       <span className="text-[10px] font-mono font-bold text-purple-800 dark:text-saas-cyan uppercase">
@@ -388,9 +458,17 @@ export function Navbar() {
                               setIsOpen(false);
                               setMobileServicesOpen(false);
                             }}
-                            className="text-xs font-semibold text-purple-950/70 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white py-1 flex items-center gap-2"
+                            className={cn(
+                              "text-xs font-semibold py-1 flex items-center gap-2 transition-colors",
+                              pathname === item.href
+                                ? "text-purple-700 dark:text-saas-cyan font-bold"
+                                : "text-purple-950/70 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white"
+                            )}
                           >
-                            <span className="w-1.5 h-1.5 rounded-full bg-purple-500/70 shrink-0" />
+                            <span className={cn(
+                              "w-1.5 h-1.5 rounded-full shrink-0",
+                              pathname === item.href ? "bg-purple-600 dark:bg-saas-cyan" : "bg-purple-500/70"
+                            )} />
                             <span>{item.title}</span>
                           </Link>
                         ))}
@@ -404,7 +482,12 @@ export function Navbar() {
             <Link 
               href="/portfolio" 
               onClick={() => setIsOpen(false)} 
-              className="text-sm font-bold text-purple-700 dark:text-saas-cyan hover:text-purple-950 dark:hover:text-white py-1.5 transition-colors"
+              className={cn(
+                "text-sm font-bold py-2 px-3 rounded-xl transition-all",
+                isLinkActive("/portfolio")
+                  ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/30"
+                  : "text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white"
+              )}
             >
               Portfolio
             </Link>
@@ -412,7 +495,12 @@ export function Navbar() {
             <Link 
               href="/blog" 
               onClick={() => setIsOpen(false)} 
-              className="text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1.5 transition-colors"
+              className={cn(
+                "text-sm font-bold py-2 px-3 rounded-xl transition-all",
+                isLinkActive("/blog")
+                  ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/30"
+                  : "text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white"
+              )}
             >
               Blog
             </Link>
@@ -420,9 +508,14 @@ export function Navbar() {
             <Link 
               href="/contact" 
               onClick={() => setIsOpen(false)} 
-              className="text-sm font-bold text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white py-1.5 transition-colors"
+              className={cn(
+                "text-sm font-bold py-2 px-3 rounded-xl transition-all",
+                isLinkActive("/contact")
+                  ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/30"
+                  : "text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white"
+              )}
             >
-              Contact
+              Contact Us
             </Link>
 
             <div className="h-px bg-purple-100 dark:bg-white/10 my-1" />

@@ -54,20 +54,23 @@ export function TechStackSection() {
   return (
     <section 
       ref={sectionRef} 
-      className="relative w-full h-[760px] sm:h-[820px] md:h-[860px] bg-[#000000] overflow-hidden select-none"
+      className="relative w-full h-[800px] sm:h-[860px] md:h-[900px] bg-[#000000] overflow-hidden select-none"
     >
-      {/* 1. Site-standard chip and section heading */}
-      <div className="absolute top-[12%] left-1/2 -translate-x-1/2 z-10 w-full text-center px-4">
+      {/* 1. Site-standard chip, section heading, and description */}
+      <div className="absolute top-[6%] sm:top-[7%] left-1/2 -translate-x-1/2 z-10 w-full text-center px-4 max-w-2xl">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-saas-cyan/30 bg-saas-cyan/10 text-[11px] font-mono font-bold uppercase tracking-widest text-saas-cyan backdrop-blur-md shadow-[0_0_15px_rgba(168,85,247,0.18)]">
           <Layers3 size={13} /> SEO &amp; Development Toolkit
         </div>
         <h2 className="mt-3 text-3xl md:text-4xl font-sans font-bold tracking-tight text-white">
           Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-saas-cyan via-purple-300 to-saas-purple">Tech Stack</span>
         </h2>
+        <p className="mt-3 text-xs sm:text-sm text-zinc-400 font-medium leading-relaxed max-w-lg mx-auto">
+          We leverage enterprise-grade search diagnostics, real-time analytics platforms, and modern web frameworks to engineer high-ranking, lightning-fast digital solutions.
+        </p>
       </div>
 
       {/* 2. Icon-only four-by-four matrix with hover and focus labels */}
-      <div className="absolute top-[24%] sm:top-[23%] left-1/2 -translate-x-1/2 z-10 grid w-[92%] max-w-[820px] grid-cols-4 place-items-center gap-x-5 sm:gap-x-12 gap-y-9 sm:gap-y-14 px-2">
+      <div className="absolute top-[28%] sm:top-[26%] left-1/2 -translate-x-1/2 z-10 grid w-[92%] max-w-[820px] grid-cols-4 place-items-center gap-x-5 sm:gap-x-12 gap-y-8 sm:gap-y-12 px-2">
         {stackTools.map(({ name, asset, invert }) => (
           <div
             key={name}

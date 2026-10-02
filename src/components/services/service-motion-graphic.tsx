@@ -36,7 +36,7 @@ export function ServiceMotionGraphic({ type }: ServiceMotionGraphicProps) {
               <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
               <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
             </div>
-            <span className="text-[10px] text-saas-purple">page.tsx • 100/100</span>
+            <span className="text-[10px] text-saas-purple">page.tsx • 90+</span>
           </div>
           <div className="text-saas-purple font-bold">&lt;NextEngine&gt;</div>
           <div className="pl-4 text-zinc-400">&lt;SEOHead title="Pune SEO Agency" /&gt;</div>

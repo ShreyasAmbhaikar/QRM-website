@@ -1,7 +1,8 @@
 import { GlowCard } from "@/components/ui/glow-card";
-import { CheckCircle2, Sparkles } from "lucide-react";
+import { CheckCircle2, Sparkles, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { ServiceMotionGraphic } from "@/components/services/service-motion-graphic";
+import type { Metadata } from "next";
 
 interface ServiceDetail {
   slug: string;
@@ -47,27 +48,27 @@ const serviceDetailsMap: Record<string, ServiceDetail> = {
   },
   "seo-web-development": {
     slug: "seo-web-development",
-    badge: "100/100 LIGHTHOUSE PERFORMANCE",
+    badge: "90+ LIGHTHOUSE PERFORMANCE",
     title: "SEO Website Development",
     subtitle: "High-Performance Next.js & React Architectures",
     tagline: "Sub-second load times engineered for maximum search engine crawlability.",
     description: "We build custom, lightning-fast web applications using Next.js, Tailwind CSS, and edge CDN architecture. Every line of code is structured for sub-500ms response times and perfect mobile Core Web Vitals.",
     metrics: [
-      { value: "100/100", label: "Lighthouse Performance" },
+      { value: "90+", label: "PageSpeed Performance" },
       { value: "< 0.5s", label: "Largest Contentful Paint (LCP)" },
       { value: "+180%", label: "Mobile Conversion Rate" }
     ],
     deliverables: [
       "Custom Next.js 16 App Router & React Architecture",
       "Sub-Second Edge Rendering & Global CDN Deployment",
-      "100/100 Core Web Vitals (LCP, INP, CLS) Guarantee",
+      "90+ Core Web Vitals Guarantee",
       "Dynamic OpenGraph & Automated Meta Architecture",
       "Mobile-First Glassmorphic & Responsive UI/UX"
     ],
     workflowSteps: [
       { step: "01", title: "UI/UX & Codebase Blueprinting", desc: "Designing high-conversion layouts with strict semantic HTML and zero bloat." },
       { step: "02", title: "Next.js Edge Engineering", desc: "Building modular React components optimized for instant server rendering." },
-      { step: "03", title: "Performance & CWV Tuning", desc: "Achieving 100/100 speed scores and deploying on global edge networks." }
+      { step: "03", title: "Performance & CWV Tuning", desc: "Achieving 90+ speed scores and deploying on global edge networks." }
     ],
     accentColor: "from-saas-purple to-fuchsia-500",
     motionType: "code"
@@ -344,6 +345,45 @@ const serviceDetailsMap: Record<string, ServiceDetail> = {
   }
 };
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const service = serviceDetailsMap[resolvedParams.slug] || serviceDetailsMap["local-seo-gmb"];
+
+  return {
+    title: `${service.title} in Pune | Quantum Reach Media`,
+    description: `${service.description} Engineered for #1 Google rankings, Google Map Pack dominance, and high ROI in Pune, Maharashtra.`,
+    alternates: {
+      canonical: `https://quantumreachmedia.com/services/${service.slug}`,
+    },
+    openGraph: {
+      title: `${service.title} in Pune | Quantum Reach Media`,
+      description: service.description,
+      url: `https://quantumreachmedia.com/services/${service.slug}`,
+      siteName: "Quantum Reach Media",
+      locale: "en_IN",
+      type: "website",
+      images: [
+        {
+          url: "/qrm-logo-transparent.webp",
+          width: 1200,
+          height: 630,
+          alt: `${service.title} - Best SEO & Digital Marketing Agency in Pune`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${service.title} in Pune | Quantum Reach Media`,
+      description: service.description,
+      images: ["/qrm-logo-transparent.webp"],
+    },
+  };
+}
+
 export function generateStaticParams() {
   return [
     { slug: "local-seo-gmb" },
@@ -365,13 +405,68 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   const resolvedParams = await params;
   const service = serviceDetailsMap[resolvedParams.slug] || serviceDetailsMap["local-seo-gmb"];
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": `https://quantumreachmedia.com/services/${service.slug}#service`,
+        name: service.title,
+        description: service.description,
+        serviceType: service.badge,
+        url: `https://quantumreachmedia.com/services/${service.slug}`,
+        provider: {
+          "@id": "https://quantumreachmedia.com/#localbusiness",
+        },
+        areaServed: [
+          { "@type": "City", "name": "Pune" },
+          { "@type": "City", "name": "Baner" },
+          { "@type": "City", "name": "Hinjawadi" },
+          { "@type": "City", "name": "Viman Nagar" },
+          { "@type": "City", "name": "Kharadi" },
+          { "@type": "City", "name": "Wadgaon Sheri" },
+          { "@type": "City", "name": "Kothrud" },
+        ],
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://quantumreachmedia.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Services",
+            item: "https://quantumreachmedia.com/#services",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: service.title,
+            item: `https://quantumreachmedia.com/services/${service.slug}`,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <main className="flex flex-col min-h-screen pt-32 pb-28 relative z-10">
+      {/* Schema.org Service & Breadcrumb JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+
       <div className="container max-w-6xl mx-auto px-6">
         
         {/* Breadcrumb Navigation */}
         <div className="mb-8">
-          <Link href="/#services" className="text-xs font-mono text-zinc-400 hover:text-saas-cyan transition-colors flex items-center gap-2">
+          <Link href="/services" className="text-xs font-mono text-zinc-400 hover:text-saas-cyan transition-colors flex items-center gap-2">
             ← Back to All Services
           </Link>
         </div>
@@ -393,10 +488,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             </p>
             <div className="pt-4 flex flex-wrap gap-4">
               <Link
-                href="/#about"
-                className="px-6 py-3 rounded-full bg-white text-black font-bold text-sm hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                href="/contact"
+                className="px-6 py-3 rounded-full bg-white text-black font-bold text-sm hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)] inline-flex items-center gap-2"
               >
-                Schedule Strategy Session
+                <span>Book Strategy Consultation</span>
+                <ArrowRight size={15} />
               </Link>
               <Link
                 href="/portfolio"
@@ -428,7 +524,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         {/* Deliverables Checklist Section */}
         <div className="mb-24">
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <h2 className="text-3xl font-sans font-bold text-white mb-4">Core Deliverables & Architecture</h2>
+            <h2 className="text-3xl font-sans font-bold text-white mb-4">Core Deliverables &amp; Architecture</h2>
             <p className="text-zinc-400 text-sm md:text-base">What you get when Quantum Reach Media engineers your growth strategy.</p>
           </div>
 
@@ -462,17 +558,49 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
 
+        {/* Hyper-Local Pune Corridor Coverage Section */}
+        <div className="mb-24 p-8 sm:p-12 rounded-3xl bg-purple-950/20 border border-purple-500/20 backdrop-blur-xl">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <span className="text-xs font-mono font-bold text-saas-cyan uppercase tracking-widest block mb-2">
+              LOCAL SEARCH FOOTPRINT • PUNE &amp; PCMC
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-sans font-bold text-white mb-3">
+              Deploying {service.title} Across Key Pune Corridors
+            </h2>
+            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
+              Our dedicated strategy desks deliver localized search dominance and paid media scaling across Pune&apos;s premier commercial and industrial hubs:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center">
+            {[
+              { name: "Hinjawadi IT Park", desc: "SaaS & Tech Corridors" },
+              { name: "Baner & Balewadi", desc: "High-Growth Startups" },
+              { name: "Viman Nagar", desc: "Clinics & Professional" },
+              { name: "Kharadi EON", desc: "Enterprise & IT Parks" },
+              { name: "Wadgaon Sheri", desc: "HQ & Local Services" },
+              { name: "Kothrud & Deccan", desc: "Retail & Institutions" },
+            ].map((hub, i) => (
+              <div key={i} className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex flex-col items-center justify-center">
+                <MapPin size={16} className="text-saas-cyan mb-1.5" />
+                <span className="text-xs font-bold text-white mb-1">{hub.name}</span>
+                <span className="text-[10px] text-zinc-400 font-medium">{hub.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Bottom Call to Action */}
         <div className="text-center bg-gradient-to-r from-saas-cyan/10 via-saas-purple/10 to-saas-cyan/10 border border-white/10 rounded-3xl p-10 backdrop-blur-xl">
           <h2 className="text-3xl font-sans font-bold text-white mb-4">Ready to deploy {service.title}?</h2>
           <p className="text-zinc-400 max-w-xl mx-auto mb-8 text-sm md:text-base">
-            Partner with Pune's premier SEO agency to outrank competitors on Google, ChatGPT, and Gemini.
+            Partner with Pune&apos;s premier SEO &amp; digital marketing agency to outrank competitors on Google, ChatGPT, and Gemini.
           </p>
           <Link
-            href="/#about"
+            href="/contact"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white text-black font-bold text-sm hover:bg-zinc-200 transition-colors shadow-[0_0_25px_rgba(255,255,255,0.3)]"
           >
-            Get In Touch With The Architects
+            Schedule Your Pune Growth Audit
           </Link>
         </div>
 

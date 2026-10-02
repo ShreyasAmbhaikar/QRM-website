@@ -6,14 +6,23 @@ export function Footer() {
   const gmbMapUrl = "https://www.google.com/maps/place/Quantum+Reach+Media,+Pune/data=!4m2!3m1!1s0x0:0xe9c0270609fb909b?sa=X&ved=1t:2428&hl=en&ictx=111";
 
   return (
-    <footer className="bg-card dark:bg-black border-t border-purple-200/50 dark:border-white/10 pt-16 pb-12 relative z-10 transition-colors">
-      <div className="container max-w-7xl mx-auto px-6">
+    <footer className="relative z-10 pt-16 pb-12 overflow-hidden transition-colors bg-gradient-to-b from-purple-50/80 via-purple-100/40 to-background dark:from-[#0d071d] dark:via-[#080413] dark:to-[#030107]">
+      {/* Luminous Top Gradient Horizon Divider Line */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-purple-500/70 via-saas-cyan/60 to-transparent shadow-[0_0_15px_rgba(168,85,247,0.6)]" />
+      
+      {/* Ambient Top Glow Halo */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 max-w-4xl h-32 bg-gradient-to-b from-purple-600/20 via-purple-900/10 to-transparent blur-3xl pointer-events-none" />
+
+      {/* Subtle Grid Texture for Structural Depth */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none opacity-40 dark:opacity-60" />
+
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6">
         
-        {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12 mb-14">
+        {/* Main Footer Grid - Symmetrically Balanced 3-Column Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 mb-12">
           
-          {/* Column 1: Brand & Mission & Socials (5 Cols) */}
-          <div className="md:col-span-5 space-y-6">
+          {/* Column 1: Brand & Mission & Socials (4 Cols) */}
+          <div className="md:col-span-4 space-y-5">
             <Link href="/" className="inline-flex items-center gap-3.5 group">
               <Image 
                 src="/qrm-logo-transparent.webp" 
@@ -30,7 +39,7 @@ export function Footer() {
               </span>
             </Link>
             
-            <p className="text-purple-950/80 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed font-medium max-w-md">
+            <p className="text-purple-950/80 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed font-medium max-w-[275px]">
               Architecting high-performance digital experiences, local map pack dominance, and Generative Engine Optimization (GEO/AEO) for ambitious brands.
             </p>
 
@@ -108,8 +117,8 @@ export function Footer() {
             </div>
           </div>
           
-          {/* Column 2: Navigation Links (3 Cols) */}
-          <div className="md:col-span-3 space-y-4">
+          {/* Column 2: Navigation Links (4 Cols, centered with deliberate left padding) */}
+          <div className="md:col-span-4 md:pl-8 lg:pl-14 space-y-4">
             <h4 className="font-bold text-zinc-900 dark:text-white text-xs font-mono uppercase tracking-wider">
               Navigation
             </h4>
@@ -125,8 +134,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#services" className="text-purple-950/70 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-saas-cyan transition-colors font-medium">
-                  Services
+                <Link href="/services" className="text-purple-950/70 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-saas-cyan transition-colors font-medium">
+                  Our Services
                 </Link>
               </li>
               <li>
@@ -148,9 +157,9 @@ export function Footer() {
           </div>
 
           {/* Column 3: Pune Office & Contact (4 Cols) */}
-          <div className="md:col-span-4 space-y-4">
+          <div className="md:col-span-4 md:pl-2 lg:pl-6 space-y-4">
             <h4 className="font-bold text-zinc-900 dark:text-white text-xs font-mono uppercase tracking-wider">
-              Pune Office & Contact
+              Pune Office & Contact Us
             </h4>
             
             <div className="text-xs text-purple-950/80 dark:text-zinc-400 leading-relaxed space-y-3.5 font-medium">

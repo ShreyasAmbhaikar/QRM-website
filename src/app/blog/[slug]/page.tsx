@@ -1,7 +1,8 @@
 import { GlowCard } from "@/components/ui/glow-card";
-import { Clock, ArrowLeft, Share2, Sparkles, CheckCircle2, Bookmark, User } from "lucide-react";
+import { Clock, ArrowLeft, Share2, Sparkles, CheckCircle2, Bookmark, User, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 
 interface BlogPostDetail {
   slug: string;
@@ -30,9 +31,9 @@ const blogDetailsMap: Record<string, BlogPostDetail> = {
     readTime: "6 min read",
     author: {
       name: "Tushar Tanpure",
-      role: "Co-Founder & CTO",
+      role: "Founder & Marketing Manager",
       avatar: "/tushar.jpg",
-      bio: "Technical SEO Architect & Systems Engineer specializing in Next.js edge performance and LLM search optimization."
+      bio: "Founder & Marketing Manager at Quantum Reach Media, driving client acquisition, high-ROI ad funnels, and marketing growth."
     },
     keyTakeaways: [
       "Google's 2026 Core Algorithm weights verified Schema JSON-LD graphs over external anchor text.",
@@ -63,9 +64,9 @@ const blogDetailsMap: Record<string, BlogPostDetail> = {
     readTime: "5 min read",
     author: {
       name: "Shreyas Ambhaikar",
-      role: "Founder & CEO",
+      role: "Co-Founder & Technical Architect",
       avatar: "/shreyas.jpg",
-      bio: "Growth Strategist & Founder at Quantum Reach Media, helping Pune businesses scale via data-driven local SEO."
+      bio: "Co-Founder, SEO Strategist & Website Developer at Quantum Reach Media, heading Next.js web architectures and local SEO dominance."
     },
     keyTakeaways: [
       "Optimizing your Google Business Profile (GMB) radius requires geo-coded image metadata and localized landing pages.",
@@ -92,9 +93,9 @@ const blogDetailsMap: Record<string, BlogPostDetail> = {
     readTime: "7 min read",
     author: {
       name: "Tushar Tanpure",
-      role: "Co-Founder & CTO",
+      role: "Founder & Marketing Manager",
       avatar: "/tushar.jpg",
-      bio: "Technical SEO Architect & Systems Engineer specializing in Next.js edge performance and LLM search optimization."
+      bio: "Founder & Marketing Manager at Quantum Reach Media, driving client acquisition, high-ROI ad funnels, and marketing growth."
     },
     keyTakeaways: [
       "AEO requires optimizing for LLM training data and real-time retrieval-augmented generation (RAG).",
@@ -111,16 +112,16 @@ const blogDetailsMap: Record<string, BlogPostDetail> = {
   },
   "nextjs-16-100-lighthouse-core-web-vitals": {
     slug: "nextjs-16-100-lighthouse-core-web-vitals",
-    title: "Engineering Sub-500ms Next.js 16 Web Apps for 100/100 Lighthouse Scores",
+    title: "Engineering Sub-500ms Next.js 16 Web Apps for 90+ Lighthouse Scores",
     subtitle: "Technical deep dive into edge rendering, dynamic image compression, and Core Web Vitals.",
     category: "Technical SEO",
     date: "July 10, 2026",
     readTime: "8 min read",
     author: {
-      name: "Tushar Tanpure",
-      role: "Co-Founder & CTO",
-      avatar: "/tushar.jpg",
-      bio: "Technical SEO Architect & Systems Engineer specializing in Next.js edge performance and LLM search optimization."
+      name: "Shreyas Ambhaikar",
+      role: "Co-Founder & Technical Architect",
+      avatar: "/shreyas.jpg",
+      bio: "Co-Founder, SEO Strategist & Website Developer at Quantum Reach Media, heading Next.js web architectures and local SEO dominance."
     },
     keyTakeaways: [
       "Next.js App Router with static HTML export delivers unbeatable response speeds.",
@@ -129,7 +130,7 @@ const blogDetailsMap: Record<string, BlogPostDetail> = {
     ],
     contentHtml: `
       <h2>Why Page Speed is the Ultimate Ranking Factor</h2>
-      <p>Google explicitly penalizes slow-loading websites. By utilizing Next.js 16 App Router, edge server rendering, and zero-JS CSS utilities, every site we deploy achieves a perfect 100/100 Lighthouse score.</p>
+      <p>Google explicitly penalizes slow-loading websites. By utilizing Next.js 16 App Router, edge server rendering, and zero-JS CSS utilities, every site we deploy achieves a verified 90+ on Google PageSpeed.</p>
     `
   },
   "meta-ads-scaling-retargeting-capi-funnels": {
@@ -140,10 +141,10 @@ const blogDetailsMap: Record<string, BlogPostDetail> = {
     date: "June 29, 2026",
     readTime: "6 min read",
     author: {
-      name: "Shreyas Ambhaikar",
-      role: "Founder & CEO",
-      avatar: "/shreyas.jpg",
-      bio: "Growth Strategist & Founder at Quantum Reach Media, helping Pune businesses scale via data-driven local SEO."
+      name: "Tushar Tanpure",
+      role: "Founder & Marketing Manager",
+      avatar: "/tushar.jpg",
+      bio: "Founder & Marketing Manager at Quantum Reach Media, driving client acquisition, high-ROI ad funnels, and marketing growth."
     },
     keyTakeaways: [
       "Browser ad blockers hide up to 35% of ad conversions without server-side CAPI.",
@@ -156,6 +157,47 @@ const blogDetailsMap: Record<string, BlogPostDetail> = {
     `
   }
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const post = blogDetailsMap[resolvedParams.slug] || blogDetailsMap["google-2026-core-update-ai-overviews-guide"];
+
+  return {
+    title: `${post.title} | Quantum Reach Media Blog`,
+    description: `${post.subtitle} Read actionable search and performance insights from Quantum Reach Media, Pune.`,
+    alternates: {
+      canonical: `https://quantumreachmedia.com/blog/${post.slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.subtitle,
+      url: `https://quantumreachmedia.com/blog/${post.slug}`,
+      siteName: "Quantum Reach Media",
+      type: "article",
+      locale: "en_IN",
+      publishedTime: post.date,
+      authors: [post.author.name],
+      images: [
+        {
+          url: "/qrm-logo-transparent.webp",
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.subtitle,
+      images: ["/qrm-logo-transparent.webp"],
+    },
+  };
+}
 
 export function generateStaticParams() {
   return [
@@ -171,8 +213,64 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const resolvedParams = await params;
   const post = blogDetailsMap[resolvedParams.slug] || blogDetailsMap["google-2026-core-update-ai-overviews-guide"];
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `https://quantumreachmedia.com/blog/${post.slug}#article`,
+        headline: post.title,
+        description: post.subtitle,
+        datePublished: post.date,
+        inLanguage: "en-IN",
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": `https://quantumreachmedia.com/blog/${post.slug}`,
+        },
+        author: {
+          "@type": "Person",
+          name: post.author.name,
+          jobTitle: post.author.role,
+        },
+        publisher: {
+          "@id": "https://quantumreachmedia.com/#organization",
+        },
+        image: "https://quantumreachmedia.com/qrm-logo-transparent.webp",
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://quantumreachmedia.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Blog",
+            item: "https://quantumreachmedia.com/blog",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: post.title,
+            item: `https://quantumreachmedia.com/blog/${post.slug}`,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <main className="flex flex-col min-h-screen pt-32 pb-28 relative z-10">
+      {/* Schema.org BlogPosting & Breadcrumb JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+
       <div className="container max-w-4xl mx-auto px-6">
         
         {/* Back Link */}
@@ -216,7 +314,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </div>
             </div>
 
-            <button className="p-2.5 rounded-full bg-saas-surface border border-white/10 text-zinc-400 hover:text-white transition-colors">
+            <button className="p-2.5 rounded-full bg-saas-surface border border-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer" aria-label="Share Article">
               <Share2 size={16} />
             </button>
           </div>
@@ -226,7 +324,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="mb-12">
           <GlowCard className="p-8 bg-saas-surface border border-saas-cyan/30">
             <div className="flex items-center gap-2 text-xs font-mono font-bold text-saas-cyan uppercase tracking-widest mb-4">
-              <Sparkles size={14} /> EXECUTIVE SUMMARY & KEY TAKEAWAYS
+              <Sparkles size={14} /> EXECUTIVE SUMMARY &amp; KEY TAKEAWAYS
             </div>
             <ul className="space-y-3">
               {post.keyTakeaways.map((item, idx) => (
@@ -245,6 +343,27 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           dangerouslySetInnerHTML={{ __html: post.contentHtml }}
         />
 
+        {/* Strategic Internal Links Block */}
+        <div className="mt-14 p-6 rounded-2xl bg-purple-950/20 border border-purple-500/20">
+          <span className="text-xs font-mono font-bold text-saas-cyan uppercase tracking-wider block mb-2">
+            RECOMMENDED GROWTH WORKFLOWS
+          </span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+            <Link href="/services/local-seo-gmb" className="p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-saas-cyan/40 transition-colors group">
+              <span className="text-xs font-bold text-white group-hover:text-saas-cyan transition-colors block mb-1">Local SEO &amp; GMB</span>
+              <span className="text-[11px] text-zinc-400 block">Dominate Pune 3-Pack</span>
+            </Link>
+            <Link href="/services/seo-web-development" className="p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-saas-purple transition-colors group">
+              <span className="text-xs font-bold text-white group-hover:text-saas-purple transition-colors block mb-1">Next.js Web Dev</span>
+              <span className="text-[11px] text-zinc-400 block">90+ Lighthouse Speed</span>
+            </Link>
+            <Link href="/services/aeo-geo-optimization" className="p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-emerald-400 transition-colors group">
+              <span className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors block mb-1">AEO &amp; GEO Engine</span>
+              <span className="text-[11px] text-zinc-400 block">Rank in ChatGPT &amp; Gemini</span>
+            </Link>
+          </div>
+        </div>
+
         {/* Author Bio Footer */}
         <div className="mt-16 pt-10 border-t border-white/10">
           <GlowCard className="p-8 bg-saas-surface flex items-start gap-5">
@@ -261,15 +380,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {/* CTA Box */}
         <div className="mt-16 text-center bg-gradient-to-r from-saas-cyan/10 via-saas-purple/10 to-saas-cyan/10 border border-white/10 rounded-3xl p-10 backdrop-blur-xl">
-          <h2 className="text-2xl font-sans font-bold text-white mb-3">Want these growth strategies applied to your business?</h2>
+          <h2 className="text-2xl font-sans font-bold text-white mb-3">Want these growth strategies deployed for your business?</h2>
           <p className="text-zinc-400 max-w-lg mx-auto mb-6 text-xs md:text-sm">
-            Book a 1-on-1 strategy call with Quantum Reach Media architects.
+            Book a 1-on-1 strategy call with Quantum Reach Media architects in Pune.
           </p>
           <Link
-            href="/#about"
+            href="/contact"
             className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-white text-black font-bold text-xs hover:bg-zinc-200 transition-colors shadow-[0_0_25px_rgba(255,255,255,0.3)]"
           >
-            Book A Strategy Session
+            <span>Book A Strategy Session</span>
+            <ArrowRight size={13} />
           </Link>
         </div>
 

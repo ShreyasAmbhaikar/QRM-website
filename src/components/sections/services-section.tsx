@@ -5,55 +5,63 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GlowCard } from "@/components/ui/glow-card";
 import Link from "next/link";
-import { MapPin, Code, Bot, Search, Megaphone, LineChart, FileText, TrendingUp, ArrowRight } from "lucide-react";
+import { MapPin, Code, Bot, Search, Megaphone, LineChart, FileText, TrendingUp, ArrowRight, Sparkles } from "lucide-react";
 
 const services = [
   {
     slug: "local-seo-gmb",
     title: "Local SEO & GMB Optimization",
-    description: "Dominate the map pack and capture local leads in Pune and beyond.",
+    description: "Capture the #1 spot in Google 3-Pack Map Results across Pune, Wadgaon Sheri, Viman Nagar, and Baner with geo-tagged schema.",
+    tag: "+340% Local Calls",
     icon: <MapPin className="w-5 h-5 text-saas-cyan" />
   },
   {
     slug: "seo-web-development",
     title: "SEO Website Development",
-    description: "High-performance React/Next.js websites scoring 100/100 on Lighthouse.",
+    description: "Lightning-fast Next.js architectures scoring 90+ on Google PageSpeed with sub-500ms Core Web Vitals for maximum crawlability.",
+    tag: "90+ Web Speed",
     icon: <Code className="w-5 h-5 text-saas-purple" />
   },
   {
     slug: "aeo-geo-optimization",
-    title: "AEO / GEO Optimization",
-    description: "Structure data to rank your brand inside LLMs like ChatGPT, Claude, and Gemini.",
+    title: "AEO & GEO AI Optimization",
+    description: "Train generative LLMs (ChatGPT, Gemini, Perplexity) to cite your brand as the canonical authority for industry searches.",
+    tag: "AI Engine Citations",
     icon: <Bot className="w-5 h-5 text-emerald-400" />
   },
   {
     slug: "traditional-seo",
     title: "Traditional SEO Mastery",
-    description: "Comprehensive technical and on-page SEO to dominate standard search algorithms.",
+    description: "Technical audits, crawl budget optimization, and keyword clustering to dominate competitive Pune & national search results.",
+    tag: "Top 3 Rankings",
     icon: <Search className="w-5 h-5 text-yellow-400" />
   },
   {
     slug: "meta-advertisements",
-    title: "Meta Advertisements",
-    description: "Data-driven ad campaigns on Facebook & Instagram for high-intent leads.",
+    title: "Meta & Instagram Ads",
+    description: "High-converting creative funnels and CAPI tracking delivering predictable ROAS and qualified B2B/B2C leads.",
+    tag: "4.8x Avg ROAS",
     icon: <Megaphone className="w-5 h-5 text-saas-cyan" />
   },
   {
     slug: "analytics-tracking",
-    title: "Analytics & Tracking",
-    description: "Real-time dashboards and data insights to track ROI and conversions flawlessly.",
+    title: "Analytics & Conversion Tracking",
+    description: "Server-side GTM, GA4 attribution, and custom revenue dashboards to track true CAC, LTV, and pipeline ROI.",
+    tag: "100% Attribution",
     icon: <LineChart className="w-5 h-5 text-saas-purple" />
   },
   {
     slug: "content-architecture",
-    title: "Content Architecture",
-    description: "High-value, intent-driven content optimized for human readers and AI crawlers.",
+    title: "Semantic Content Architecture",
+    description: "Intent-driven editorial clusters optimized for both human decision-makers and Google search NLP algorithms.",
+    tag: "Topic Authority",
     icon: <FileText className="w-5 h-5 text-emerald-400" />
   },
   {
     slug: "authority-building",
-    title: "Authority Building",
-    description: "High-quality backlinks and digital PR to skyrocket your domain authority.",
+    title: "Authority Building & PR",
+    description: "Tier-1 editorial backlinks, digital PR outreach, and high-DA placements that permanently elevate domain trust.",
+    tag: "High-DA Backlinks",
     icon: <TrendingUp className="w-5 h-5 text-yellow-400" />
   }
 ];
@@ -85,12 +93,19 @@ export function ServicesSection() {
   return (
     <section id="services" ref={sectionRef} className="py-32 relative z-10 flex justify-center">
       <div className="container max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-sans font-bold mb-4 tracking-tight text-zinc-900 dark:text-white">
-            Architectural Capabilities <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-saas-purple dark:from-saas-cyan dark:to-saas-purple">Engineered for Dominance.</span>
+        <div className="text-center mb-16 space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-purple-300 dark:border-saas-cyan/30 bg-purple-100/80 dark:bg-saas-cyan/10 text-[11px] font-mono font-bold uppercase tracking-widest text-purple-950 dark:text-saas-cyan backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.15)]">
+            <Sparkles size={13} className="text-purple-600 dark:text-saas-cyan" /> COMPREHENSIVE DIGITAL GROWTH &amp; SEO
+          </div>
+          <h2 className="text-3xl md:text-5xl font-sans font-bold tracking-tight text-zinc-900 dark:text-white">
+            Growth Architecture <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-saas-purple dark:from-saas-cyan dark:to-saas-purple">
+              Engineered for Pune &amp; Global Dominance.
+            </span>
           </h2>
-          <p className="text-purple-950/80 dark:text-zinc-400 text-sm md:text-base font-medium">Click any service to view dedicated technical workflows, motion graphics, and ROI metrics.</p>
+          <p className="text-purple-950/80 dark:text-zinc-400 text-sm md:text-base font-medium leading-relaxed">
+            From #1 Google Map Pack rankings in Pune to multi-channel paid acquisition, our data-backed systems turn search intent into measurable pipeline and revenue.
+          </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -98,14 +113,19 @@ export function ServicesSection() {
             <Link key={i} href={`/services/${service.slug}`}>
               <GlowCard className="p-6 service-card flex flex-col items-start group transition-all cursor-pointer h-full justify-between">
                 <div>
-                  <div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-white/5 border border-purple-200 dark:border-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    {service.icon}
+                  <div className="flex items-center justify-between w-full mb-5">
+                    <div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-white/5 border border-purple-200 dark:border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      {service.icon}
+                    </div>
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-purple-200/60 dark:bg-white/10 text-purple-950 dark:text-zinc-300">
+                      {service.tag}
+                    </span>
                   </div>
                   <h3 className="text-sm font-extrabold mb-2 text-purple-950 dark:text-zinc-100 group-hover:text-purple-700 dark:group-hover:text-saas-cyan transition-colors">{service.title}</h3>
                   <p className="text-purple-900/80 dark:text-zinc-400 text-xs leading-relaxed mb-4 font-medium">{service.description}</p>
                 </div>
-                <div className="flex items-center gap-1 text-[11px] font-bold text-purple-700 dark:text-saas-cyan group-hover:translate-x-1 transition-transform">
-                  <span>Explore Workflow</span>
+                <div className="flex items-center gap-1 text-[11px] font-bold text-purple-700 dark:text-saas-cyan group-hover:translate-x-1 transition-transform pt-2 border-t border-purple-100 dark:border-white/5 w-full">
+                  <span>Explore Technical Workflow</span>
                   <ArrowRight size={12} />
                 </div>
               </GlowCard>

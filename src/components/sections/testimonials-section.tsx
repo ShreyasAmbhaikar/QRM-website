@@ -32,7 +32,7 @@ const testimonialsRow1: Testimonial[] = [
     avatar: "/dr-varun-preview.jpg",
     rating: 5,
     text: "Sub-second page loads and patient bookings on autopilot. Best web development team.",
-    metric: "100/100 Speed Score",
+    metric: "90+ Web Speed Score",
   },
   {
     name: "Rajiv Kulkarni",
@@ -52,7 +52,7 @@ const testimonialsRow2: Testimonial[] = [
     company: "June Women's Health",
     avatar: "/shreyas.jpg",
     rating: 5,
-    text: "Stunning website scoring 100/100 on Lighthouse. Professional and highly responsive.",
+    text: "Stunning website scoring 90+ on Google PageSpeed. Professional and highly responsive.",
     metric: "+210% Organic Leads",
   },
   {
@@ -147,18 +147,18 @@ export function TestimonialsSection() {
           {/* Left Column: Shortened 2-Line Heading */}
           <div className="lg:col-span-5 space-y-6 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-300 dark:border-saas-cyan/30 bg-purple-100/80 dark:bg-saas-cyan/10 text-xs font-mono font-bold uppercase tracking-widest text-purple-900 dark:text-saas-cyan shadow-[0_0_20px_rgba(147,51,234,0.15)]">
-              <Sparkles size={14} /> CLIENT PROOF & REVIEWS
+              <Sparkles size={14} /> VERIFIED CLIENT RESULTS &amp; 5.0★ REVIEWS
             </div>
             
             <h2 className="text-2xl md:text-4xl font-sans font-bold tracking-tight text-purple-950 dark:text-white leading-tight">
-              Trusted by Founders & <br className="hidden sm:inline" />
+              Trusted by Ambitious Brands <br className="hidden sm:inline" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-purple-500 to-saas-purple dark:from-saas-cyan dark:via-purple-300 dark:to-saas-purple">
-                Enterprise Leaders.
+                Across Pune &amp; Beyond.
               </span>
             </h2>
             
             <p className="text-purple-950/80 dark:text-zinc-400 text-sm md:text-base leading-relaxed font-medium">
-              Verified growth benchmarks from Pune&apos;s premier dental clinics, medical centers, and commercial enterprises.
+              Verified growth benchmarks from Pune&apos;s leading medical clinics, B2B distributors, and high-growth startups dominating Google Search and Google Map Pack.
             </p>
 
             {/* Rating Trust Bar */}

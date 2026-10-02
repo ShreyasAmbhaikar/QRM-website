@@ -2,52 +2,74 @@ import { HelpCircle, Plus } from "lucide-react";
 
 const faqs = [
   {
-    question: "What services does Quantum Reach Media provide?",
-    answer: "We combine technical SEO, local SEO, AEO and GEO, high-performance web development, conversion-focused design, content strategy, and paid acquisition. Engagements are shaped around the channels most likely to create measurable growth for your business.",
+    question: "Why is Quantum Reach Media considered the best SEO & digital marketing agency in Pune?",
+    answer: "Unlike traditional agencies that rely on slow WordPress templates and vanity metrics, Quantum Reach Media builds engineering-grade Next.js platforms scoring 90+ on Google PageSpeed. We combine programmatic technical SEO, Google Map Pack dominance, Generative Engine Optimization (GEO/AEO), and high-ROI paid acquisition to deliver verified pipeline and revenue for Pune and global businesses.",
   },
   {
-    question: "How long does it take to see SEO results?",
-    answer: "Technical improvements can show an impact within weeks, while meaningful organic growth typically compounds over three to six months. Timing depends on your market, website history, competition, and the condition of your current search presence.",
+    question: "How do you rank local Pune businesses in the Google Map Pack (3-Pack)?",
+    answer: "We engineer local authority through a 4-step framework: 100% NAP consistency across top directories, localized Schema.org JSON-LD structured data, geo-tagged image and coordinate signals for Pune areas (Wadgaon Sheri, Viman Nagar, Baner, Hinjawadi), and an automated review velocity system that prompts real clients to leave keyword-rich 5-star reviews.",
   },
   {
-    question: "Can you guarantee first-page or number-one rankings?",
-    answer: "No responsible agency can guarantee a specific organic position because search engines control their algorithms. We commit to transparent execution, technically sound strategy, measurable milestones, and continuous optimization against agreed business outcomes.",
+    question: "Do you serve clients across Pune tech hubs like Hinjawadi, Baner, and Kharadi?",
+    answer: "Yes. Headquartered in Wadgaon Sheri, Pune, we work extensively with IT and SaaS companies in Hinjawadi Phase 1-3, dental clinics and healthcare providers in Viman Nagar and Kalyani Nagar, real estate developers in Baner and Balewadi, and commercial enterprises across Kharadi and Magarpatta.",
   },
   {
-    question: "Do you work with an existing website or marketing team?",
-    answer: "Yes. We can improve an existing platform, collaborate with your internal team, or manage the complete strategy and implementation. We begin with an audit so responsibilities, priorities, and technical constraints are clear from the start.",
+    question: "What is the difference between traditional SEO, AEO, and GEO?",
+    answer: "Traditional SEO focuses on keyword rankings on classic search engine results pages. AEO (Answer Engine Optimization) structures your content to answer direct questions for voice search and featured snippets. GEO (Generative Engine Optimization) models your brand's digital footprint so AI engines like ChatGPT, Google AI Overviews, Perplexity, and Gemini cite you as the canonical authority.",
   },
   {
-    question: "What is the difference between SEO, AEO, and GEO?",
-    answer: "SEO improves visibility in traditional search results. AEO structures content to answer questions directly, while GEO strengthens how your brand is understood and cited by generative search experiences such as AI Overviews, ChatGPT, Gemini, and other answer engines.",
+    question: "How fast can we see results from our SEO and Google Ads campaigns?",
+    answer: "Google Ads and Meta campaigns generate qualified inbound leads within 48 to 72 hours of launch. Technical SEO and Core Web Vitals optimizations typically show crawling and indexation improvements within 2 to 3 weeks, while organic revenue and top-3 keyword rankings compound dramatically over 60 to 90 days.",
   },
   {
-    question: "How are projects priced?",
-    answer: "Pricing depends on scope, competition, technical complexity, and the level of ongoing support required. After discovery, we provide a clear proposal with deliverables, timelines, ownership, and fees before any work begins.",
+    question: "Can you migrate our slow WordPress website to a high-speed Next.js platform?",
+    answer: "Yes. Slow page speeds (over 2 seconds) degrade Google rankings and drop conversion rates by up to 50%. We migrate brands from bloated WordPress setups to custom Next.js architectures with sub-500ms load times, automated image optimization, and zero downtime.",
   },
   {
-    question: "Will we own the website, content, and campaign data?",
-    answer: "Yes. Once invoices are settled, you retain ownership of the approved website assets and content produced for your engagement. Your analytics, advertising, and business profiles remain in accounts you control.",
+    question: "Will our business own all website code, ad accounts, and analytics assets?",
+    answer: "100% yes. You maintain complete ownership of your Next.js source code, Google Analytics 4 properties, Meta ad accounts, and Google Business Profile. We do not lock clients into proprietary holding platforms.",
   },
   {
-    question: "How do you report performance?",
-    answer: "Reporting focuses on outcomes rather than vanity metrics. Depending on the engagement, we track qualified leads, calls, conversions, revenue attribution, local visibility, organic growth, Core Web Vitals, and progress against the agreed roadmap.",
+    question: "How do you measure and report marketing performance?",
+    answer: "We build custom real-time dashboards tracking bottom-line business metrics: Cost Per Qualified Lead (CPQL), Return on Ad Spend (ROAS), Google Map Pack phone calls, conversion rates, and organic pipeline revenue—never vanity clicks or meaningless impression metrics.",
   },
 ];
 
 export function FaqSection() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <section id="faq" className="relative z-10 overflow-hidden py-24 md:py-32">
+      {/* Schema.org FAQPage Structured Data for Google Rich Snippets */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       <div className="container relative mx-auto max-w-4xl px-6">
         <div className="mx-auto mb-12 max-w-2xl space-y-4 text-center md:mb-16">
           <div className="inline-flex items-center gap-2 rounded-full border border-saas-cyan/30 bg-saas-cyan/10 px-3.5 py-1 text-[11px] font-mono font-bold uppercase tracking-widest text-saas-cyan shadow-[0_0_15px_rgba(168,85,247,0.18)] backdrop-blur-md">
-            <HelpCircle size={13} /> Frequently Asked Questions
+            <HelpCircle size={13} /> CLEAR ANSWERS &amp; CLARITY
           </div>
-          <h2 className="text-3xl font-sans font-bold tracking-tight text-white md:text-4xl">
-            Clear answers before <span className="text-transparent bg-clip-text bg-gradient-to-r from-saas-cyan via-purple-300 to-saas-purple">we begin.</span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-sans font-bold tracking-tight text-white">
+            Frequently Asked{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-saas-cyan via-purple-300 to-saas-purple">
+              Questions
+            </span>
           </h2>
           <p className="text-sm font-medium leading-relaxed text-zinc-400 md:text-base">
-            The practical details businesses usually want to understand before choosing a growth partner.
+            Clear answers about our SEO methodologies, ranking timelines, and digital growth strategies in Pune.
           </p>
         </div>
 

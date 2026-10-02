@@ -1,26 +1,87 @@
-"use client";
-
-import { useState } from "react";
+import type { Metadata } from "next";
 import { GlowCard } from "@/components/ui/glow-card";
-import { MapPin, Phone, Clock, Star, Send, Sparkles, CheckCircle2, Globe, MessageSquare } from "lucide-react";
-import Link from "next/link";
+import { MapPin, Phone, Clock, Star, Sparkles, Globe } from "lucide-react";
+import { ContactForm } from "@/components/contact/contact-form";
+
+export const metadata: Metadata = {
+  title: "Contact Quantum Reach Media | Wadgaon Sheri, Pune Office",
+  description:
+    "Get in touch with Quantum Reach Media in Wadgaon Sheri, Pune. Call 077388 12028 or visit our strategy lab for Google #1 SEO, Map Pack dominance, and high-ROI paid ads.",
+  alternates: {
+    canonical: "https://quantumreachmedia.com/contact",
+  },
+  openGraph: {
+    title: "Contact Quantum Reach Media | Wadgaon Sheri, Pune Office",
+    description:
+      "Schedule your SEO & growth audit with Quantum Reach Media architects in Pune.",
+    url: "https://quantumreachmedia.com/contact",
+    siteName: "Quantum Reach Media",
+    locale: "en_IN",
+    type: "website",
+    images: [
+      {
+        url: "/qrm-logo-transparent.webp",
+        width: 1200,
+        height: 630,
+        alt: "Quantum Reach Media Contact Headquarters",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Quantum Reach Media | Wadgaon Sheri, Pune Office",
+    description: "Reach our lead strategy desk in Wadgaon Sheri, Pune.",
+    images: ["/qrm-logo-transparent.webp"],
+  },
+};
 
 export default function ContactPage() {
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ContactPage",
+        "@id": "https://quantumreachmedia.com/contact#page",
+        url: "https://quantumreachmedia.com/contact",
+        name: "Contact Quantum Reach Media",
+        description: "Official contact page for Quantum Reach Media SEO & Digital Marketing Agency in Pune.",
+        mainEntity: {
+          "@id": "https://quantumreachmedia.com/#localbusiness",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://quantumreachmedia.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Contact",
+            item: "https://quantumreachmedia.com/contact",
+          },
+        ],
+      },
+    ],
   };
 
   return (
     <main className="flex flex-col min-h-screen pt-32 pb-28 relative z-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
+      />
+
       <div className="container max-w-6xl mx-auto px-6">
 
         {/* Hero Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-saas-cyan/30 bg-saas-cyan/10 text-xs font-mono font-bold uppercase tracking-widest text-saas-cyan shadow-[0_0_20px_rgba(6,182,212,0.2)]">
-            <Sparkles size={14} /> HEADQUARTERS & STRATEGY LAB
+            <Sparkles size={14} /> PUNE HEADQUARTERS &amp; STRATEGY LAB
           </div>
           <h1 className="text-4xl md:text-6xl font-sans font-extrabold text-white tracking-tight leading-tight">
             Connect With The <br />
@@ -65,7 +126,7 @@ export default function ContactPage() {
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Direct Strategy Hotline</h3>
               <p className="text-zinc-400 text-xs leading-relaxed mb-1">
-                Speak directly with Tushar or Shreyas for urgent campaigns.
+                Speak directly with Tushar or Shreyas for high-priority campaigns.
               </p>
               <div className="text-xl font-mono font-bold text-white mt-3">
                 077388 12028
@@ -91,7 +152,7 @@ export default function ContactPage() {
                 <span>24/7 Digital Operations</span>
               </div>
               <p className="text-zinc-400 text-xs leading-relaxed">
-                Always open to serve you & engineer your market dominance across Google, ChatGPT & Gemini.
+                Always open to serve you &amp; engineer your market dominance across Google, ChatGPT &amp; Gemini.
               </p>
             </div>
             <div className="pt-4 border-t border-white/10 flex items-center justify-between mt-4">
@@ -110,99 +171,7 @@ export default function ContactPage() {
           
           {/* Inquiry Form */}
           <div className="lg:col-span-7">
-            <GlowCard className="p-8 md:p-10 bg-saas-surface border border-white/10">
-              <div className="flex items-center gap-2 text-xs font-mono font-bold text-saas-cyan uppercase tracking-widest mb-2">
-                <MessageSquare size={14} /> INITIATE STRATEGY DISPATCH
-              </div>
-              <h2 className="text-2xl font-sans font-bold text-white mb-6">
-                Request Your SEO & AI Growth Audit
-              </h2>
-
-              {submitted ? (
-                <div className="p-8 rounded-2xl bg-saas-cyan/10 border border-saas-cyan/30 text-center space-y-4">
-                  <CheckCircle2 className="w-12 h-12 text-saas-cyan mx-auto animate-bounce" />
-                  <h3 className="text-xl font-bold text-white">Strategy Dispatch Received!</h3>
-                  <p className="text-zinc-300 text-xs leading-relaxed max-w-sm mx-auto">
-                    Thank you! Shreyas or Tushar will review your domain metrics and reach out to you within 2 business hours.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-mono text-zinc-400 mb-1">Your Full Name *</label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="Dr. Varun"
-                        className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-white/10 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-saas-cyan/50"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-mono text-zinc-400 mb-1">Phone Number *</label>
-                      <input
-                        type="tel"
-                        required
-                        placeholder="+91 98765 43210"
-                        className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-white/10 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-saas-cyan/50"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-mono text-zinc-400 mb-1">Work Email *</label>
-                      <input
-                        type="email"
-                        required
-                        placeholder="doctor@clinic.com"
-                        className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-white/10 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-saas-cyan/50"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-mono text-zinc-400 mb-1">Business / Practice Name</label>
-                      <input
-                        type="text"
-                        placeholder="Dental Clinic Viman Nagar"
-                        className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-white/10 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-saas-cyan/50"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-mono text-zinc-400 mb-1">Service Needed *</label>
-                    <select
-                      required
-                      className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-white/10 text-xs text-zinc-300 focus:outline-none focus:border-saas-cyan/50"
-                    >
-                      <option value="local-seo">Local SEO & GMB Map Pack Dominance</option>
-                      <option value="web-dev">SEO Web Development (Next.js)</option>
-                      <option value="aeo-ai">AEO / GEO (ChatGPT & Gemini Search)</option>
-                      <option value="meta-ads">Meta Facebook & Instagram Ads</option>
-                      <option value="analytics">Analytics & Conversion Tracking</option>
-                      <option value="full-audit">Complete Growth Audit</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-mono text-zinc-400 mb-1">Project Details / Goals</label>
-                    <textarea
-                      rows={4}
-                      placeholder="Tell us about your current Google ranking goals or website speed needs..."
-                      className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-white/10 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-saas-cyan/50"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full py-3.5 rounded-full bg-white text-black font-bold text-xs hover:bg-zinc-200 transition-colors shadow-[0_0_25px_rgba(255,255,255,0.3)] flex items-center justify-center gap-2"
-                  >
-                    <span>Submit Strategy Request</span>
-                    <Send size={14} />
-                  </button>
-                </form>
-              )}
-            </GlowCard>
+            <ContactForm />
           </div>
 
           {/* Embedded Google Map */}
