@@ -43,21 +43,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/google-algorithm-updates`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
   ];
 
   const serviceSlugs = [
-    "traditional-seo-pune",
-    "google-ads-ppc-pune",
-    "social-media-marketing-pune",
-    "email-marketing-pune",
-    "seo-web-development-pune",
-    "branding-design-pune",
-    "content-architecture-pune",
-    "authority-building-pune",
-    "local-seo-gmb-pune",
-    "meta-advertisements-pune",
-    "aeo-geo-optimization-pune",
-    "analytics-tracking-pune",
+    "traditional-seo-in-pune",
+    "google-ads-ppc-in-pune",
+    "social-media-marketing-in-pune",
+    "email-marketing-in-pune",
+    "seo-web-development-in-pune",
+    "branding-design-in-pune",
+    "content-architecture-in-pune",
+    "authority-building-in-pune",
+    "local-seo-gmb-in-pune",
+    "meta-advertisements-in-pune",
+    "aeo-geo-optimization-in-pune",
+    "analytics-tracking-in-pune",
   ];
 
   const serviceRoutes: MetadataRoute.Sitemap = serviceSlugs.map((slug) => ({
@@ -73,6 +79,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "aeo-ranking-in-chatgpt-claude-gemini",
     "nextjs-16-100-lighthouse-core-web-vitals",
     "meta-ads-scaling-retargeting-capi-funnels",
+    "programmatic-seo-dynamic-landing-pages",
+    "b2b-saas-demand-generation-funnel",
+    "cro-conversion-rate-optimization-psychology",
+    "google-ads-performance-max-pmax-mastery",
   ];
 
   const blogRoutes: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
@@ -82,5 +92,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...blogRoutes];
+  const googleUpdateSlugs = [
+    "google-march-2026-broad-core-update",
+    "google-december-2025-helpful-content-update",
+    "google-august-2025-scaled-content-spam-update",
+    "google-march-2025-inp-core-web-vitals-update",
+  ];
+
+  const googleUpdateRoutes: MetadataRoute.Sitemap = googleUpdateSlugs.map((slug) => ({
+    url: `${baseUrl}/google-algorithm-updates/${slug}`,
+    lastModified: currentDate,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
+  return [...staticRoutes, ...serviceRoutes, ...blogRoutes, ...googleUpdateRoutes];
 }

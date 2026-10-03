@@ -6,30 +6,51 @@ import { ALL_SERVICES, ServiceItem } from "@/data/services-data";
 import { ArrowRight } from "lucide-react";
 
 const SHORT_DESCRIPTIONS: Record<string, string> = {
+  "traditional-seo-in-pune": "Eliminate technical crawl blockers and dominate competitive organic search rankings.",
   "traditional-seo-pune": "Eliminate technical crawl blockers and dominate competitive organic search rankings.",
   "traditional-seo": "Eliminate technical crawl blockers and dominate competitive organic search rankings.",
+  
+  "google-ads-ppc-in-pune": "Capture high-intent buyer searches with targeted Search and Performance Max campaigns.",
   "google-ads-ppc-pune": "Capture high-intent buyer searches with targeted Search and Performance Max campaigns.",
   "google-ads-ppc": "Capture high-intent buyer searches with targeted Search and Performance Max campaigns.",
+  
+  "social-media-marketing-in-pune": "Build engaged brand audiences and consistent lead pipelines across social platforms.",
   "social-media-marketing-pune": "Build engaged brand audiences and consistent lead pipelines across social platforms.",
   "social-media-marketing": "Build engaged brand audiences and consistent lead pipelines across social platforms.",
+  
+  "email-marketing-in-pune": "Nurture prospects and retain high-value customers with automated trigger workflows.",
   "email-marketing-pune": "Nurture prospects and retain high-value customers with automated trigger workflows.",
   "email-marketing": "Nurture prospects and retain high-value customers with automated trigger workflows.",
   
+  "seo-web-development-in-pune": "Sub-second Next.js web applications engineered for 90+ Google Core Web Vitals.",
   "seo-web-development-pune": "Sub-second Next.js web applications engineered for 90+ Google Core Web Vitals.",
   "seo-web-development": "Sub-second Next.js web applications engineered for 90+ Google Core Web Vitals.",
+  
+  "branding-design-in-pune": "Distinctive brand identities and frictionless layouts designed for high conversion in Pune.",
   "branding-design-pune": "Distinctive brand identities and frictionless layouts designed for high conversion in Pune.",
   "branding-design": "Distinctive brand identities and frictionless layouts designed for high conversion.",
+  
+  "content-architecture-in-pune": "Semantic topic clusters and authoritative copy structured for Google search intent.",
   "content-architecture-pune": "Semantic topic clusters and authoritative copy structured for Google search intent.",
   "content-architecture": "Semantic topic clusters and authoritative copy structured for Google search intent.",
+  
+  "authority-building-in-pune": "High-tier editorial backlinks and digital PR outreach to scale domain authority.",
   "authority-building-pune": "High-tier editorial backlinks and digital PR outreach to scale domain authority.",
   "authority-building": "High-tier editorial backlinks and digital PR outreach to scale domain authority.",
   
+  "local-seo-gmb-in-pune": "Dominate the Google 3-Pack Maps box to drive high-intent local phone calls in Pune.",
   "local-seo-gmb-pune": "Dominate the Google 3-Pack Maps box to drive high-intent local phone calls in Pune.",
   "local-seo-gmb": "Dominate the Google 3-Pack Maps box to drive high-intent local phone calls in Pune.",
+  
+  "meta-advertisements-in-pune": "Scale predictable customer inquiries with targeted Facebook and Instagram ad funnels.",
   "meta-advertisements-pune": "Scale predictable customer inquiries with targeted Facebook and Instagram ad funnels.",
   "meta-advertisements": "Scale predictable customer inquiries with targeted Facebook and Instagram ad funnels.",
+  
+  "aeo-geo-optimization-in-pune": "Position your brand as the canonical authority cited by ChatGPT and Gemini.",
   "aeo-geo-optimization-pune": "Position your brand as the canonical authority cited by ChatGPT and Gemini.",
   "aeo-geo-optimization": "Position your brand as the canonical authority cited by ChatGPT and Gemini.",
+  
+  "analytics-tracking-in-pune": "Server-side GTM and GA4 attribution dashboards providing full revenue clarity.",
   "analytics-tracking-pune": "Server-side GTM and GA4 attribution dashboards providing full revenue clarity.",
   "analytics-tracking": "Server-side GTM and GA4 attribution dashboards providing full revenue clarity."
 };

@@ -23,7 +23,9 @@ import {
   BarChart3,
   ArrowRight,
   Sparkles,
-  Bot
+  Bot,
+  BookOpen,
+  Activity
 } from "lucide-react";
 
 export function Navbar() {
@@ -34,6 +36,11 @@ export function Navbar() {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const servicesDropdownRef = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const [blogOpen, setBlogOpen] = useState(false);
+  const [mobileBlogOpen, setMobileBlogOpen] = useState(false);
+  const blogDropdownRef = useRef<HTMLDivElement>(null);
+  const blogCloseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const isLinkActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -48,7 +55,7 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Handle click outside for services dropdown
+  // Handle click outside for dropdowns
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -57,11 +64,18 @@ export function Navbar() {
       ) {
         setServicesOpen(false);
       }
+      if (
+        blogDropdownRef.current && 
+        !blogDropdownRef.current.contains(event.target as Node)
+      ) {
+        setBlogOpen(false);
+      }
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setServicesOpen(false);
+        setBlogOpen(false);
         setIsOpen(false);
       }
     };
@@ -88,6 +102,20 @@ export function Navbar() {
     }, 180);
   };
 
+  const handleBlogMouseEnter = () => {
+    if (blogCloseTimeoutRef.current) {
+      clearTimeout(blogCloseTimeoutRef.current);
+      blogCloseTimeoutRef.current = null;
+    }
+    setBlogOpen(true);
+  };
+
+  const handleBlogMouseLeave = () => {
+    blogCloseTimeoutRef.current = setTimeout(() => {
+      setBlogOpen(false);
+    }, 180);
+  };
+
   const serviceCategories = [
     {
       title: "DIGITAL MARKETING",
@@ -95,25 +123,25 @@ export function Navbar() {
         {
           title: "SEO Services",
           desc: "Rank higher on Google",
-          href: "/services/traditional-seo-pune",
+          href: "/services/traditional-seo-in-pune",
           icon: <Search className="w-4 h-4 text-purple-600 dark:text-purple-400" />
         },
         {
           title: "Google Ads (PPC)",
           desc: "Get instant inbound traffic",
-          href: "/services/google-ads-ppc-pune",
+          href: "/services/google-ads-ppc-in-pune",
           icon: <TrendingUp className="w-4 h-4 text-amber-500 dark:text-amber-400" />
         },
         {
           title: "Social Media Marketing",
           desc: "Build engaged audiences",
-          href: "/services/social-media-marketing-pune",
+          href: "/services/social-media-marketing-in-pune",
           icon: <Users className="w-4 h-4 text-pink-500 dark:text-pink-400" />
         },
         {
           title: "Email Marketing",
           desc: "Nurture and convert leads",
-          href: "/services/email-marketing-pune",
+          href: "/services/email-marketing-in-pune",
           icon: <Mail className="w-4 h-4 text-blue-500 dark:text-blue-400" />
         }
       ]
@@ -124,25 +152,25 @@ export function Navbar() {
         {
           title: "Website Development",
           desc: "Fast, modern Next.js websites",
-          href: "/services/seo-web-development-pune",
+          href: "/services/seo-web-development-in-pune",
           icon: <Code2 className="w-4 h-4 text-saas-purple dark:text-saas-cyan" />
         },
         {
           title: "Branding & Design",
           desc: "Stand out from competitors",
-          href: "/services/branding-design-pune",
+          href: "/services/branding-design-in-pune",
           icon: <Palette className="w-4 h-4 text-fuchsia-500 dark:text-fuchsia-400" />
         },
         {
           title: "Content Marketing",
           desc: "High-ranking content that converts",
-          href: "/services/content-architecture-pune",
+          href: "/services/content-architecture-in-pune",
           icon: <FileText className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
         },
         {
           title: "Authority & Digital PR",
           desc: "High-DA backlinks and press",
-          href: "/services/authority-building-pune",
+          href: "/services/authority-building-in-pune",
           icon: <Award className="w-4 h-4 text-amber-500 dark:text-amber-400" />
         }
       ]
@@ -153,28 +181,43 @@ export function Navbar() {
         {
           title: "Google My Business",
           desc: "Dominate local 3-pack search",
-          href: "/services/local-seo-gmb-pune",
+          href: "/services/local-seo-gmb-in-pune",
           icon: <MapPin className="w-4 h-4 text-rose-500 dark:text-rose-400" />
         },
         {
           title: "Meta Ads",
           desc: "Facebook & Instagram ads",
-          href: "/services/meta-advertisements-pune",
+          href: "/services/meta-advertisements-in-pune",
           icon: <Megaphone className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
         },
         {
           title: "AEO / GEO Optimization",
           desc: "Rank in ChatGPT & Gemini",
-          href: "/services/aeo-geo-optimization-pune",
+          href: "/services/aeo-geo-optimization-in-pune",
           icon: <Bot className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
         },
         {
           title: "Analytics & Tracking",
           desc: "Server-side GTM & GA4 attribution",
-          href: "/services/analytics-tracking-pune",
+          href: "/services/analytics-tracking-in-pune",
           icon: <BarChart3 className="w-4 h-4 text-purple-600 dark:text-saas-cyan" />
         }
       ]
+    }
+  ];
+
+  const blogNavItems = [
+    {
+      title: "Blog Posts & Insights",
+      desc: "Marketing playbooks, guides & deep dives",
+      href: "/blog",
+      icon: <BookOpen className="w-4 h-4 text-saas-cyan" />
+    },
+    {
+      title: "Google Core Updates",
+      desc: "Live Google algorithm updates radar",
+      href: "/google-algorithm-updates",
+      icon: <Activity className="w-4 h-4 text-purple-400" />
     }
   ];
 
@@ -336,17 +379,66 @@ export function Navbar() {
             Our Work
           </Link>
 
-          <Link 
-            href="/blog" 
-            className={cn(
-              "text-xs lg:text-sm font-bold transition-all whitespace-nowrap px-3 py-1.5 rounded-full",
-              isLinkActive("/blog")
-                ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] dark:shadow-[0_0_15px_rgba(56,189,248,0.25)]"
-                : "text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white hover:bg-purple-100/50 dark:hover:bg-white/5 border border-transparent"
-            )}
+          {/* Blog Dropdown Trigger */}
+          <div 
+            ref={blogDropdownRef}
+            className="relative"
+            onMouseEnter={handleBlogMouseEnter}
+            onMouseLeave={handleBlogMouseLeave}
           >
-            Blog
-          </Link>
+            <Link
+              href="/blog"
+              onClick={() => setBlogOpen(false)}
+              className={cn(
+                "inline-flex items-center gap-1.5 text-xs lg:text-sm font-bold transition-all py-1.5 px-3 rounded-full cursor-pointer whitespace-nowrap",
+                pathname.startsWith("/blog") || pathname.startsWith("/google-algorithm-updates") || blogOpen
+                  ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] dark:shadow-[0_0_15px_rgba(56,189,248,0.25)]"
+                  : "text-purple-950/80 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white hover:bg-purple-100/50 dark:hover:bg-white/5 border border-transparent"
+              )}
+            >
+              <span>Blog</span>
+              <ChevronDown 
+                size={13} 
+                className={cn(
+                  "transition-transform duration-200",
+                  blogOpen ? "rotate-180 text-purple-700 dark:text-saas-cyan" : ""
+                )} 
+              />
+            </Link>
+
+            {/* Blog Dropdown Menu */}
+            {blogOpen && (
+              <div 
+                className="absolute left-1/2 -translate-x-1/2 top-[calc(100%+14px)] w-72 p-3 rounded-2xl border border-purple-200/90 dark:border-white/15 bg-card/98 dark:bg-zinc-950/98 backdrop-blur-2xl shadow-[0_20px_50px_rgba(147,51,234,0.18)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.9)] animate-in fade-in zoom-in-95 duration-200 z-50 pointer-events-auto"
+              >
+                <div className="flex flex-col gap-1.5">
+                  {blogNavItems.map((item, idx) => (
+                    <Link
+                      key={idx}
+                      href={item.href}
+                      onClick={() => setBlogOpen(false)}
+                      className={cn(
+                        "group flex items-start gap-3 p-2.5 rounded-xl hover:bg-purple-50 dark:hover:bg-white/5 transition-all",
+                        pathname === item.href && "bg-purple-50 dark:bg-white/5"
+                      )}
+                    >
+                      <div className="mt-0.5 w-7 h-7 rounded-lg bg-purple-100 dark:bg-zinc-900 border border-purple-200/70 dark:border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-purple-400 dark:group-hover:border-saas-cyan/50 transition-all">
+                        {item.icon}
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-xs font-bold text-purple-950 dark:text-zinc-100 group-hover:text-purple-700 dark:group-hover:text-saas-cyan transition-colors">
+                          {item.title}
+                        </span>
+                        <span className="text-[11px] text-purple-900/70 dark:text-zinc-400 font-medium">
+                          {item.desc}
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           <Link 
             href="/contact" 
@@ -505,18 +597,64 @@ export function Navbar() {
               Our Work
             </Link>
 
-            <Link 
-              href="/blog" 
-              onClick={() => setIsOpen(false)} 
-              className={cn(
-                "text-sm font-bold py-2 px-3 rounded-xl transition-all",
-                isLinkActive("/blog")
-                  ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/30"
-                  : "text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white"
+            {/* Mobile Blog Accordion */}
+            <div className="flex flex-col">
+              <div className="flex items-center justify-between">
+                <Link
+                  href="/blog"
+                  onClick={() => setIsOpen(false)}
+                  className={cn(
+                    "flex-1 text-sm font-bold py-2 px-3 rounded-xl transition-all",
+                    pathname.startsWith("/blog") || pathname.startsWith("/google-algorithm-updates")
+                      ? "text-purple-700 dark:text-saas-cyan bg-purple-100/90 dark:bg-saas-cyan/15 border border-purple-300 dark:border-saas-cyan/30"
+                      : "text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white"
+                  )}
+                >
+                  Blog
+                </Link>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMobileBlogOpen(!mobileBlogOpen);
+                  }}
+                  className="p-2 text-purple-950/80 dark:text-zinc-300 hover:text-purple-950 dark:hover:text-white rounded-xl cursor-pointer"
+                  aria-label="Toggle blog list"
+                >
+                  <ChevronDown 
+                    size={16} 
+                    className={cn(
+                      "transition-transform duration-200", 
+                      mobileBlogOpen ? "rotate-180 text-purple-700 dark:text-saas-cyan" : ""
+                    )} 
+                  />
+                </button>
+              </div>
+
+              {mobileBlogOpen && (
+                <div className="pl-3 pr-1 py-2 flex flex-col gap-1.5 my-1 border-l-2 border-purple-200 dark:border-white/10">
+                  {blogNavItems.map((item, idx) => (
+                    <Link
+                      key={idx}
+                      href={item.href}
+                      onClick={() => {
+                        setIsOpen(false);
+                        setMobileBlogOpen(false);
+                      }}
+                      className={cn(
+                        "text-xs font-semibold py-1.5 px-2 rounded-lg flex items-center gap-2 transition-colors",
+                        pathname === item.href
+                          ? "text-purple-700 dark:text-saas-cyan font-bold bg-purple-100 dark:bg-white/10"
+                          : "text-purple-950/70 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-white"
+                      )}
+                    >
+                      <div className="w-4 h-4 shrink-0">{item.icon}</div>
+                      <span>{item.title}</span>
+                    </Link>
+                  ))}
+                </div>
               )}
-            >
-              Blog
-            </Link>
+            </div>
 
             <Link 
               href="/contact" 

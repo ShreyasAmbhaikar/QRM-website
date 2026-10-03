@@ -18,11 +18,11 @@ export function FreeAuditCta() {
   return (
     <section id="free-audit" className="py-24 relative z-10 flex justify-center">
       <div className="container max-w-5xl mx-auto px-6">
-        <GlowCard className="p-8 md:p-14 bg-gradient-to-br from-card via-purple-900/10 to-card dark:from-zinc-950 dark:via-saas-purple/10 dark:to-zinc-950 border border-purple-200 dark:border-white/10 rounded-3xl shadow-[0_20px_70px_rgba(147,51,234,0.15)] relative overflow-hidden">
+        <GlowCard className="p-8 md:p-14 bg-gradient-to-br from-purple-50 via-purple-100/60 to-white dark:from-zinc-950 dark:via-saas-purple/10 dark:to-zinc-950 border border-purple-300/90 dark:border-white/10 rounded-3xl shadow-[0_20px_70px_rgba(147,51,234,0.18)] relative overflow-hidden">
           
           {/* Ambient Glow Orbs */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-saas-purple/20 blur-[100px] rounded-full pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-saas-cyan/15 blur-[100px] rounded-full pointer-events-none" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-purple-400/15 dark:bg-saas-purple/20 blur-[100px] rounded-full pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-300/12 dark:bg-saas-cyan/15 blur-[100px] rounded-full pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto text-center space-y-6">
             

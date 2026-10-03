@@ -9,56 +9,56 @@ import { MapPin, Code, Bot, Search, Megaphone, LineChart, FileText, TrendingUp, 
 
 const services = [
   {
-    slug: "local-seo-gmb-pune",
+    slug: "local-seo-gmb-in-pune",
     title: "Local SEO & GMB Optimization",
     description: "Capture the #1 spot in Google 3-Pack Map Results across Pune, Wadgaon Sheri, Viman Nagar, and Baner with geo-tagged schema.",
     tag: "+340% Local Calls",
     icon: <MapPin className="w-5 h-5 text-saas-cyan" />
   },
   {
-    slug: "seo-web-development-pune",
+    slug: "seo-web-development-in-pune",
     title: "SEO Website Development",
     description: "Lightning-fast Next.js architectures scoring 90+ on Google PageSpeed with sub-500ms Core Web Vitals for maximum crawlability.",
     tag: "90+ Web Speed",
     icon: <Code className="w-5 h-5 text-saas-purple" />
   },
   {
-    slug: "aeo-geo-optimization-pune",
+    slug: "aeo-geo-optimization-in-pune",
     title: "AEO & GEO AI Optimization",
     description: "Train generative LLMs (ChatGPT, Gemini, Perplexity) to cite your brand as the canonical authority for industry searches.",
     tag: "AI Engine Citations",
     icon: <Bot className="w-5 h-5 text-emerald-400" />
   },
   {
-    slug: "traditional-seo-pune",
+    slug: "traditional-seo-in-pune",
     title: "Traditional SEO Mastery",
     description: "Technical audits, crawl budget optimization, and keyword clustering to dominate competitive Pune & national search results.",
     tag: "Top 3 Rankings",
     icon: <Search className="w-5 h-5 text-yellow-400" />
   },
   {
-    slug: "meta-advertisements-pune",
+    slug: "meta-advertisements-in-pune",
     title: "Meta & Instagram Ads",
     description: "High-converting creative funnels and CAPI tracking delivering predictable ROAS and qualified B2B/B2C leads.",
     tag: "4.8x Avg ROAS",
     icon: <Megaphone className="w-5 h-5 text-saas-cyan" />
   },
   {
-    slug: "analytics-tracking-pune",
+    slug: "analytics-tracking-in-pune",
     title: "Analytics & Conversion Tracking",
     description: "Server-side GTM, GA4 attribution, and custom revenue dashboards to track true CAC, LTV, and pipeline ROI.",
     tag: "100% Attribution",
     icon: <LineChart className="w-5 h-5 text-saas-purple" />
   },
   {
-    slug: "content-architecture-pune",
+    slug: "content-architecture-in-pune",
     title: "Semantic Content Architecture",
     description: "Intent-driven editorial clusters optimized for both human decision-makers and Google search NLP algorithms.",
     tag: "Topic Authority",
     icon: <FileText className="w-5 h-5 text-emerald-400" />
   },
   {
-    slug: "authority-building-pune",
+    slug: "authority-building-in-pune",
     title: "Authority Building & PR",
     description: "Tier-1 editorial backlinks, digital PR outreach, and high-DA placements that permanently elevate domain trust.",
     tag: "High-DA Backlinks",

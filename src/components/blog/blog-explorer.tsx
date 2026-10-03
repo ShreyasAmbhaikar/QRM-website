@@ -1,244 +1,356 @@
 "use client";
 
-import { useState } from "react";
-import { GlowCard } from "@/components/ui/glow-card";
-import { Search, Clock, ArrowRight, TrendingUp, Cpu, MapPin, Zap } from "lucide-react";
+import { useState, useMemo, useRef } from "react";
+import { 
+  Search, 
+  Clock, 
+  ArrowRight, 
+  ChevronLeft, 
+  ChevronRight, 
+  X, 
+  FileText 
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { BLOG_POSTS, BLOG_CATEGORIES, type BlogPost } from "@/data/blog-data";
 
-export interface BlogPost {
-  slug: string;
-  title: string;
-  excerpt: string;
-  category: "Google Core Updates" | "AEO & AI Search" | "Local GMB Strategy" | "Technical SEO";
-  date: string;
-  readTime: string;
-  author: {
-    name: string;
-    role: string;
-    avatar: string;
-  };
-  featured?: boolean;
-  tags: string[];
-}
-
-export const sampleBlogPosts: BlogPost[] = [
-  {
-    slug: "google-2026-core-update-ai-overviews-guide",
-    title: "Google 2026 Core Update: Navigating AI Overviews & Gemini Search Integration",
-    excerpt: "How Google's latest algorithmic deployment prioritizes factual entity relationships and LLM corpus citations over traditional backlinks.",
-    category: "Google Core Updates",
-    date: "Aug 5, 2026",
-    readTime: "6 min read",
-    author: {
-      name: "Tushar Tanpure",
-      role: "Co-Founder & CTO",
-      avatar: "/tushar.jpg"
-    },
-    featured: true,
-    tags: ["Google Update", "Gemini AI", "Algorithm"]
-  },
-  {
-    slug: "local-seo-gmb-map-pack-dominance-pune",
-    title: "How We Rank Local Businesses #1 in Google Map Pack (Pune & Regional Case Study)",
-    excerpt: "A step-by-step breakdown of geo-targeted entity citations, review velocity engineering, and GMB radius proximity optimization.",
-    category: "Local GMB Strategy",
-    date: "Jul 28, 2026",
-    readTime: "5 min read",
-    author: {
-      name: "Shreyas Ambhaikar",
-      role: "Founder & CEO",
-      avatar: "/shreyas.jpg"
-    },
-    tags: ["Local SEO", "Google Map Pack", "GMB"]
-  },
-  {
-    slug: "aeo-ranking-in-chatgpt-claude-gemini",
-    title: "The Complete Guide to AEO: Ranking Your Brand Inside ChatGPT, Claude & Gemini",
-    excerpt: "Artificial Engine Optimization (AEO) strategies to ensure AI search bots cite your business when users ask conversational questions.",
-    category: "AEO & AI Search",
-    date: "Jul 19, 2026",
-    readTime: "7 min read",
-    author: {
-      name: "Tushar Tanpure",
-      role: "Co-Founder & CTO",
-      avatar: "/tushar.jpg"
-    },
-    tags: ["AEO", "GPTBot", "Generative AI"]
-  },
-  {
-    slug: "nextjs-16-100-lighthouse-core-web-vitals",
-    title: "Engineering Sub-500ms Next.js 16 Web Apps for 100/100 Lighthouse Scores",
-    excerpt: "Technical deep dive into edge rendering, dynamic image compression, font preloading, and eliminating layout shifts.",
-    category: "Technical SEO",
-    date: "Jul 10, 2026",
-    readTime: "8 min read",
-    author: {
-      name: "Tushar Tanpure",
-      role: "Co-Founder & CTO",
-      avatar: "/tushar.jpg"
-    },
-    tags: ["Next.js", "Core Web Vitals", "Lighthouse"]
-  },
-  {
-    slug: "meta-ads-scaling-retargeting-capi-funnels",
-    title: "Scaling Meta Ads in 2026: Server-Side CAPI & High-Intent Conversion Funnels",
-    excerpt: "Why browser pixels fail and how server-side Conversions API (CAPI) paired with direct-response landing pages reduces CPA by 40%.",
-    category: "Technical SEO",
-    date: "Jun 29, 2026",
-    readTime: "6 min read",
-    author: {
-      name: "Shreyas Ambhaikar",
-      role: "Founder & CEO",
-      avatar: "/shreyas.jpg"
-    },
-    tags: ["Meta Ads", "ROAS", "Performance Marketing"]
-  }
-];
-
-const categories = ["All Articles", "Google Core Updates", "AEO & AI Search", "Local GMB Strategy", "Technical SEO"];
+const POSTS_PER_PAGE = 6;
 
 export function BlogExplorer() {
-  const [selectedCategory, setSelectedCategory] = useState("All Articles");
+  const [selectedCategory, setSelectedCategory] = useState<string>("All Articles");
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const explorerTopRef = useRef<HTMLDivElement>(null);
 
-  const featuredPost = sampleBlogPosts.find((post) => post.featured) || sampleBlogPosts[0];
+  // Growth blog posts (Google Core update post is dedicated to /google-algorithm-updates)
+  const growthBlogPosts = useMemo(() => {
+    return BLOG_POSTS.filter(post => post.slug !== "google-2026-core-update-ai-overviews-guide");
+  }, []);
 
-  const filteredPosts = sampleBlogPosts.filter((post) => {
-    const matchesCategory = selectedCategory === "All Articles" || post.category === selectedCategory;
-    const matchesSearch = 
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    return matchesCategory && matchesSearch;
-  });
+  // Filtered posts based on category and search query
+  const filteredPosts = useMemo(() => {
+    return growthBlogPosts.filter((post) => {
+      let matchesCategory = selectedCategory === "All Articles";
+      if (!matchesCategory) {
+        if (selectedCategory === "Local SEO & GMB") {
+          matchesCategory = post.category === "Local SEO & GMB";
+        } else if (selectedCategory === "AEO & AI Search") {
+          matchesCategory = post.category === "AEO & Generative Search";
+        } else if (selectedCategory === "Web Performance") {
+          matchesCategory = post.category === "Technical & Web Speed";
+        } else if (selectedCategory === "Paid Ads & ROAS") {
+          matchesCategory = post.category === "Paid Ads & ROAS";
+        } else if (selectedCategory === "Conversion Optimization") {
+          matchesCategory = post.category === "Conversion Optimization";
+        }
+      }
+
+      const q = searchQuery.toLowerCase().trim();
+      const matchesSearch =
+        !q ||
+        post.title.toLowerCase().includes(q) ||
+        post.excerpt.toLowerCase().includes(q) ||
+        post.tags.some((tag) => tag.toLowerCase().includes(q));
+      return matchesCategory && matchesSearch;
+    });
+  }, [growthBlogPosts, selectedCategory, searchQuery]);
+
+  // Total pages
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE) || 1;
+
+  // Paginated posts for current page
+  const paginatedPosts = useMemo(() => {
+    const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+    return filteredPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
+  }, [filteredPosts, currentPage]);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    if (explorerTopRef.current) {
+      explorerTopRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const handleCategoryChange = (cat: string) => {
+    setSelectedCategory(cat);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (val: string) => {
+    setSearchQuery(val);
+    setCurrentPage(1);
+  };
+
+  // Subtle, tasteful category styling without harsh neon glow
+  const getCategoryBadgeStyle = (category: BlogPost["category"]) => {
+    switch (category) {
+      case "Local SEO & GMB":
+        return "bg-emerald-500/10 text-emerald-300 border-emerald-500/25";
+      case "AEO & Generative Search":
+        return "bg-cyan-500/10 text-cyan-300 border-cyan-500/25";
+      case "Technical & Web Speed":
+        return "bg-sky-500/10 text-sky-300 border-sky-500/25";
+      case "Paid Ads & ROAS":
+        return "bg-amber-500/10 text-amber-300 border-amber-500/25";
+      case "Conversion Optimization":
+        return "bg-purple-500/10 text-purple-300 border-purple-500/25";
+      default:
+        return "bg-white/10 text-zinc-300 border-white/15";
+    }
+  };
+
+  const featuredPost = growthBlogPosts.find((p) => p.featured) || growthBlogPosts[0];
 
   return (
-    <>
-      {/* Featured Hero Article */}
-      {featuredPost && (
-        <div className="mb-16">
-          <Link href={`/blog/${featuredPost.slug}`}>
-            <GlowCard className="p-8 md:p-12 bg-saas-surface border border-white/10 hover:border-saas-cyan/50 transition-all group cursor-pointer relative overflow-hidden">
-              <div className="flex flex-col md:flex-row justify-between gap-8 items-start md:items-center">
-                <div className="space-y-4 max-w-2xl">
-                  <div className="flex items-center gap-3">
-                    <span className="px-3 py-1 rounded-full bg-saas-cyan/10 border border-saas-cyan/30 text-xs font-mono font-bold text-saas-cyan uppercase">
+    <div ref={explorerTopRef} className="scroll-mt-32">
+      {/* Featured Article - Remains consistent and pinned across category filter switches */}
+      {!searchQuery && currentPage === 1 && featuredPost && (
+        <div className="mb-12">
+          <Link href={`/blog/${featuredPost.slug}`} className="block group">
+            <div className="p-5 sm:p-7 rounded-3xl bg-gradient-to-br from-[#150a2b] via-[#0e071e] to-[#070311] border border-purple-500/30 hover:border-saas-cyan/50 transition-all duration-300 shadow-[0_0_30px_rgba(168,85,247,0.12)] relative overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <div className="lg:col-span-7 space-y-3.5">
+                  <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono">
+                    <span className={cn("px-2.5 py-1 rounded-md font-semibold uppercase tracking-wider text-[11px] border", getCategoryBadgeStyle(featuredPost.category))}>
                       {featuredPost.category}
                     </span>
-                    <span className="text-zinc-500 text-xs font-mono">•</span>
-                    <span className="text-xs text-zinc-400 font-mono flex items-center gap-1">
-                      <Clock size={12} /> {featuredPost.readTime}
+                    <span className="text-zinc-600">•</span>
+                    <span className="text-zinc-400 flex items-center gap-1">
+                      <Clock size={11} /> {featuredPost.readTime}
                     </span>
+                    <span className="text-zinc-600">•</span>
+                    <span className="text-zinc-400">{featuredPost.date}</span>
                   </div>
-                  
-                  <h2 className="text-2xl md:text-3xl font-sans font-bold text-white group-hover:text-saas-cyan transition-colors leading-tight">
+
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-sans font-extrabold text-white group-hover:text-saas-cyan transition-colors leading-snug">
                     {featuredPost.title}
                   </h2>
-                  
-                  <p className="text-zinc-400 text-sm leading-relaxed">
-                    {featuredPost.excerpt}
+
+                  <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed line-clamp-2">
+                    {featuredPost.subtitle}
                   </p>
-                  
-                  <div className="flex items-center gap-3 pt-2">
+
+                  <div className="flex items-center gap-3 pt-1">
                     <div className="relative w-8 h-8 rounded-full overflow-hidden border border-white/20">
-                      <Image src={featuredPost.author.avatar} alt={featuredPost.author.name} fill className="object-cover" />
+                      <Image
+                        src={featuredPost.author.avatar}
+                        alt={featuredPost.author.name}
+                        fill
+                        className="object-cover"
+                      />
                     </div>
-                    <div className="text-xs font-medium text-zinc-300">
-                      {featuredPost.author.name} <span className="text-zinc-500">• {featuredPost.date}</span>
+                    <div>
+                      <div className="text-xs font-bold text-white">{featuredPost.author.name}</div>
+                      <div className="text-[11px] text-zinc-400">{featuredPost.author.role}</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="hidden lg:flex items-center justify-center w-24 h-24 rounded-full bg-saas-cyan/10 border border-saas-cyan/30 text-saas-cyan group-hover:scale-110 transition-transform">
-                  <ArrowRight size={32} />
+                <div className="lg:col-span-5 relative w-full h-48 sm:h-56 rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-zinc-950">
+                  <Image
+                    src={featuredPost.coverImage}
+                    alt={featuredPost.coverImageAlt}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  <div className="absolute bottom-3 right-3 flex items-center gap-1 px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-xs font-mono font-bold text-saas-cyan group-hover:bg-saas-cyan group-hover:text-black transition-all">
+                    <span>Read Article</span>
+                    <ArrowRight size={12} />
+                  </div>
                 </div>
               </div>
-            </GlowCard>
+            </div>
           </Link>
         </div>
       )}
 
-      {/* Search & Filter Bar */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-12">
-        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
-          {categories.map((cat, i) => (
+      {/* Filter and Search Bar: Navigational, Horizontally Scrollable without Clipping */}
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-8">
+        {/* Category Filter Pills - Horizontally Scrollable & Perfectly Rounded */}
+        <div className="flex items-center gap-2 overflow-x-auto py-1.5 px-0.5 scrollbar-none scroll-smooth">
+          {BLOG_CATEGORIES.map((cat) => (
             <button
-              key={i}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-full text-xs font-mono font-bold transition-all cursor-pointer ${
-                selectedCategory === cat 
-                  ? "bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]" 
-                  : "bg-saas-surface text-zinc-400 hover:text-white border border-white/5 hover:border-white/10"
-              }`}
+              key={cat}
+              onClick={() => handleCategoryChange(cat)}
+              className={cn(
+                "px-4 py-2 rounded-full text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer shrink-0",
+                selectedCategory === cat
+                  ? "bg-white text-black shadow-sm"
+                  : "bg-[#110926] text-zinc-300 hover:text-white border border-white/10 hover:border-white/25 hover:bg-[#180d36]"
+              )}
             >
               {cat}
             </button>
           ))}
         </div>
 
-        <div className="relative w-full md:w-72">
-          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+        {/* Search Box */}
+        <div className="relative w-full lg:w-64 shrink-0">
+          <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" />
           <input
             type="text"
-            placeholder="Search keywords or topics..."
+            placeholder="Search articles..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 py-2 rounded-full bg-saas-surface border border-white/10 text-xs text-white placeholder:text-zinc-500 focus:outline-none focus:border-saas-cyan transition-colors"
+            onChange={(e) => handleSearchChange(e.target.value)}
+            className="w-full pl-9 pr-8 py-2 rounded-full bg-[#0e071e] border border-white/15 text-xs text-white placeholder:text-zinc-500 focus:outline-none focus:border-saas-cyan focus:ring-1 focus:ring-saas-cyan transition-all"
           />
+          {searchQuery && (
+            <button
+              onClick={() => handleSearchChange("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white cursor-pointer"
+              aria-label="Clear search"
+            >
+              <X size={14} />
+            </button>
+          )}
         </div>
       </div>
 
-      {/* Grid of Articles */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredPosts.map((post, idx) => (
-          <Link key={idx} href={`/blog/${post.slug}`}>
-            <GlowCard className="p-6 bg-saas-surface border border-white/10 hover:border-saas-cyan/30 flex flex-col justify-between h-full group cursor-pointer transition-all">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-[11px] font-mono font-bold text-saas-cyan uppercase">
-                    {post.category}
-                  </span>
-                  <span className="text-[11px] text-zinc-500 font-mono">
-                    {post.readTime}
-                  </span>
+      {/* Main Grid of Articles - More Spacing, Chip Moved Above Heading, No Glowing Image Overlays */}
+      {paginatedPosts.length === 0 ? (
+        <div className="text-center py-16 rounded-3xl bg-[#0e071e]/50 border border-white/10 space-y-4">
+          <FileText size={36} className="mx-auto text-zinc-600" />
+          <h3 className="text-lg font-bold text-white">No articles matched your criteria</h3>
+          <p className="text-xs text-zinc-400 max-w-sm mx-auto">
+            Try adjusting your search query or reset category filters to browse all publications.
+          </p>
+          <button
+            onClick={() => {
+              setSelectedCategory("All Articles");
+              setSearchQuery("");
+              setCurrentPage(1);
+            }}
+            className="px-4 py-2 rounded-full bg-purple-600 text-white font-bold text-xs hover:bg-purple-500 transition-colors cursor-pointer"
+          >
+            Reset Filters
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8">
+          {paginatedPosts.map((post) => (
+            <Link key={post.slug} href={`/blog/${post.slug}`} className="group flex flex-col h-full">
+              <article className="flex flex-col justify-between h-full rounded-2xl bg-gradient-to-b from-[#110826] to-[#0a0517] border border-white/10 hover:border-saas-cyan/40 hover:shadow-[0_0_20px_rgba(6,182,212,0.12)] transition-all duration-300 overflow-hidden">
+                {/* Clean Image Banner without Glowing Chips */}
+                <div className="relative w-full h-40 sm:h-44 overflow-hidden bg-zinc-950">
+                  <Image
+                    src={post.coverImage}
+                    alt={post.coverImageAlt}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0517] via-transparent to-transparent" />
                 </div>
-                
-                <h3 className="text-lg font-sans font-bold text-white group-hover:text-saas-cyan transition-colors mb-3 leading-snug line-clamp-2">
-                  {post.title}
-                </h3>
-                
-                <p className="text-zinc-400 text-xs leading-relaxed mb-6 line-clamp-3">
-                  {post.excerpt}
-                </p>
-              </div>
 
-              <div>
-                <div className="flex flex-wrap gap-1.5 mb-6">
-                  {post.tags.map((tag, tIdx) => (
-                    <span key={tIdx} className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-zinc-400">
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                  <div className="flex items-center gap-2">
-                    <div className="relative w-6 h-6 rounded-full overflow-hidden border border-white/20">
-                      <Image src={post.author.avatar} alt={post.author.name} fill className="object-cover" />
+                {/* Content Area with Chip Placed Above Heading */}
+                <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
+                  <div>
+                    {/* Category Chip & Read Time Row Above Heading */}
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <span className={cn(
+                        "px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold tracking-wider uppercase border",
+                        getCategoryBadgeStyle(post.category)
+                      )}>
+                        {post.category}
+                      </span>
+                      <span className="text-[11px] font-mono text-zinc-400 flex items-center gap-1">
+                        <Clock size={11} /> {post.readTime}
+                      </span>
                     </div>
-                    <span className="text-xs text-zinc-400 font-medium">{post.author.name}</span>
+
+                    <h3 className="text-base font-sans font-bold text-white group-hover:text-saas-cyan transition-colors leading-snug line-clamp-2">
+                      {post.title}
+                    </h3>
+
+                    <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed mt-2.5 line-clamp-2">
+                      {post.excerpt}
+                    </p>
                   </div>
-                  <div className="text-xs font-mono font-bold text-saas-cyan group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                    <span>Read</span>
-                    <ArrowRight size={12} />
+
+                  {/* Clean Footer: Author + Read Link */}
+                  <div className="pt-3.5 border-t border-white/10 flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div className="relative w-6 h-6 rounded-full overflow-hidden border border-white/20">
+                        <Image
+                          src={post.author.avatar}
+                          alt={post.author.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <span className="text-xs text-zinc-300 font-medium">{post.author.name}</span>
+                    </div>
+
+                    <div className="text-xs font-mono font-bold text-saas-cyan group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
+                      <span>Read Article</span>
+                      <ArrowRight size={12} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </GlowCard>
-          </Link>
-        ))}
-      </div>
-    </>
+              </article>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      {/* Pagination Controls - Result Counter on Extreme Left, Controls on Extreme Right */}
+      {totalPages > 1 && (
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-12 pt-6 border-t border-white/10">
+          {/* Extreme Left: Formatted Results Counter */}
+          <div className="flex items-center gap-2.5 text-xs font-mono text-zinc-400">
+            <span className="w-2 h-2 rounded-full bg-saas-cyan shadow-[0_0_8px_#06b6d4]" />
+            <span>
+              Showing <strong className="text-white font-semibold">{paginatedPosts.length}</strong> of{" "}
+              <strong className="text-white font-semibold">{filteredPosts.length}</strong> results
+            </span>
+            <span className="text-zinc-600 hidden sm:inline">•</span>
+            <span className="text-zinc-400 hidden sm:inline">
+              Page <strong className="text-white font-semibold">{currentPage}</strong> of{" "}
+              <strong className="text-white font-semibold">{totalPages}</strong>
+            </span>
+          </div>
+
+          {/* Extreme Right: Pagination Controls */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+              disabled={currentPage === 1}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-white/10 bg-[#0e071e] text-xs font-mono text-zinc-300 hover:text-white hover:border-saas-cyan/50 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            >
+              <ChevronLeft size={13} /> Previous
+            </button>
+
+            {/* Page Number Buttons */}
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={cn(
+                  "w-7 h-7 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer",
+                  currentPage === pageNum
+                    ? "bg-saas-cyan text-black shadow-[0_0_12px_rgba(6,182,212,0.35)]"
+                    : "bg-[#0e071e] border border-white/10 text-zinc-400 hover:text-white hover:border-white/20"
+                )}
+              >
+                {pageNum}
+              </button>
+            ))}
+
+            {/* Next Button */}
+            <button
+              onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-white/10 bg-[#0e071e] text-xs font-mono text-zinc-300 hover:text-white hover:border-saas-cyan/50 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            >
+              Next <ChevronRight size={13} />
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

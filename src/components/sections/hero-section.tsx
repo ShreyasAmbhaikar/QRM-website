@@ -59,9 +59,9 @@ export function HeroSection() {
       <Particles color="#c084fc" quantity={120} ease={40} staticity={30} className="z-0" />
 
       {/* Subtle, Moody Ambient Purple Glows - Centered Directly Behind the Headline */}
-      <div className="absolute top-[44%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[460px] bg-purple-900/28 blur-[140px] rounded-full pointer-events-none" />
-      <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[340px] bg-saas-purple/20 blur-[115px] rounded-full pointer-events-none" />
-      <div className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[220px] bg-fuchsia-600/12 blur-[90px] rounded-full pointer-events-none" />
+      <div className="absolute top-[44%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[460px] bg-purple-400/20 dark:bg-purple-900/28 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[340px] bg-purple-300/25 dark:bg-saas-purple/20 blur-[115px] rounded-full pointer-events-none" />
+      <div className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[220px] bg-fuchsia-400/15 dark:bg-fuchsia-600/12 blur-[90px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10 text-center flex flex-col items-center">
         {/* Magic UI Style Badge Pill with Moving Glare Shimmer */}

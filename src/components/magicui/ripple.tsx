@@ -61,7 +61,7 @@ export const Ripple = React.memo(function Ripple({
         return (
           <div
             key={i}
-            className="absolute rounded-full border magic-ripple-ring shadow-[0_0_25px_rgba(168,85,247,0.15)]"
+            className="absolute rounded-full border magic-ripple-ring shadow-[0_0_25px_rgba(126,34,206,0.15)]"
             style={
               {
                 width: `${size}px`,
@@ -70,7 +70,7 @@ export const Ripple = React.memo(function Ripple({
                 animationDelay,
                 borderStyle,
                 borderWidth: "1.5px",
-                borderColor: `rgba(168, 85, 247, ${borderAlpha})`,
+                borderColor: `rgba(126, 34, 206, ${borderAlpha})`,
                 background: `radial-gradient(circle, rgba(168, 85, 247, ${fillAlpha * 1.5}) 0%, rgba(126, 34, 206, ${fillAlpha}) 60%, transparent 100%)`,
                 top: "50%",
                 left: "50%",

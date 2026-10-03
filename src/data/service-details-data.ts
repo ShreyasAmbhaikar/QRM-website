@@ -84,9 +84,9 @@ export const SERVICE_DETAILS_DATA: Record<string, ServiceDetailFull> = {
   // =========================================================================
   // 1. Traditional & Technical SEO
   // =========================================================================
-  "traditional-seo-pune": {
-    slug: "traditional-seo-pune",
-    canonicalSlug: "traditional-seo-pune",
+  "traditional-seo-in-pune": {
+    slug: "traditional-seo-in-pune",
+    canonicalSlug: "traditional-seo-in-pune",
     badge: "SEARCH ENGINE OPTIMIZATION • PUNE",
     title: "Traditional & Technical SEO in Pune",
     heroHeading: "Organic Search Optimization Built for",
@@ -257,9 +257,9 @@ export const SERVICE_DETAILS_DATA: Record<string, ServiceDetailFull> = {
   // =========================================================================
   // 2. Google Ads (PPC) Management
   // =========================================================================
-  "google-ads-ppc-pune": {
-    slug: "google-ads-ppc-pune",
-    canonicalSlug: "google-ads-ppc-pune",
+  "google-ads-ppc-in-pune": {
+    slug: "google-ads-ppc-in-pune",
+    canonicalSlug: "google-ads-ppc-in-pune",
     badge: "HIGH-INTENT PAID SEARCH • PUNE",
     title: "Google Ads (PPC) Agency in Pune",
     heroHeading: "Search Marketing Built for",
@@ -430,9 +430,9 @@ export const SERVICE_DETAILS_DATA: Record<string, ServiceDetailFull> = {
   // =========================================================================
   // 3. Local SEO & GMB Optimization
   // =========================================================================
-  "local-seo-gmb-pune": {
-    slug: "local-seo-gmb-pune",
-    canonicalSlug: "local-seo-gmb-pune",
+  "local-seo-gmb-in-pune": {
+    slug: "local-seo-gmb-in-pune",
+    canonicalSlug: "local-seo-gmb-in-pune",
     badge: "GOOGLE 3-PACK MAP DOMINANCE • PUNE",
     title: "Local SEO & GMB Optimization in Pune",
     heroHeading: "Google Map Pack Dominance Built for",
@@ -603,9 +603,9 @@ export const SERVICE_DETAILS_DATA: Record<string, ServiceDetailFull> = {
   // =========================================================================
   // 4. SEO Website Development
   // =========================================================================
-  "seo-web-development-pune": {
-    slug: "seo-web-development-pune",
-    canonicalSlug: "seo-web-development-pune",
+  "seo-web-development-in-pune": {
+    slug: "seo-web-development-in-pune",
+    canonicalSlug: "seo-web-development-in-pune",
     badge: "90+ LIGHTHOUSE PERFORMANCE • PUNE",
     title: "SEO Website Development in Pune",
     heroHeading: "Next.js Web Architectures Built for",
@@ -776,9 +776,9 @@ export const SERVICE_DETAILS_DATA: Record<string, ServiceDetailFull> = {
   // =========================================================================
   // 5. Meta Advertisements
   // =========================================================================
-  "meta-advertisements-pune": {
-    slug: "meta-advertisements-pune",
-    canonicalSlug: "meta-advertisements-pune",
+  "meta-advertisements-in-pune": {
+    slug: "meta-advertisements-in-pune",
+    canonicalSlug: "meta-advertisements-in-pune",
     badge: "PAID SOCIAL ACQUISITION • PUNE",
     title: "Meta & Instagram Ads Agency in Pune",
     heroHeading: "Paid Social Acquisition Engineered for",
@@ -949,9 +949,9 @@ export const SERVICE_DETAILS_DATA: Record<string, ServiceDetailFull> = {
   // =========================================================================
   // 6. AEO & GEO AI Optimization
   // =========================================================================
-  "aeo-geo-optimization-pune": {
-    slug: "aeo-geo-optimization-pune",
-    canonicalSlug: "aeo-geo-optimization-pune",
+  "aeo-geo-optimization-in-pune": {
+    slug: "aeo-geo-optimization-in-pune",
+    canonicalSlug: "aeo-geo-optimization-in-pune",
     badge: "AI SEARCH & LLM CITATIONS • PUNE",
     title: "AEO & GEO AI Optimization in Pune",
     heroHeading: "Generative AI Search Optimization Built to",
@@ -1122,9 +1122,9 @@ export const SERVICE_DETAILS_DATA: Record<string, ServiceDetailFull> = {
   // =========================================================================
   // 7. Branding & Design
   // =========================================================================
-  "branding-design-pune": {
-    slug: "branding-design-pune",
-    canonicalSlug: "branding-design-pune",
+  "branding-design-in-pune": {
+    slug: "branding-design-in-pune",
+    canonicalSlug: "branding-design-in-pune",
     badge: "CORPORATE BRAND IDENTITY & UI/UX • PUNE",
     title: "Branding & UI/UX Design Agency in Pune",
     heroHeading: "Distinctive Brand Identities Built for",
@@ -1295,9 +1295,9 @@ export const SERVICE_DETAILS_DATA: Record<string, ServiceDetailFull> = {
   // =========================================================================
   // 8. Content Architecture & Marketing
   // =========================================================================
-  "content-architecture-pune": {
-    slug: "content-architecture-pune",
-    canonicalSlug: "content-architecture-pune",
+  "content-architecture-in-pune": {
+    slug: "content-architecture-in-pune",
+    canonicalSlug: "content-architecture-in-pune",
     badge: "SEMANTIC TOPIC CLUSTERS • PUNE",
     title: "Content Marketing & Architecture in Pune",
     heroHeading: "Semantic Topic Clusters Built to",
@@ -1468,9 +1468,9 @@ export const SERVICE_DETAILS_DATA: Record<string, ServiceDetailFull> = {
   // =========================================================================
   // 9. Authority Building & Digital PR
   // =========================================================================
-  "authority-building-pune": {
-    slug: "authority-building-pune",
-    canonicalSlug: "authority-building-pune",
+  "authority-building-in-pune": {
+    slug: "authority-building-in-pune",
+    canonicalSlug: "authority-building-in-pune",
     badge: "TIER-1 BACKLINKS & DIGITAL PR • PUNE",
     title: "Authority Building & Digital PR in Pune",
     heroHeading: "Tier-1 Backlinks & Digital Press Placements for",
@@ -1641,9 +1641,9 @@ export const SERVICE_DETAILS_DATA: Record<string, ServiceDetailFull> = {
   // =========================================================================
   // 10. Social Media Marketing & Growth
   // =========================================================================
-  "social-media-marketing-pune": {
-    slug: "social-media-marketing-pune",
-    canonicalSlug: "social-media-marketing-pune",
+  "social-media-marketing-in-pune": {
+    slug: "social-media-marketing-in-pune",
+    canonicalSlug: "social-media-marketing-in-pune",
     badge: "FOUNDER AUTHORITY & B2B SOCIAL • PUNE",
     title: "Social Media Marketing in Pune",
     heroHeading: "Authority-Driven Social Engines That",
@@ -1814,9 +1814,9 @@ export const SERVICE_DETAILS_DATA: Record<string, ServiceDetailFull> = {
   // =========================================================================
   // 11. Email Marketing & Automation
   // =========================================================================
-  "email-marketing-pune": {
-    slug: "email-marketing-pune",
-    canonicalSlug: "email-marketing-pune",
+  "email-marketing-in-pune": {
+    slug: "email-marketing-in-pune",
+    canonicalSlug: "email-marketing-in-pune",
     badge: "AUTOMATED LIFECYCLE NURTURING • PUNE",
     title: "Email Marketing & Automation in Pune",
     heroHeading: "Lifecycle Email Automations Built to",
@@ -1987,9 +1987,9 @@ export const SERVICE_DETAILS_DATA: Record<string, ServiceDetailFull> = {
   // =========================================================================
   // 12. Analytics, Tracking & Attribution
   // =========================================================================
-  "analytics-tracking-pune": {
-    slug: "analytics-tracking-pune",
-    canonicalSlug: "analytics-tracking-pune",
+  "analytics-tracking-in-pune": {
+    slug: "analytics-tracking-in-pune",
+    canonicalSlug: "analytics-tracking-in-pune",
     badge: "SERVER-SIDE TELEMETRY & ATTRIBUTION • PUNE",
     title: "Analytics & Tracking Agency in Pune",
     heroHeading: "Server-Side Telemetry & Attribution for",
@@ -2160,18 +2160,71 @@ export const SERVICE_DETAILS_DATA: Record<string, ServiceDetailFull> = {
 
 // ===========================================================================
 // Backward-Compatibility Aliases
-// Ensures both non-pune URLs (/services/traditional-seo) and
-// canonical -pune URLs (/services/traditional-seo-pune) resolve seamlessly.
+// Ensures *-in-pune canonical URLs, legacy *-pune URLs, and base URLs all resolve seamlessly.
 // ===========================================================================
-SERVICE_DETAILS_DATA["traditional-seo"] = SERVICE_DETAILS_DATA["traditional-seo-pune"];
-SERVICE_DETAILS_DATA["google-ads-ppc"] = SERVICE_DETAILS_DATA["google-ads-ppc-pune"];
-SERVICE_DETAILS_DATA["local-seo-gmb"] = SERVICE_DETAILS_DATA["local-seo-gmb-pune"];
-SERVICE_DETAILS_DATA["seo-web-development"] = SERVICE_DETAILS_DATA["seo-web-development-pune"];
-SERVICE_DETAILS_DATA["meta-advertisements"] = SERVICE_DETAILS_DATA["meta-advertisements-pune"];
-SERVICE_DETAILS_DATA["aeo-geo-optimization"] = SERVICE_DETAILS_DATA["aeo-geo-optimization-pune"];
-SERVICE_DETAILS_DATA["branding-design"] = SERVICE_DETAILS_DATA["branding-design-pune"];
-SERVICE_DETAILS_DATA["content-architecture"] = SERVICE_DETAILS_DATA["content-architecture-pune"];
-SERVICE_DETAILS_DATA["authority-building"] = SERVICE_DETAILS_DATA["authority-building-pune"];
-SERVICE_DETAILS_DATA["social-media-marketing"] = SERVICE_DETAILS_DATA["social-media-marketing-pune"];
-SERVICE_DETAILS_DATA["email-marketing"] = SERVICE_DETAILS_DATA["email-marketing-pune"];
-SERVICE_DETAILS_DATA["analytics-tracking"] = SERVICE_DETAILS_DATA["analytics-tracking-pune"];
+
+// 1. Traditional SEO
+SERVICE_DETAILS_DATA["traditional-seo-pune"] = SERVICE_DETAILS_DATA["traditional-seo-in-pune"];
+SERVICE_DETAILS_DATA["traditional-seo"] = SERVICE_DETAILS_DATA["traditional-seo-in-pune"];
+
+// 2. Google Ads PPC
+SERVICE_DETAILS_DATA["google-ads-ppc-pune"] = SERVICE_DETAILS_DATA["google-ads-ppc-in-pune"];
+SERVICE_DETAILS_DATA["google-ads-ppc"] = SERVICE_DETAILS_DATA["google-ads-ppc-in-pune"];
+
+// 3. Local SEO & GMB
+SERVICE_DETAILS_DATA["local-seo-gmb-pune"] = SERVICE_DETAILS_DATA["local-seo-gmb-in-pune"];
+SERVICE_DETAILS_DATA["local-seo-gmb"] = SERVICE_DETAILS_DATA["local-seo-gmb-in-pune"];
+
+// 4. SEO Web Development
+SERVICE_DETAILS_DATA["seo-web-development-pune"] = SERVICE_DETAILS_DATA["seo-web-development-in-pune"];
+SERVICE_DETAILS_DATA["seo-web-development"] = SERVICE_DETAILS_DATA["seo-web-development-in-pune"];
+SERVICE_DETAILS_DATA["web-development-in-pune"] = SERVICE_DETAILS_DATA["seo-web-development-in-pune"];
+SERVICE_DETAILS_DATA["web-development-pune"] = SERVICE_DETAILS_DATA["seo-web-development-in-pune"];
+SERVICE_DETAILS_DATA["web-development"] = SERVICE_DETAILS_DATA["seo-web-development-in-pune"];
+
+// 5. Meta & Performance Marketing
+SERVICE_DETAILS_DATA["meta-advertisements-pune"] = SERVICE_DETAILS_DATA["meta-advertisements-in-pune"];
+SERVICE_DETAILS_DATA["meta-advertisements"] = SERVICE_DETAILS_DATA["meta-advertisements-in-pune"];
+SERVICE_DETAILS_DATA["performance-marketing-in-pune"] = SERVICE_DETAILS_DATA["meta-advertisements-in-pune"];
+SERVICE_DETAILS_DATA["performance-marketing-pune"] = SERVICE_DETAILS_DATA["meta-advertisements-in-pune"];
+SERVICE_DETAILS_DATA["performance-marketing"] = SERVICE_DETAILS_DATA["meta-advertisements-in-pune"];
+
+// 6. AEO & GEO Optimization
+SERVICE_DETAILS_DATA["aeo-geo-optimization-pune"] = SERVICE_DETAILS_DATA["aeo-geo-optimization-in-pune"];
+SERVICE_DETAILS_DATA["aeo-geo-optimization"] = SERVICE_DETAILS_DATA["aeo-geo-optimization-in-pune"];
+SERVICE_DETAILS_DATA["generative-engine-optimization-in-pune"] = SERVICE_DETAILS_DATA["aeo-geo-optimization-in-pune"];
+SERVICE_DETAILS_DATA["generative-engine-optimization-pune"] = SERVICE_DETAILS_DATA["aeo-geo-optimization-in-pune"];
+SERVICE_DETAILS_DATA["generative-engine-optimization"] = SERVICE_DETAILS_DATA["aeo-geo-optimization-in-pune"];
+
+// 7. Branding & Design
+SERVICE_DETAILS_DATA["branding-design-pune"] = SERVICE_DETAILS_DATA["branding-design-in-pune"];
+SERVICE_DETAILS_DATA["branding-design"] = SERVICE_DETAILS_DATA["branding-design-in-pune"];
+
+// 8. Content Marketing & Architecture
+SERVICE_DETAILS_DATA["content-architecture-pune"] = SERVICE_DETAILS_DATA["content-architecture-in-pune"];
+SERVICE_DETAILS_DATA["content-architecture"] = SERVICE_DETAILS_DATA["content-architecture-in-pune"];
+SERVICE_DETAILS_DATA["content-marketing-in-pune"] = SERVICE_DETAILS_DATA["content-architecture-in-pune"];
+SERVICE_DETAILS_DATA["content-marketing-pune"] = SERVICE_DETAILS_DATA["content-architecture-in-pune"];
+SERVICE_DETAILS_DATA["content-marketing"] = SERVICE_DETAILS_DATA["content-architecture-in-pune"];
+
+// 9. Authority Building & ORM
+SERVICE_DETAILS_DATA["authority-building-pune"] = SERVICE_DETAILS_DATA["authority-building-in-pune"];
+SERVICE_DETAILS_DATA["authority-building"] = SERVICE_DETAILS_DATA["authority-building-in-pune"];
+SERVICE_DETAILS_DATA["online-reputation-management-in-pune"] = SERVICE_DETAILS_DATA["authority-building-in-pune"];
+SERVICE_DETAILS_DATA["online-reputation-management-pune"] = SERVICE_DETAILS_DATA["authority-building-in-pune"];
+SERVICE_DETAILS_DATA["online-reputation-management"] = SERVICE_DETAILS_DATA["authority-building-in-pune"];
+
+// 10. Social Media Marketing
+SERVICE_DETAILS_DATA["social-media-marketing-pune"] = SERVICE_DETAILS_DATA["social-media-marketing-in-pune"];
+SERVICE_DETAILS_DATA["social-media-marketing"] = SERVICE_DETAILS_DATA["social-media-marketing-in-pune"];
+
+// 11. Email Marketing
+SERVICE_DETAILS_DATA["email-marketing-pune"] = SERVICE_DETAILS_DATA["email-marketing-in-pune"];
+SERVICE_DETAILS_DATA["email-marketing"] = SERVICE_DETAILS_DATA["email-marketing-in-pune"];
+
+// 12. Analytics, Tracking & CRO
+SERVICE_DETAILS_DATA["analytics-tracking-pune"] = SERVICE_DETAILS_DATA["analytics-tracking-in-pune"];
+SERVICE_DETAILS_DATA["analytics-tracking"] = SERVICE_DETAILS_DATA["analytics-tracking-in-pune"];
+SERVICE_DETAILS_DATA["conversion-rate-optimization-cro-in-pune"] = SERVICE_DETAILS_DATA["analytics-tracking-in-pune"];
+SERVICE_DETAILS_DATA["conversion-rate-optimization-cro-pune"] = SERVICE_DETAILS_DATA["analytics-tracking-in-pune"];
+SERVICE_DETAILS_DATA["conversion-rate-optimization-cro"] = SERVICE_DETAILS_DATA["analytics-tracking-in-pune"];

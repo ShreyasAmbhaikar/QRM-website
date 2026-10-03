@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
-import { Sparkles } from "lucide-react";
+import Link from "next/link";
+import { Activity, ArrowRight } from "lucide-react";
 import { BlogExplorer } from "@/components/blog/blog-explorer";
 
 export const metadata: Metadata = {
-  title: "SEO, AEO & Digital Marketing Insights | Quantum Reach Media Pune",
+  title: "Latest Marketing, SEO & Growth Articles | Quantum Reach Media",
   description:
-    "Actionable breakdowns on Google algorithm updates, Google Map Pack ranking strategies, AEO/GEO artificial intelligence search citations, and sub-500ms Next.js web performance.",
+    "Actionable articles and guides on Google algorithm updates, local SEO, Google Map Pack dominance, AEO/GEO AI search, and high-performance web architecture.",
   alternates: {
     canonical: "https://quantumreachmedia.com/blog",
   },
   openGraph: {
-    title: "SEO, AEO & Digital Marketing Insights | Quantum Reach Media",
+    title: "Latest Marketing, SEO & Growth Articles | Quantum Reach Media",
     description:
-      "Expert search engineering and growth intelligence from Quantum Reach Media, Pune.",
+      "Proven digital marketing playbooks, SEO strategies, and web performance insights from Quantum Reach Media, Pune.",
     url: "https://quantumreachmedia.com/blog",
     siteName: "Quantum Reach Media",
     locale: "en_IN",
@@ -22,14 +23,14 @@ export const metadata: Metadata = {
         url: "/qrm-logo-transparent.webp",
         width: 1200,
         height: 630,
-        alt: "Quantum Reach Media Search Intelligence Blog",
+        alt: "Quantum Reach Media Blog Articles",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SEO, AEO & Digital Marketing Insights | Quantum Reach Media",
-    description: "Algorithmic search and performance marketing dispatches from Pune.",
+    title: "Latest Marketing, SEO & Growth Articles | Quantum Reach Media",
+    description: "Actionable digital marketing, SEO, and web architecture playbooks.",
     images: ["/qrm-logo-transparent.webp"],
   },
 };
@@ -62,25 +63,21 @@ export default function BlogPage() {
       />
 
       <div className="container max-w-6xl mx-auto px-6">
-        
-        {/* Hero Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-saas-cyan/30 bg-saas-cyan/10 text-xs font-mono font-bold uppercase tracking-widest text-saas-cyan shadow-[0_0_20px_rgba(6,182,212,0.2)]">
-            <Sparkles size={14} /> SEARCH INTEL &amp; ALGORITHMIC DISPATCH
-          </div>
-          <h1 className="text-4xl md:text-6xl font-sans font-extrabold text-white tracking-tight leading-tight">
-            Engineering Search &amp; <br/>
+        {/* Clean Hero Header */}
+        <div className="text-center max-w-4xl mx-auto mb-14 space-y-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-sans font-extrabold text-white tracking-tight leading-[1.2]">
+            Latest Marketing Insights &amp; <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-saas-cyan via-purple-300 to-saas-purple">
-              AI Market Intelligence.
+              Digital Growth Playbooks
             </span>
           </h1>
-          <p className="text-zinc-400 text-base md:text-lg">
-            Breakdowns on Google Core Algorithm updates, AEO LLM rankings, Local GMB map dominance in Pune, and high-performance Web Architecture.
+          <p className="text-zinc-400 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+            Actionable guides, local SEO strategies, and technical architectures to scale your brand and capture high-intent customers.
           </p>
         </div>
 
+        {/* Intelligence Dispatches & Article Explorer */}
         <BlogExplorer />
-
       </div>
     </main>
   );

@@ -17,7 +17,7 @@ export interface ServiceItem {
 export const ALL_SERVICES: ServiceItem[] = [
   // ================= PILLAR 1: DIGITAL MARKETING =================
   {
-    slug: "traditional-seo-pune",
+    slug: "traditional-seo-in-pune",
     pillar: "digital-marketing",
     pillarLabel: "DIGITAL MARKETING",
     title: "Traditional & Technical SEO Mastery",
@@ -40,7 +40,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     accentColor: "from-purple-500 to-indigo-500"
   },
   {
-    slug: "google-ads-ppc-pune",
+    slug: "google-ads-ppc-in-pune",
     pillar: "digital-marketing",
     pillarLabel: "DIGITAL MARKETING",
     title: "Google Ads (PPC) Management",
@@ -63,7 +63,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     accentColor: "from-amber-400 to-orange-500"
   },
   {
-    slug: "social-media-marketing-pune",
+    slug: "social-media-marketing-in-pune",
     pillar: "digital-marketing",
     pillarLabel: "DIGITAL MARKETING",
     title: "Social Media Marketing & Growth",
@@ -86,7 +86,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     accentColor: "from-pink-500 to-purple-600"
   },
   {
-    slug: "email-marketing-pune",
+    slug: "email-marketing-in-pune",
     pillar: "digital-marketing",
     pillarLabel: "DIGITAL MARKETING",
     title: "Email Marketing & CRM Automation",
@@ -111,7 +111,7 @@ export const ALL_SERVICES: ServiceItem[] = [
 
   // ================= PILLAR 2: WEBSITE & CONTENT =================
   {
-    slug: "seo-web-development-pune",
+    slug: "seo-web-development-in-pune",
     pillar: "website-content",
     pillarLabel: "WEBSITE & CONTENT",
     title: "SEO Website Development (Next.js)",
@@ -134,7 +134,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     accentColor: "from-saas-purple to-saas-cyan"
   },
   {
-    slug: "branding-design-pune",
+    slug: "branding-design-in-pune",
     pillar: "website-content",
     pillarLabel: "WEBSITE & CONTENT",
     title: "Branding & Conversion UI/UX Design",
@@ -157,7 +157,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     accentColor: "from-fuchsia-500 to-purple-600"
   },
   {
-    slug: "content-architecture-pune",
+    slug: "content-architecture-in-pune",
     pillar: "website-content",
     pillarLabel: "WEBSITE & CONTENT",
     title: "Content Architecture & Copywriting",
@@ -180,7 +180,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     accentColor: "from-emerald-400 to-teal-600"
   },
   {
-    slug: "authority-building-pune",
+    slug: "authority-building-in-pune",
     pillar: "website-content",
     pillarLabel: "WEBSITE & CONTENT",
     title: "Authority Building & Digital PR",
@@ -205,7 +205,7 @@ export const ALL_SERVICES: ServiceItem[] = [
 
   // ================= PILLAR 3: SPECIALIZED GROWTH =================
   {
-    slug: "local-seo-gmb-pune",
+    slug: "local-seo-gmb-in-pune",
     pillar: "specialized-growth",
     pillarLabel: "SPECIALIZED GROWTH",
     title: "Local SEO & Google Business Profile (GMB)",
@@ -228,7 +228,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     accentColor: "from-saas-cyan to-blue-500"
   },
   {
-    slug: "meta-advertisements-pune",
+    slug: "meta-advertisements-in-pune",
     pillar: "specialized-growth",
     pillarLabel: "SPECIALIZED GROWTH",
     title: "Meta Advertisements (FB & Instagram)",
@@ -251,7 +251,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     accentColor: "from-indigo-500 to-purple-600"
   },
   {
-    slug: "aeo-geo-optimization-pune",
+    slug: "aeo-geo-optimization-in-pune",
     pillar: "specialized-growth",
     pillarLabel: "SPECIALIZED GROWTH",
     title: "AEO / GEO Optimization (AI Search)",
@@ -274,7 +274,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     accentColor: "from-emerald-400 to-teal-500"
   },
   {
-    slug: "analytics-tracking-pune",
+    slug: "analytics-tracking-in-pune",
     pillar: "specialized-growth",
     pillarLabel: "SPECIALIZED GROWTH",
     title: "Analytics, Telemetry & GA4 Attribution",

@@ -1,181 +1,53 @@
-import { GlowCard } from "@/components/ui/glow-card";
-import { Clock, ArrowLeft, Share2, Sparkles, CheckCircle2, Bookmark, User, ArrowRight } from "lucide-react";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import type { Metadata } from "next";
+import { 
+  Clock, 
+  ArrowLeft, 
+  Sparkles, 
+  CheckCircle2, 
+  ArrowRight,
+  Compass,
+  Check,
+  Layers,
+  BarChart3
+} from "lucide-react";
+import { BLOG_POSTS, type BlogPost } from "@/data/blog-data";
 
-interface BlogPostDetail {
-  slug: string;
-  title: string;
-  subtitle: string;
-  category: string;
-  date: string;
-  readTime: string;
-  author: {
-    name: string;
-    role: string;
-    avatar: string;
-    bio: string;
-  };
-  keyTakeaways: string[];
-  contentHtml: string;
+interface Props {
+  params: Promise<{ slug: string }>;
 }
 
-const blogDetailsMap: Record<string, BlogPostDetail> = {
-  "google-2026-core-update-ai-overviews-guide": {
-    slug: "google-2026-core-update-ai-overviews-guide",
-    title: "Google 2026 Core Update: Navigating AI Overviews & Gemini Search Integration",
-    subtitle: "Why traditional backlink counting is giving way to factual entity extraction and LLM corpus citations.",
-    category: "Google Core Updates",
-    date: "August 5, 2026",
-    readTime: "6 min read",
-    author: {
-      name: "Tushar Tanpure",
-      role: "Founder & Marketing Manager",
-      avatar: "/tushar.jpg",
-      bio: "Founder & Marketing Manager at Quantum Reach Media, driving client acquisition, high-ROI ad funnels, and marketing growth."
-    },
-    keyTakeaways: [
-      "Google's 2026 Core Algorithm weights verified Schema JSON-LD graphs over external anchor text.",
-      "AI Overviews now synthesize content directly from structured Knowledge Graphs.",
-      "Fast Core Web Vitals (sub-500ms LCP) remain a prerequisite for AI Bot crawl priority."
-    ],
-    contentHtml: `
-      <h2>The Shift to Factual Entity Extraction</h2>
-      <p>With Google's latest core algorithm deployment, traditional link equity models have evolved. Search crawlers now evaluate your domain through <strong>Entity Relationship Graphs</strong>. If your brand's metadata is ambiguous, Gemini search bots will bypass your URL in favor of structured sources.</p>
+export async function generateStaticParams() {
+  return BLOG_POSTS.map((post) => ({
+    slug: post.slug,
+  }));
+}
 
-      <h3>Key Strategic Pillars for 2026:</h3>
-      <ul>
-        <li><strong>Structured Schema Injection:</strong> Deploy comprehensive Organization, LocalBusiness, and Service JSON-LD graphs.</li>
-        <li><strong>Conversational QA Formatting:</strong> Structure H2 and H3 subheadings as natural human questions answered concisely in the first sentence.</li>
-        <li><strong>Core Web Vitals Mastery:</strong> Maintain sub-500ms Largest Contentful Paint (LCP) to prevent crawler timeouts during high-frequency index sweeps.</li>
-      </ul>
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = BLOG_POSTS.find((p) => p.slug === slug);
 
-      <h2>Optimizing for Gemini & AI Overviews</h2>
-      <p>When Google generates an AI Overview snippet, it searches for concise, factual declarations backed by authoritative citations. By optimizing your content architecture, your website becomes the primary cited source in AI search results.</p>
-    `
-  },
-  "local-seo-gmb-map-pack-dominance-pune": {
-    slug: "local-seo-gmb-map-pack-dominance-pune",
-    title: "How We Rank Local Businesses #1 in Google Map Pack (Pune Case Study)",
-    subtitle: "A step-by-step breakdown of geo-targeted entity citations, review velocity, and GMB radius proximity.",
-    category: "Local GMB Strategy",
-    date: "July 28, 2026",
-    readTime: "5 min read",
-    author: {
-      name: "Shreyas Ambhaikar",
-      role: "Co-Founder & Technical Architect",
-      avatar: "/shreyas.jpg",
-      bio: "Co-Founder, SEO Strategist & Website Developer at Quantum Reach Media, heading Next.js web architectures and local SEO dominance."
-    },
-    keyTakeaways: [
-      "Optimizing your Google Business Profile (GMB) radius requires geo-coded image metadata and localized landing pages.",
-      "Review velocity (frequency and response time) outweighs raw rating numbers.",
-      "NAP consistency across 100+ local directories validates local domain trust."
-    ],
-    contentHtml: `
-      <h2>The Blueprint for Local 3-Pack Supremacy</h2>
-      <p>Ranking in the Google 3-Pack Map Pack is the highest-ROI marketing channel for local clinics, dental practices, and service providers in Pune. In this breakdown, we examine the exact protocol used for our medical and dental partners.</p>
-
-      <h3>Step 1: Geotagged Entity Optimization</h3>
-      <p>We inject precise EXIF metadata and geo-coordinates into all uploaded Google Business Profile photos, validating physical location signals to Google's local algorithm.</p>
-
-      <h3>Step 2: Automated Review Acquisition</h3>
-      <p>Systematic review requests with specific service keywords in customer responses boost local relevance by over 300%.</p>
-    `
-  },
-  "aeo-ranking-in-chatgpt-claude-gemini": {
-    slug: "aeo-ranking-in-chatgpt-claude-gemini",
-    title: "The Complete Guide to AEO: Ranking Your Brand Inside ChatGPT, Claude & Gemini",
-    subtitle: "How to ensure Large Language Models recommend your business when users ask AI tools for suggestions.",
-    category: "AEO & AI Search",
-    date: "July 19, 2026",
-    readTime: "7 min read",
-    author: {
-      name: "Tushar Tanpure",
-      role: "Founder & Marketing Manager",
-      avatar: "/tushar.jpg",
-      bio: "Founder & Marketing Manager at Quantum Reach Media, driving client acquisition, high-ROI ad funnels, and marketing growth."
-    },
-    keyTakeaways: [
-      "AEO requires optimizing for LLM training data and real-time retrieval-augmented generation (RAG).",
-      "Perplexity and ChatGPT look for consensus signals across trusted industry publications.",
-      "JSON-LD knowledge graphs give AI bots instant factual verification."
-    ],
-    contentHtml: `
-      <h2>What is Artificial Engine Optimization (AEO)?</h2>
-      <p>As millions of users replace traditional Google queries with ChatGPT, Claude, and Gemini prompts, AEO has become essential. When a user asks: <em>"What is the best SEO agency in Pune?"</em>, LLMs generate responses by synthesizing trusted web data.</p>
-
-      <h2>How to Audit Your Brand's AI Citation Rate</h2>
-      <p>We use automated LLM crawler scripts to monitor how frequently ChatGPT and Gemini recommend our clients over competitors, refining knowledge graph metadata to lock in #1 rankings.</p>
-    `
-  },
-  "nextjs-16-100-lighthouse-core-web-vitals": {
-    slug: "nextjs-16-100-lighthouse-core-web-vitals",
-    title: "Engineering Sub-500ms Next.js 16 Web Apps for 90+ Lighthouse Scores",
-    subtitle: "Technical deep dive into edge rendering, dynamic image compression, and Core Web Vitals.",
-    category: "Technical SEO",
-    date: "July 10, 2026",
-    readTime: "8 min read",
-    author: {
-      name: "Shreyas Ambhaikar",
-      role: "Co-Founder & Technical Architect",
-      avatar: "/shreyas.jpg",
-      bio: "Co-Founder, SEO Strategist & Website Developer at Quantum Reach Media, heading Next.js web architectures and local SEO dominance."
-    },
-    keyTakeaways: [
-      "Next.js App Router with static HTML export delivers unbeatable response speeds.",
-      "Pre-loading critical Google Fonts eliminates layout shifts (CLS).",
-      "Unoptimized images are the #1 cause of slow Largest Contentful Paint (LCP)."
-    ],
-    contentHtml: `
-      <h2>Why Page Speed is the Ultimate Ranking Factor</h2>
-      <p>Google explicitly penalizes slow-loading websites. By utilizing Next.js 16 App Router, edge server rendering, and zero-JS CSS utilities, every site we deploy achieves a verified 90+ on Google PageSpeed.</p>
-    `
-  },
-  "meta-ads-scaling-retargeting-capi-funnels": {
-    slug: "meta-ads-scaling-retargeting-capi-funnels",
-    title: "Scaling Meta Ads in 2026: Server-Side CAPI & High-Intent Conversion Funnels",
-    subtitle: "Why browser pixels fail and how server-side Conversions API (CAPI) reduces CPA by 40%.",
-    category: "Technical SEO",
-    date: "June 29, 2026",
-    readTime: "6 min read",
-    author: {
-      name: "Tushar Tanpure",
-      role: "Founder & Marketing Manager",
-      avatar: "/tushar.jpg",
-      bio: "Founder & Marketing Manager at Quantum Reach Media, driving client acquisition, high-ROI ad funnels, and marketing growth."
-    },
-    keyTakeaways: [
-      "Browser ad blockers hide up to 35% of ad conversions without server-side CAPI.",
-      "Direct-response visual copy outperforms generic stock imagery.",
-      "Custom audience lookalikes based on actual phone leads drive maximum ROAS."
-    ],
-    contentHtml: `
-      <h2>The Fall of the Browser Pixel</h2>
-      <p>Modern browser privacy features block traditional client-side Meta pixels. Installing Meta Server-Side Conversions API (CAPI) passes event data directly from your server to Meta, restoring full attribution accuracy and driving down CPA.</p>
-    `
+  if (!post) {
+    return {
+      title: "Article Not Found | Quantum Reach Media",
+      description: "The requested search intelligence article could not be found.",
+    };
   }
-};
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const resolvedParams = await params;
-  const post = blogDetailsMap[resolvedParams.slug] || blogDetailsMap["google-2026-core-update-ai-overviews-guide"];
+  const canonicalUrl = `https://quantumreachmedia.com/blog/${post.slug}`;
 
   return {
-    title: `${post.title} | Quantum Reach Media Blog`,
-    description: `${post.subtitle} Read actionable search and performance insights from Quantum Reach Media, Pune.`,
+    title: `${post.title} | Quantum Reach Media`,
+    description: post.excerpt,
     alternates: {
-      canonical: `https://quantumreachmedia.com/blog/${post.slug}`,
+      canonical: canonicalUrl,
     },
     openGraph: {
       title: post.title,
-      description: post.subtitle,
-      url: `https://quantumreachmedia.com/blog/${post.slug}`,
+      description: post.excerpt,
+      url: canonicalUrl,
       siteName: "Quantum Reach Media",
       type: "article",
       locale: "en_IN",
@@ -183,35 +55,35 @@ export async function generateMetadata({
       authors: [post.author.name],
       images: [
         {
-          url: "/qrm-logo-transparent.webp",
+          url: post.coverImage,
           width: 1200,
           height: 630,
-          alt: post.title,
+          alt: post.coverImageAlt,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
-      description: post.subtitle,
-      images: ["/qrm-logo-transparent.webp"],
+      description: post.excerpt,
+      images: [post.coverImage],
     },
   };
 }
 
-export function generateStaticParams() {
-  return [
-    { slug: "google-2026-core-update-ai-overviews-guide" },
-    { slug: "local-seo-gmb-map-pack-dominance-pune" },
-    { slug: "aeo-ranking-in-chatgpt-claude-gemini" },
-    { slug: "nextjs-16-100-lighthouse-core-web-vitals" },
-    { slug: "meta-ads-scaling-retargeting-capi-funnels" },
-  ];
-}
+export default async function BlogPostPage({ params }: Props) {
+  const { slug } = await params;
+  const post = BLOG_POSTS.find((p) => p.slug === slug);
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = await params;
-  const post = blogDetailsMap[resolvedParams.slug] || blogDetailsMap["google-2026-core-update-ai-overviews-guide"];
+  if (!post) {
+    notFound();
+  }
+
+  // Related posts: exclude current post, prioritize same category, take top 3
+  const relatedPosts = BLOG_POSTS
+    .filter((p) => p.slug !== post.slug)
+    .sort((a, b) => (a.category === post.category ? -1 : 1))
+    .slice(0, 3);
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -220,7 +92,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         "@type": "BlogPosting",
         "@id": `https://quantumreachmedia.com/blog/${post.slug}#article`,
         headline: post.title,
-        description: post.subtitle,
+        description: post.excerpt,
         datePublished: post.date,
         inLanguage: "en-IN",
         mainEntityOfPage: {
@@ -235,7 +107,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         publisher: {
           "@id": "https://quantumreachmedia.com/#organization",
         },
-        image: "https://quantumreachmedia.com/qrm-logo-transparent.webp",
+        image: post.coverImage,
       },
       {
         "@type": "BreadcrumbList",
@@ -264,7 +136,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   };
 
   return (
-    <main className="flex flex-col min-h-screen pt-32 pb-28 relative z-10">
+    <main className="flex flex-col min-h-screen pt-32 pb-24 relative z-10">
       {/* Schema.org BlogPosting & Breadcrumb JSON-LD */}
       <script
         type="application/ld+json"
@@ -272,133 +144,256 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       />
 
       <div className="container max-w-4xl mx-auto px-6">
-        
-        {/* Back Link */}
+        {/* Back Navigation Link */}
         <div className="mb-8">
-          <Link href="/blog" className="text-xs font-mono text-zinc-400 hover:text-saas-cyan transition-colors flex items-center gap-2">
-            <ArrowLeft size={14} /> Back to All Dispatches
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 hover:text-saas-cyan transition-colors group"
+          >
+            <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+            <span>Back to All Articles</span>
           </Link>
         </div>
 
-        {/* Article Header */}
-        <div className="space-y-6 mb-12 border-b border-white/10 pb-10">
-          <div className="flex items-center gap-3 text-xs font-mono">
+        {/* Lean Article Header: Title + Author Info */}
+        <header className="space-y-6 mb-10 pb-8 border-b border-white/10">
+          {/* Metadata Row */}
+          <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-zinc-400">
             <span className="px-3 py-1 rounded-full bg-saas-cyan/10 border border-saas-cyan/30 text-saas-cyan font-bold uppercase tracking-wider">
               {post.category}
             </span>
-            <span className="text-zinc-500">•</span>
-            <span className="text-zinc-400 flex items-center gap-1">
+            <span>•</span>
+            <span className="flex items-center gap-1">
               <Clock size={12} /> {post.readTime}
             </span>
-            <span className="text-zinc-500">•</span>
-            <span className="text-zinc-400">{post.date}</span>
+            <span>•</span>
+            <span>{post.date}</span>
           </div>
 
-          <h1 className="text-3xl md:text-5xl font-sans font-bold text-white leading-tight">
+          {/* Clean Main Title */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-sans font-extrabold text-white leading-[1.18] tracking-tight">
             {post.title}
           </h1>
 
-          <p className="text-lg text-zinc-300 font-medium leading-relaxed">
-            {post.subtitle}
-          </p>
-
-          {/* Author Card Header */}
-          <div className="flex items-center justify-between pt-4">
-            <div className="flex items-center gap-3">
-              <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/20">
-                <Image src={post.author.avatar} alt={post.author.name} fill className="object-cover" />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-white">{post.author.name}</div>
-                <div className="text-xs text-zinc-400">{post.author.role}</div>
-              </div>
+          {/* Author Row Directly Below Heading */}
+          <div className="flex items-center gap-3.5 pt-2">
+            <div className="relative w-11 h-11 rounded-full overflow-hidden border border-white/20 flex-shrink-0">
+              <Image
+                src={post.author.avatar}
+                alt={post.author.name}
+                fill
+                className="object-cover"
+              />
             </div>
+            <div>
+              <div className="text-sm font-bold text-white">{post.author.name}</div>
+              <div className="text-xs text-zinc-400">{post.author.role}</div>
+            </div>
+          </div>
+        </header>
 
-            <button className="p-2.5 rounded-full bg-saas-surface border border-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer" aria-label="Share Article">
-              <Share2 size={16} />
-            </button>
+        {/* Hero Cover Image */}
+        <div className="relative w-full h-72 sm:h-96 rounded-2xl overflow-hidden border border-white/10 mb-12 shadow-2xl bg-zinc-950">
+          <Image
+            src={post.coverImage}
+            alt={post.coverImageAlt}
+            fill
+            className="object-cover"
+            priority
+            sizes="(max-width: 896px) 100vw, 896px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0517]/80 via-transparent to-transparent" />
+          <div className="absolute bottom-4 left-6 text-xs font-mono text-zinc-400 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+            {post.coverImageAlt}
           </div>
         </div>
 
-        {/* Key Takeaways Box */}
+        {/* Executive Summary / Key Takeaways */}
         <div className="mb-12">
-          <GlowCard className="p-8 bg-saas-surface border border-saas-cyan/30">
+          <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-[#170c31] to-[#0c071d] border border-saas-cyan/40 shadow-[0_0_25px_rgba(6,182,212,0.12)]">
             <div className="flex items-center gap-2 text-xs font-mono font-bold text-saas-cyan uppercase tracking-widest mb-4">
-              <Sparkles size={14} /> EXECUTIVE SUMMARY &amp; KEY TAKEAWAYS
+              <Sparkles size={14} className="text-saas-cyan" /> EXECUTIVE SUMMARY &amp; KEY TAKEAWAYS
             </div>
-            <ul className="space-y-3">
+            <ul className="space-y-3.5">
               {post.keyTakeaways.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-sm text-zinc-200 leading-relaxed">
+                <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-zinc-200 leading-relaxed">
                   <CheckCircle2 size={16} className="text-saas-cyan flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-          </GlowCard>
+          </div>
         </div>
 
-        {/* Article Body Content */}
-        <div 
-          className="prose prose-invert max-w-none prose-p:text-zinc-300 prose-p:leading-relaxed prose-p:text-base prose-headings:text-white prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-strong:text-white prose-ul:text-zinc-300 prose-li:my-1"
+        {/* High-Readability Formatted Middle Content (Medium / dev.to typography) */}
+        <article
+          className="blog-prose space-y-6 text-zinc-300 text-base sm:text-lg leading-[1.85] font-normal
+            [&_h2]:text-2xl [&_h2]:sm:text-3xl [&_h2]:font-extrabold [&_h2]:text-white [&_h2]:mt-14 [&_h2]:mb-5 [&_h2]:pt-6 [&_h2]:border-t [&_h2]:border-white/10 [&_h2]:tracking-tight
+            [&_h3]:text-xl [&_h3]:sm:text-2xl [&_h3]:font-bold [&_h3]:text-saas-cyan [&_h3]:mt-9 [&_h3]:mb-3.5 [&_h3]:tracking-tight
+            [&_p]:mb-6 [&_p]:text-zinc-300 [&_p]:leading-[1.85]
+            [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 [&_ul]:space-y-2.5 [&_ul]:text-zinc-300
+            [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-6 [&_ol]:space-y-2.5 [&_ol]:text-zinc-300
+            [&_li]:text-zinc-300 [&_li]:leading-relaxed
+            [&_strong]:text-white [&_strong]:font-bold
+            [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:bg-white/10 [&_code]:text-purple-300 [&_code]:font-mono [&_code]:text-xs sm:[&_code]:text-sm
+            [&_table]:w-full [&_table]:my-8 [&_table]:border [&_table]:border-white/10 [&_table]:rounded-xl [&_table]:overflow-hidden
+            [&_thead]:bg-white/5 [&_th]:p-3.5 [&_th]:text-left [&_th]:text-xs [&_th]:font-mono [&_th]:text-saas-cyan [&_th]:uppercase
+            [&_td]:p-3.5 [&_td]:text-xs sm:[&_td]:text-sm [&_td]:border-t [&_td]:border-white/10 [&_td]:text-zinc-300"
           dangerouslySetInnerHTML={{ __html: post.contentHtml }}
         />
 
-        {/* Strategic Internal Links Block */}
-        <div className="mt-14 p-6 rounded-2xl bg-purple-950/20 border border-purple-500/20">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-            <span className="text-xs font-mono font-bold text-saas-cyan uppercase tracking-wider block">
-              RECOMMENDED GROWTH PROTOCOLS
+        {/* Visual Two-Grid Layout Section for Topic Breakdown */}
+        <section className="mt-14 pt-10 border-t border-white/10">
+          <div className="mb-6">
+            <span className="text-xs font-mono font-bold text-saas-cyan uppercase tracking-wider block mb-1">
+              OPERATIONAL BLUEPRINT
             </span>
-            <Link href="/services" className="text-xs font-bold text-purple-400 hover:text-saas-cyan transition-colors flex items-center gap-1 group">
-              <span>View All 12 Growth Protocols</span>
-              <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
-            </Link>
+            <h2 className="text-xl sm:text-2xl font-bold text-white">
+              Strategic Implementation &amp; Matrix
+            </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-            <Link href="/services/local-seo-gmb" className="p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-saas-cyan/40 transition-colors group">
-              <span className="text-xs font-bold text-white group-hover:text-saas-cyan transition-colors block mb-1">Local SEO &amp; GMB</span>
-              <span className="text-[11px] text-zinc-400 block">Dominate Pune 3-Pack</span>
-            </Link>
-            <Link href="/services/seo-web-development" className="p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-saas-purple transition-colors group">
-              <span className="text-xs font-bold text-white group-hover:text-saas-purple transition-colors block mb-1">Next.js Web Dev</span>
-              <span className="text-[11px] text-zinc-400 block">90+ Lighthouse Speed</span>
-            </Link>
-            <Link href="/services/aeo-geo-optimization" className="p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-emerald-400 transition-colors group">
-              <span className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors block mb-1">AEO &amp; GEO Engine</span>
-              <span className="text-[11px] text-zinc-400 block">Rank in ChatGPT &amp; Gemini</span>
-            </Link>
-          </div>
-        </div>
 
-        {/* Author Bio Footer */}
-        <div className="mt-16 pt-10 border-t border-white/10">
-          <GlowCard className="p-8 bg-saas-surface flex items-start gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Column 1: Actionable Checklist Card */}
+            <div className="p-6 rounded-2xl bg-gradient-to-b from-[#130b29] to-[#0a0517] border border-white/10 space-y-4">
+              <div className="flex items-center gap-2 text-xs font-mono font-bold text-purple-300 uppercase">
+                <Layers size={15} className="text-purple-400" />
+                <span>Core Execution Framework</span>
+              </div>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-300">
+                  <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check size={12} />
+                  </span>
+                  <span><strong>Entity Schema Validation:</strong> Deploy nested JSON-LD graphs linking author and organizational identities.</span>
+                </li>
+                <li className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-300">
+                  <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check size={12} />
+                  </span>
+                  <span><strong>Semantic Passage Formatting:</strong> Answer direct query intents within the initial 150 words using clean HTML tags.</span>
+                </li>
+                <li className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-300">
+                  <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check size={12} />
+                  </span>
+                  <span><strong>Firsthand Practitioner Proof:</strong> Embed verified client benchmarks, proprietary case studies, and real screenshots.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 2: Benchmark Metrics Table Card */}
+            <div className="p-6 rounded-2xl bg-gradient-to-b from-[#130b29] to-[#0a0517] border border-white/10 space-y-4">
+              <div className="flex items-center gap-2 text-xs font-mono font-bold text-saas-cyan uppercase">
+                <BarChart3 size={15} className="text-saas-cyan" />
+                <span>Performance Benchmark Matrix</span>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="text-zinc-400 font-mono border-b border-white/10">
+                    <tr>
+                      <th className="pb-2">Vector</th>
+                      <th className="pb-2">Target Baseline</th>
+                      <th className="pb-2">Algorithmic Priority</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 text-zinc-300">
+                    <tr>
+                      <td className="py-2.5 font-bold text-white">LCP Speed</td>
+                      <td className="py-2.5 text-saas-cyan font-mono">&lt; 1.2s</td>
+                      <td className="py-2.5 text-emerald-400 font-bold">Critical</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2.5 font-bold text-white">INP Latency</td>
+                      <td className="py-2.5 text-saas-cyan font-mono">&lt; 200ms</td>
+                      <td className="py-2.5 text-emerald-400 font-bold">High</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2.5 font-bold text-white">Schema Trust</td>
+                      <td className="py-2.5 text-saas-cyan font-mono">100% Valid</td>
+                      <td className="py-2.5 text-emerald-400 font-bold">Maximum</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Author Bio Footer Box */}
+        <div className="mt-14 pt-10 border-t border-white/10">
+          <div className="p-6 md:p-8 rounded-2xl bg-[#0f0923] border border-white/10 flex flex-col sm:flex-row items-start gap-5">
             <div className="relative w-14 h-14 rounded-full overflow-hidden border border-white/20 flex-shrink-0">
-              <Image src={post.author.avatar} alt={post.author.name} fill className="object-cover" />
+              <Image
+                src={post.author.avatar}
+                alt={post.author.name}
+                fill
+                className="object-cover"
+              />
             </div>
+            <div className="space-y-1.5">
+              <div className="text-[11px] font-mono text-saas-cyan uppercase font-bold tracking-wider">
+                WRITTEN BY
+              </div>
+              <h3 className="text-lg font-bold text-white">{post.author.name}</h3>
+              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">{post.author.bio}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Recommended Further Reading (3 Related Articles with Clean Spacing) */}
+        <div className="mt-14 pt-10 border-t border-white/10">
+          <div className="flex items-center justify-between mb-8">
             <div>
-              <div className="text-xs font-mono text-saas-cyan mb-1">WRITTEN BY</div>
-              <h3 className="text-lg font-bold text-white mb-2">{post.author.name}</h3>
-              <p className="text-zinc-400 text-xs leading-relaxed">{post.author.bio}</p>
+              <div className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-purple-400 uppercase tracking-wider mb-1">
+                <Compass size={13} />
+                RELATED ARTICLES
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold text-white">Recommended Further Reading</h2>
             </div>
-          </GlowCard>
-        </div>
+            <Link
+              href="/blog"
+              className="text-xs font-mono text-zinc-400 hover:text-saas-cyan transition-colors flex items-center gap-1 group"
+            >
+              <span>View All</span>
+              <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
 
-        {/* CTA Box */}
-        <div className="mt-16 text-center bg-gradient-to-r from-saas-cyan/10 via-saas-purple/10 to-saas-cyan/10 border border-white/10 rounded-3xl p-10 backdrop-blur-xl">
-          <h2 className="text-2xl font-sans font-bold text-white mb-3">Want these growth strategies deployed for your business?</h2>
-          <p className="text-zinc-400 max-w-lg mx-auto mb-6 text-xs md:text-sm">
-            Book a 1-on-1 strategy call with Quantum Reach Media architects in Pune.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-white text-black font-bold text-xs hover:bg-zinc-200 transition-colors shadow-[0_0_25px_rgba(255,255,255,0.3)]"
-          >
-            <span>Book A Strategy Session</span>
-            <ArrowRight size={13} />
-          </Link>
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {relatedPosts.map((related) => (
+              <Link
+                key={related.slug}
+                href={`/blog/${related.slug}`}
+                className="group flex flex-col justify-between rounded-2xl bg-[#0e071e] border border-white/10 hover:border-saas-cyan/40 p-4 transition-all duration-300"
+              >
+                <div>
+                  <div className="relative w-full h-36 rounded-xl overflow-hidden mb-3 bg-zinc-950">
+                    <Image
+                      src={related.coverImage}
+                      alt={related.coverImageAlt}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <span className="text-[10px] font-mono uppercase text-saas-cyan font-bold block mb-1.5">
+                    {related.category}
+                  </span>
+                  <h3 className="text-sm font-bold text-white group-hover:text-saas-cyan transition-colors line-clamp-2 leading-snug mb-2">
+                    {related.title}
+                  </h3>
+                </div>
 
+                <div className="flex items-center justify-between pt-3 border-t border-white/5 text-[11px] text-zinc-400 font-mono">
+                  <span>{related.readTime}</span>
+                  <span className="text-saas-cyan font-bold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                    Read <ArrowRight size={10} />
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </main>
   );
