@@ -15,6 +15,7 @@ import { ServiceConfidenceSection } from "@/components/services/service-confiden
 import { ServiceSplitSpecification } from "@/components/services/service-split-specification";
 import { ServiceEditorialProcess } from "@/components/services/service-editorial-process";
 import { ServiceFaqAccordion } from "@/components/services/service-faq-accordion";
+import { ServiceCtaCard } from "@/components/services/service-cta-card";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -328,46 +329,8 @@ export default async function ServiceDetailPage({ params }: Props) {
           <ServiceFaqAccordion faqs={service.faqs} serviceTitle={service.title} />
         </section>
 
-        {/* 8. SIMPLIFIED HIGH-IMPACT CONVERSION CALL TO ACTION BANNER */}
-        <section className="relative mt-16 md:mt-20 mb-6 md:mb-8 overflow-hidden rounded-3xl p-8 sm:p-12 lg:p-14 border border-purple-400/40 dark:border-purple-500/30 bg-gradient-to-b from-purple-100/95 via-purple-50/70 to-white/95 dark:from-[#1b062c] dark:via-[#13031f] dark:to-[#0a0112] shadow-2xl">
-          {/* Subtle Ambient Radial Glows */}
-          <div className="absolute -top-24 -left-24 w-80 h-80 bg-purple-500/20 dark:bg-purple-600/25 rounded-full blur-[100px] pointer-events-none" />
-          <div className="absolute -bottom-24 -right-24 w-80 h-80 bg-pink-500/20 dark:bg-rose-600/20 rounded-full blur-[100px] pointer-events-none" />
-
-          <div className="relative z-10 max-w-3xl mx-auto text-center space-y-6">
-            {/* Main Headline */}
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-sans font-extrabold text-purple-950 dark:text-white tracking-tight leading-[1.15]">
-              Ready to Make Your Digital Presence{" "}
-              <span className="italic font-serif font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-pink-600 to-rose-600 dark:from-saas-cyan dark:via-purple-300 dark:to-pink-400">
-                Work Harder in Pune?
-              </span>
-            </h2>
-
-            {/* Narrative description */}
-            <p className="text-sm sm:text-base md:text-lg text-purple-950/80 dark:text-zinc-300 leading-relaxed max-w-2xl mx-auto">
-              Partner with Pune&apos;s premier SEO &amp; digital growth engineering team to outrank entrenched competitors on Google, ChatGPT, and Gemini.
-            </p>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-              <Link
-                href="/contact"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-purple-950 text-white hover:bg-purple-900 dark:bg-white dark:text-black dark:hover:bg-zinc-200 font-bold text-sm transition-all shadow-[0_4px_25px_rgba(147,51,234,0.3)] hover:scale-[1.02]"
-              >
-                <span>Schedule Your Pune Growth Audit</span>
-                <ArrowRight size={15} />
-              </Link>
-
-              <Link
-                href="/services"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-white/80 dark:bg-zinc-900/80 border border-purple-300 dark:border-white/15 text-purple-950 dark:text-white font-bold text-sm hover:bg-purple-100/70 dark:hover:bg-white/10 transition-colors shadow-sm"
-              >
-                <span>Explore All 12 Services</span>
-                <ArrowRight size={14} />
-              </Link>
-            </div>
-          </div>
-        </section>
+        {/* 8. INTERACTIVE HIGH-IMPACT CONVERSION CALL TO ACTION BANNER */}
+        <ServiceCtaCard />
 
       </div>
     </main>

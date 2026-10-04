@@ -6,7 +6,7 @@ export function Footer() {
   const gmbMapUrl = "https://www.google.com/maps/place/Quantum+Reach+Media,+Pune/data=!4m2!3m1!1s0x0:0xe9c0270609fb909b?sa=X&ved=1t:2428&hl=en&ictx=111";
 
   return (
-    <footer className="relative z-10 pt-16 pb-12 overflow-hidden transition-colors bg-gradient-to-b from-purple-50/80 via-purple-100/40 to-background dark:from-[#0d071d] dark:via-[#080413] dark:to-[#030107]">
+    <footer className="relative z-10 pt-16 pb-0 overflow-hidden transition-colors bg-gradient-to-b from-purple-50/80 via-purple-100/40 to-background dark:from-[#0d071d] dark:via-[#080413] dark:to-[#030107]">
       {/* Luminous Top Gradient Horizon Divider Line */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-purple-500/70 via-saas-cyan/60 to-transparent shadow-[0_0_15px_rgba(168,85,247,0.6)]" />
       
@@ -33,7 +33,7 @@ export function Footer() {
               />
               <span className="font-sans font-extrabold text-lg sm:text-xl tracking-tight text-purple-950 dark:text-white flex flex-col leading-[1.1]">
                 <span>Quantum Reach</span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] to-[#7E22CE] dark:from-[#38BDF8] dark:to-[#A855F7]">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-purple-600 to-saas-purple dark:from-saas-cyan dark:via-purple-300 dark:to-saas-purple">
                   Media
                 </span>
               </span>
@@ -222,17 +222,26 @@ export function Footer() {
         
         {/* Footer Bottom Bar */}
         <div className="pt-8 border-t border-purple-200/60 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-purple-950/70 dark:text-zinc-500 font-medium">
-          <p>&copy; {new Date().getFullYear()} Quantum Reach Media. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <Link href="#" className="hover:text-purple-950 dark:hover:text-zinc-300 transition-colors">
+          <p>
+            &copy; {new Date().getFullYear()} <strong className="text-purple-950 dark:text-zinc-300 font-semibold">Quantum Reach Media</strong> — SEO &amp; Digital Marketing Agency in Pune. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6 shrink-0">
+            <Link href="/privacy-policy" className="hover:text-purple-950 dark:hover:text-zinc-300 transition-colors">
               Privacy Policy
             </Link>
-            <Link href="#" className="hover:text-purple-950 dark:hover:text-zinc-300 transition-colors">
+            <Link href="/terms-of-service" className="hover:text-purple-950 dark:hover:text-zinc-300 transition-colors">
               Terms of Service
             </Link>
           </div>
         </div>
 
+      </div>
+
+      {/* Massive Edge-to-Edge Watermark Typography Replicating Reference Design */}
+      <div className="w-full overflow-hidden select-none pointer-events-none mt-6 sm:mt-10 pt-2 pb-0 px-4 sm:px-6 flex justify-center items-end">
+        <span className="font-sans font-black uppercase tracking-tight text-center leading-[0.78] text-transparent bg-clip-text bg-gradient-to-b from-purple-950/[0.08] via-purple-950/[0.03] to-transparent dark:from-white/[0.08] dark:via-white/[0.03] dark:to-transparent text-[7.2vw] sm:text-[8.2vw] md:text-[8.8vw] lg:text-[9.2vw] whitespace-nowrap block max-w-full">
+          QUANTUM REACH
+        </span>
       </div>
     </footer>
   );

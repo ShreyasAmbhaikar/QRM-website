@@ -4,6 +4,7 @@ import "./globals.css";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { JsonLd } from "@/components/seo/json-ld";
 
 const inter = Inter({
@@ -113,6 +114,7 @@ export default function RootLayout({
             {children}
           </div>
           <Footer />
+          <WhatsAppButton />
         </LenisProvider>
       </body>
     </html>

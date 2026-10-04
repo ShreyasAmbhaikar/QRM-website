@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ALL_SERVICES, ServiceItem } from "@/data/services-data";
 import { ArrowRight } from "lucide-react";
+import { ServiceCtaCard } from "@/components/services/service-cta-card";
 
 const SHORT_DESCRIPTIONS: Record<string, string> = {
   "traditional-seo-in-pune": "Eliminate technical crawl blockers and dominate competitive organic search rankings.",
@@ -172,6 +173,9 @@ export function ServicesPageView() {
             </section>
           ))}
         </div>
+        
+        {/* Interactive Dynamic Pointing Arrow CTA Card */}
+        <ServiceCtaCard />
       </div>
     </div>
   );

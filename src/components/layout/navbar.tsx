@@ -247,7 +247,7 @@ export function Navbar() {
           {/* Brand Name: Shown on larger displays to guarantee no overlapping */}
           <span className="font-sans font-extrabold text-sm sm:text-base tracking-tight text-purple-950 dark:text-white hidden lg:inline-block whitespace-nowrap">
             Quantum Reach{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] to-[#7E22CE] dark:from-[#38BDF8] dark:to-[#A855F7]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-purple-600 to-saas-purple dark:from-saas-cyan dark:via-purple-300 dark:to-saas-purple">
               Media
             </span>
           </span>
