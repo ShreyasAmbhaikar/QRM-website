@@ -1048,54 +1048,49 @@ function TechInfinityHeader() {
             </div>
 
             {mobileServicesOpen && (
-              <div className="flex flex-col gap-2 my-1 pl-1 pr-1 animate-in fade-in duration-200">
-                <Link
-                  href="/services"
-                  onClick={() => {
-                    setIsOpen(false);
-                    setMobileServicesOpen(false);
-                  }}
-                  className="group flex items-center justify-between p-3 rounded-2xl bg-gradient-to-r from-purple-500/20 via-saas-purple/20 to-saas-cyan/15 border border-white/20 hover:border-saas-cyan/50 transition-all"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-saas-cyan/20 border border-saas-cyan/40 flex items-center justify-center text-saas-cyan shrink-0">
-                      <Sparkles size={14} />
+              <div className="flex flex-col gap-3 my-1 pl-1 pr-1 animate-in fade-in duration-200">
+                {serviceCategories.map((category, catIdx) => (
+                  <div key={catIdx} className="space-y-1.5">
+                    {/* Category Label */}
+                    <div className="text-[10px] font-mono font-extrabold uppercase tracking-wider text-saas-cyan/90 border-b border-white/10 pb-1 pt-1 flex items-center justify-between">
+                      <span>{category.title}</span>
+                      <span className="text-[9px] text-zinc-500 font-normal">{category.items.length} services</span>
                     </div>
-                    <div className="flex flex-col">
-                      <span className="text-xs font-bold text-white group-hover:text-saas-cyan transition-colors">
-                        View All 12 Services Hub
-                      </span>
-                      <span className="text-[10px] text-zinc-400">
-                        Explore full digital growth matrix
-                      </span>
+
+                    {/* All Complete Services with Icons */}
+                    <div className="flex flex-col gap-1.5">
+                      {category.items.map((item, itemIdx) => (
+                        <Link
+                          key={itemIdx}
+                          href={item.href}
+                          onClick={() => {
+                            setIsOpen(false);
+                            setMobileServicesOpen(false);
+                          }}
+                          className={cn(
+                            "group flex items-center justify-between p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-saas-cyan/40 transition-all",
+                            pathname === item.href && "bg-white/10 border-saas-cyan/40"
+                          )}
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <div className="w-7 h-7 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:border-saas-cyan/50 transition-all">
+                              {item.icon}
+                            </div>
+                            <div className="flex flex-col min-w-0">
+                              <span className="text-xs font-bold text-zinc-100 group-hover:text-saas-cyan transition-colors truncate">
+                                {item.title}
+                              </span>
+                              <span className="text-[10px] text-zinc-400 font-medium truncate">
+                                {item.desc}
+                              </span>
+                            </div>
+                          </div>
+                          <ChevronRight size={13} className="text-zinc-500 group-hover:text-saas-cyan group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
+                        </Link>
+                      ))}
                     </div>
                   </div>
-                  <ArrowRight size={13} className="text-saas-cyan group-hover:translate-x-0.5 transition-transform shrink-0" />
-                </Link>
-
-                <div className="grid grid-cols-1 gap-1.5">
-                  {serviceCategories.map((category, catIdx) => (
-                    <Link
-                      key={catIdx}
-                      href="/services"
-                      onClick={() => {
-                        setIsOpen(false);
-                        setMobileServicesOpen(false);
-                      }}
-                      className="group flex items-center justify-between p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-purple-400/40 transition-all"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <span className="text-xs font-bold text-zinc-200 group-hover:text-white">
-                          {category.title}
-                        </span>
-                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-purple-500/20 text-purple-300 border border-purple-400/30">
-                          {category.items.length} services
-                        </span>
-                      </div>
-                      <ChevronRight size={13} className="text-zinc-400 group-hover:text-white transition-colors" />
-                    </Link>
-                  ))}
-                </div>
+                ))}
               </div>
             )}
           </div>
