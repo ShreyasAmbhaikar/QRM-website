@@ -216,6 +216,8 @@ function TechInfinityHeader() {
 
   const notchRef = useRef<HTMLDivElement>(null);
   const collapseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const servicesTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const blogTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const servicesDropdownRef = useRef<HTMLDivElement>(null);
   const blogDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -223,6 +225,15 @@ function TechInfinityHeader() {
     if (href === "/") return pathname === "/";
     return pathname === href || pathname.startsWith(href + "/");
   };
+
+  // Cleanup timers on unmount
+  useEffect(() => {
+    return () => {
+      if (servicesTimeoutRef.current) clearTimeout(servicesTimeoutRef.current);
+      if (blogTimeoutRef.current) clearTimeout(blogTimeoutRef.current);
+      if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current);
+    };
+  }, []);
 
   // Scroll listener: activates full-width dipped header when scrolling past 30px
   useEffect(() => {
@@ -248,7 +259,11 @@ function TechInfinityHeader() {
       const drawer = document.querySelector('[data-mobile-drawer="true"]');
       if (drawer && drawer.contains(target)) return;
 
-      if (notchRef.current && !notchRef.current.contains(target)) {
+      const inServices = servicesDropdownRef.current && servicesDropdownRef.current.contains(target);
+      const inBlog = blogDropdownRef.current && blogDropdownRef.current.contains(target);
+      const inNotch = notchRef.current && notchRef.current.contains(target);
+
+      if (!inServices && !inBlog && !inNotch) {
         setIsHovered(false);
         setServicesOpen(false);
         setBlogOpen(false);
@@ -272,7 +287,41 @@ function TechInfinityHeader() {
     };
   }, []);
 
-  // Grace hover timeout
+  // Grace hover handlers for Services dropdown
+  const handleServicesEnter = () => {
+    if (servicesTimeoutRef.current) clearTimeout(servicesTimeoutRef.current);
+    if (blogTimeoutRef.current) clearTimeout(blogTimeoutRef.current);
+    if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current);
+    setBlogOpen(false);
+    setIsHovered(true);
+    setServicesOpen(true);
+  };
+
+  const handleServicesLeave = () => {
+    if (servicesTimeoutRef.current) clearTimeout(servicesTimeoutRef.current);
+    servicesTimeoutRef.current = setTimeout(() => {
+      setServicesOpen(false);
+    }, 200);
+  };
+
+  // Grace hover handlers for Blog dropdown
+  const handleBlogEnter = () => {
+    if (blogTimeoutRef.current) clearTimeout(blogTimeoutRef.current);
+    if (servicesTimeoutRef.current) clearTimeout(servicesTimeoutRef.current);
+    if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current);
+    setServicesOpen(false);
+    setIsHovered(true);
+    setBlogOpen(true);
+  };
+
+  const handleBlogLeave = () => {
+    if (blogTimeoutRef.current) clearTimeout(blogTimeoutRef.current);
+    blogTimeoutRef.current = setTimeout(() => {
+      setBlogOpen(false);
+    }, 200);
+  };
+
+  // Grace hover timeout for notch
   const handleNotchMouseEnter = () => {
     if (collapseTimeoutRef.current) {
       clearTimeout(collapseTimeoutRef.current);
@@ -282,8 +331,8 @@ function TechInfinityHeader() {
   };
 
   const handleNotchMouseLeave = () => {
-    // If mobile drawer is open, keep notch expanded
-    if (isOpen) return;
+    // If mobile drawer is open or dropdowns are active, keep notch expanded
+    if (isOpen || servicesOpen || blogOpen) return;
     collapseTimeoutRef.current = setTimeout(() => {
       setIsHovered(false);
       setServicesOpen(false);
@@ -355,8 +404,8 @@ function TechInfinityHeader() {
                 <div 
                   ref={servicesDropdownRef}
                   className="relative"
-                  onMouseEnter={() => setServicesOpen(true)}
-                  onMouseLeave={() => setServicesOpen(false)}
+                  onMouseEnter={handleServicesEnter}
+                  onMouseLeave={handleServicesLeave}
                 >
                   <Link
                     href="/services"
@@ -379,62 +428,68 @@ function TechInfinityHeader() {
 
                   {servicesOpen && (
                     <div 
-                      className="absolute left-1/2 -translate-x-1/2 top-[calc(100%+14px)] w-[820px] max-w-[90vw] p-6 rounded-3xl border border-white/20 backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-200 z-50 pointer-events-auto"
-                      style={{
-                        background: "linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(168, 85, 247, 0.12) 20%, rgba(18, 14, 32, 0.85) 100%)",
-                        boxShadow: "0 30px 80px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 0 35px rgba(168, 85, 247, 0.15)",
-                      }}
+                      onMouseEnter={handleServicesEnter}
+                      onMouseLeave={handleServicesLeave}
+                      className="absolute left-1/2 -translate-x-1/2 top-full pt-2.5 z-50 pointer-events-auto"
                     >
-                      <div className="grid grid-cols-3 gap-6">
-                        {serviceCategories.map((category, idx) => (
-                          <div key={idx} className="space-y-3">
-                            <div className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-purple-800 dark:text-saas-cyan/90 border-b border-purple-100 dark:border-white/10 pb-2">
-                              {category.title}
+                      <div 
+                        className="w-[820px] max-w-[90vw] p-6 rounded-3xl border border-white/20 backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-200"
+                        style={{
+                          background: "linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(168, 85, 247, 0.12) 20%, rgba(18, 14, 32, 0.85) 100%)",
+                          boxShadow: "0 30px 80px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 0 35px rgba(168, 85, 247, 0.15)",
+                        }}
+                      >
+                        <div className="grid grid-cols-3 gap-6">
+                          {serviceCategories.map((category, idx) => (
+                            <div key={idx} className="space-y-3">
+                              <div className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-purple-800 dark:text-saas-cyan/90 border-b border-purple-100 dark:border-white/10 pb-2">
+                                {category.title}
+                              </div>
+                              <div className="flex flex-col gap-1.5">
+                                {category.items.map((item, itemIdx) => (
+                                  <Link
+                                    key={itemIdx}
+                                    href={item.href}
+                                    onClick={() => setServicesOpen(false)}
+                                    className="group flex items-start gap-3 p-2 rounded-xl hover:bg-purple-50 dark:hover:bg-white/5 transition-all"
+                                  >
+                                    <div className="mt-0.5 w-7 h-7 rounded-lg bg-purple-100 dark:bg-zinc-900 border border-purple-200/70 dark:border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-purple-400 dark:group-hover:border-saas-cyan/50 transition-all">
+                                      {item.icon}
+                                    </div>
+                                    <div className="flex flex-col">
+                                      <span className="text-xs font-bold text-purple-950 dark:text-zinc-100 group-hover:text-purple-700 dark:group-hover:text-saas-cyan transition-colors">
+                                        {item.title}
+                                      </span>
+                                      <span className="text-[11px] text-purple-900/70 dark:text-zinc-400 font-medium line-clamp-1">
+                                        {item.desc}
+                                      </span>
+                                    </div>
+                                  </Link>
+                                ))}
+                              </div>
                             </div>
-                            <div className="flex flex-col gap-1.5">
-                              {category.items.map((item, itemIdx) => (
-                                <Link
-                                  key={itemIdx}
-                                  href={item.href}
-                                  onClick={() => setServicesOpen(false)}
-                                  className="group flex items-start gap-3 p-2 rounded-xl hover:bg-purple-50 dark:hover:bg-white/5 transition-all"
-                                >
-                                  <div className="mt-0.5 w-7 h-7 rounded-lg bg-purple-100 dark:bg-zinc-900 border border-purple-200/70 dark:border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-purple-400 dark:group-hover:border-saas-cyan/50 transition-all">
-                                    {item.icon}
-                                  </div>
-                                  <div className="flex flex-col">
-                                    <span className="text-xs font-bold text-purple-950 dark:text-zinc-100 group-hover:text-purple-700 dark:group-hover:text-saas-cyan transition-colors">
-                                      {item.title}
-                                    </span>
-                                    <span className="text-[11px] text-purple-900/70 dark:text-zinc-400 font-medium line-clamp-1">
-                                      {item.desc}
-                                    </span>
-                                  </div>
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                          ))}
+                        </div>
 
-                      <div className="mt-5 pt-4 border-t border-purple-100 dark:border-white/10 flex items-center justify-between text-xs">
-                        <Link
-                          href="/services"
-                          onClick={() => setServicesOpen(false)}
-                          className="inline-flex items-center gap-1.5 font-bold px-3 py-1.5 rounded-full bg-purple-100 dark:bg-white/10 hover:bg-purple-200 dark:hover:bg-white/15 text-purple-900 dark:text-saas-cyan transition-colors"
-                        >
-                          <Sparkles size={13} className="text-purple-600 dark:text-saas-cyan" />
-                          <span>View All 12 Services Hub</span>
-                          <ArrowRight size={12} />
-                        </Link>
-                        <Link
-                          href="/contact"
-                          onClick={() => setServicesOpen(false)}
-                          className="inline-flex items-center gap-1.5 font-bold text-purple-700 dark:text-saas-cyan hover:underline group"
-                        >
-                          <span>Schedule Strategy Audit</span>
-                          <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
-                        </Link>
+                        <div className="mt-5 pt-4 border-t border-purple-100 dark:border-white/10 flex items-center justify-between text-xs">
+                          <Link
+                            href="/services"
+                            onClick={() => setServicesOpen(false)}
+                            className="inline-flex items-center gap-1.5 font-bold px-3 py-1.5 rounded-full bg-purple-100 dark:bg-white/10 hover:bg-purple-200 dark:hover:bg-white/15 text-purple-900 dark:text-saas-cyan transition-colors"
+                          >
+                            <Sparkles size={13} className="text-purple-600 dark:text-saas-cyan" />
+                            <span>View All 12 Services Hub</span>
+                            <ArrowRight size={12} />
+                          </Link>
+                          <Link
+                            href="/contact"
+                            onClick={() => setServicesOpen(false)}
+                            className="inline-flex items-center gap-1.5 font-bold text-purple-700 dark:text-saas-cyan hover:underline group"
+                          >
+                            <span>Schedule Strategy Audit</span>
+                            <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -442,6 +497,10 @@ function TechInfinityHeader() {
 
                 <Link 
                   href="/our-work" 
+                  onMouseEnter={() => {
+                    setServicesOpen(false);
+                    setBlogOpen(false);
+                  }}
                   className={cn(
                     "text-xs lg:text-sm font-bold transition-all whitespace-nowrap px-3 py-1.5 rounded-full",
                     isLinkActive("/our-work")
@@ -456,8 +515,8 @@ function TechInfinityHeader() {
                 <div 
                   ref={blogDropdownRef}
                   className="relative"
-                  onMouseEnter={() => setBlogOpen(true)}
-                  onMouseLeave={() => setBlogOpen(false)}
+                  onMouseEnter={handleBlogEnter}
+                  onMouseLeave={handleBlogLeave}
                 >
                   <Link
                     href="/blog"
@@ -480,36 +539,42 @@ function TechInfinityHeader() {
 
                   {blogOpen && (
                     <div 
-                      className="absolute left-1/2 -translate-x-1/2 top-[calc(100%+14px)] w-72 p-3 rounded-2xl border border-white/20 backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-200 z-50 pointer-events-auto"
-                      style={{
-                        background: "linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(168, 85, 247, 0.12) 25%, rgba(18, 14, 32, 0.85) 100%)",
-                        boxShadow: "0 25px 70px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 0 25px rgba(168, 85, 247, 0.12)",
-                      }}
+                      onMouseEnter={handleBlogEnter}
+                      onMouseLeave={handleBlogLeave}
+                      className="absolute left-1/2 -translate-x-1/2 top-full pt-2.5 z-50 pointer-events-auto"
                     >
-                      <div className="flex flex-col gap-1.5">
-                        {blogNavItems.map((item, idx) => (
-                          <Link
-                            key={idx}
-                            href={item.href}
-                            onClick={() => setBlogOpen(false)}
-                            className={cn(
-                              "group flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/10 transition-all",
-                              pathname === item.href && "bg-white/10"
-                            )}
-                          >
-                            <div className="mt-0.5 w-7 h-7 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-saas-cyan/50 transition-all">
-                              {item.icon}
-                            </div>
-                            <div className="flex flex-col">
-                              <span className="text-xs font-bold text-zinc-100 group-hover:text-saas-cyan transition-colors">
-                                {item.title}
-                              </span>
-                              <span className="text-[11px] text-zinc-400 font-medium">
-                                {item.desc}
-                              </span>
-                            </div>
-                          </Link>
-                        ))}
+                      <div 
+                        className="w-72 p-3 rounded-2xl border border-white/20 backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-200"
+                        style={{
+                          background: "linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(168, 85, 247, 0.12) 25%, rgba(18, 14, 32, 0.85) 100%)",
+                          boxShadow: "0 25px 70px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 0 25px rgba(168, 85, 247, 0.12)",
+                        }}
+                      >
+                        <div className="flex flex-col gap-1.5">
+                          {blogNavItems.map((item, idx) => (
+                            <Link
+                              key={idx}
+                              href={item.href}
+                              onClick={() => setBlogOpen(false)}
+                              className={cn(
+                                "group flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/10 transition-all",
+                                pathname === item.href && "bg-white/10"
+                              )}
+                            >
+                              <div className="mt-0.5 w-7 h-7 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-saas-cyan/50 transition-all">
+                                {item.icon}
+                              </div>
+                              <div className="flex flex-col">
+                                <span className="text-xs font-bold text-zinc-100 group-hover:text-saas-cyan transition-colors">
+                                  {item.title}
+                                </span>
+                                <span className="text-[11px] text-zinc-400 font-medium">
+                                  {item.desc}
+                                </span>
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   )}
@@ -737,6 +802,10 @@ function TechInfinityHeader() {
                         <nav className="flex items-center gap-1.5 lg:gap-2 xl:gap-3 h-9">
                           <Link 
                             href="/about" 
+                            onMouseEnter={() => {
+                              setServicesOpen(false);
+                              setBlogOpen(false);
+                            }}
                             className={cn(
                               "inline-flex items-center h-8 px-3.5 rounded-full text-[13px] font-semibold transition-all whitespace-nowrap",
                               isLinkActive("/about")
@@ -750,11 +819,8 @@ function TechInfinityHeader() {
                           {/* Services Trigger with Dropdown Chevron */}
                           <div 
                             className="relative flex items-center h-9"
-                            onMouseEnter={() => {
-                              if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current);
-                              setServicesOpen(true);
-                            }}
-                            onMouseLeave={() => setServicesOpen(false)}
+                            onMouseEnter={handleServicesEnter}
+                            onMouseLeave={handleServicesLeave}
                           >
                             <Link
                               href="/services"
@@ -778,76 +844,77 @@ function TechInfinityHeader() {
                             {/* Services Mega Menu with Glassmorphism */}
                             {servicesOpen && (
                               <div 
-                                onMouseEnter={() => {
-                                  if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current);
-                                  setIsHovered(true);
-                                  setServicesOpen(true);
-                                }}
-                                className="absolute left-1/2 -translate-x-1/2 top-[calc(100%+14px)] w-[820px] max-w-[92vw] p-6 rounded-3xl border border-white/20 backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-150 z-50 pointer-events-auto"
-                                style={{
-                                  background: "linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(168, 85, 247, 0.12) 20%, rgba(18, 14, 32, 0.85) 100%)",
-                                  boxShadow: "0 30px 80px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 0 35px rgba(168, 85, 247, 0.15)",
-                                }}
+                                onMouseEnter={handleServicesEnter}
+                                onMouseLeave={handleServicesLeave}
+                                className="absolute left-1/2 -translate-x-1/2 top-full pt-3.5 z-50 pointer-events-auto"
                               >
-                                <div className="grid grid-cols-3 gap-6">
-                                  {serviceCategories.map((category, idx) => (
-                                    <div key={idx} className="space-y-3">
-                                      <div className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-saas-cyan/90 border-b border-white/10 pb-2">
-                                        {category.title}
+                                <div
+                                  className="w-[820px] max-w-[92vw] p-6 rounded-3xl border border-white/20 backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-150"
+                                  style={{
+                                    background: "linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(168, 85, 247, 0.12) 20%, rgba(18, 14, 32, 0.85) 100%)",
+                                    boxShadow: "0 30px 80px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 0 35px rgba(168, 85, 247, 0.15)",
+                                  }}
+                                >
+                                  <div className="grid grid-cols-3 gap-6">
+                                    {serviceCategories.map((category, idx) => (
+                                      <div key={idx} className="space-y-3">
+                                        <div className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-saas-cyan/90 border-b border-white/10 pb-2">
+                                          {category.title}
+                                        </div>
+                                        <div className="flex flex-col gap-1.5">
+                                          {category.items.map((item, itemIdx) => (
+                                            <Link
+                                              key={itemIdx}
+                                              href={item.href}
+                                              onClick={() => {
+                                                setServicesOpen(false);
+                                                setIsHovered(false);
+                                              }}
+                                              className="group flex items-start gap-3 p-2 rounded-xl hover:bg-white/5 transition-all"
+                                            >
+                                              <div className="mt-0.5 w-7 h-7 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-saas-cyan/50 transition-all">
+                                                {item.icon}
+                                              </div>
+                                              <div className="flex flex-col">
+                                                <span className="text-xs font-bold text-zinc-100 group-hover:text-saas-cyan transition-colors">
+                                                  {item.title}
+                                                </span>
+                                                <span className="text-[11px] text-zinc-400 font-medium line-clamp-1">
+                                                  {item.desc}
+                                                </span>
+                                              </div>
+                                            </Link>
+                                          ))}
+                                        </div>
                                       </div>
-                                      <div className="flex flex-col gap-1.5">
-                                        {category.items.map((item, itemIdx) => (
-                                          <Link
-                                            key={itemIdx}
-                                            href={item.href}
-                                            onClick={() => {
-                                              setServicesOpen(false);
-                                              setIsHovered(false);
-                                            }}
-                                            className="group flex items-start gap-3 p-2 rounded-xl hover:bg-white/5 transition-all"
-                                          >
-                                            <div className="mt-0.5 w-7 h-7 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-saas-cyan/50 transition-all">
-                                              {item.icon}
-                                            </div>
-                                            <div className="flex flex-col">
-                                              <span className="text-xs font-bold text-zinc-100 group-hover:text-saas-cyan transition-colors">
-                                                {item.title}
-                                              </span>
-                                              <span className="text-[11px] text-zinc-400 font-medium line-clamp-1">
-                                                {item.desc}
-                                              </span>
-                                            </div>
-                                          </Link>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  ))}
-                                </div>
+                                    ))}
+                                  </div>
 
-                                <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-xs">
-                                  <Link
-                                    href="/services"
-                                    onClick={() => {
-                                      setServicesOpen(false);
-                                      setIsHovered(false);
-                                    }}
-                                    className="inline-flex items-center gap-1.5 font-bold px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/15 text-saas-cyan transition-colors text-xs"
-                                  >
-                                    <Sparkles size={13} className="text-saas-cyan" />
-                                    <span>View All 12 Services Hub</span>
-                                    <ArrowRight size={12} />
-                                  </Link>
-                                  <Link
-                                    href="/contact"
-                                    onClick={() => {
-                                      setServicesOpen(false);
-                                      setIsHovered(false);
-                                    }}
-                                    className="inline-flex items-center gap-1 font-bold text-saas-cyan hover:underline group text-xs"
-                                  >
-                                    <span>Schedule Strategy Audit</span>
-                                    <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
-                                  </Link>
+                                  <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-xs">
+                                    <Link
+                                      href="/services"
+                                      onClick={() => {
+                                        setServicesOpen(false);
+                                        setIsHovered(false);
+                                      }}
+                                      className="inline-flex items-center gap-1.5 font-bold px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/15 text-saas-cyan transition-colors text-xs"
+                                    >
+                                      <Sparkles size={13} className="text-saas-cyan" />
+                                      <span>View All 12 Services Hub</span>
+                                      <ArrowRight size={12} />
+                                    </Link>
+                                    <Link
+                                      href="/contact"
+                                      onClick={() => {
+                                        setServicesOpen(false);
+                                        setIsHovered(false);
+                                      }}
+                                      className="inline-flex items-center gap-1 font-bold text-saas-cyan hover:underline group text-xs"
+                                    >
+                                      <span>Schedule Strategy Audit</span>
+                                      <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+                                    </Link>
+                                  </div>
                                 </div>
                               </div>
                             )}
@@ -855,6 +922,10 @@ function TechInfinityHeader() {
 
                           <Link 
                             href="/our-work" 
+                            onMouseEnter={() => {
+                              setServicesOpen(false);
+                              setBlogOpen(false);
+                            }}
                             className={cn(
                               "inline-flex items-center h-8 px-3.5 rounded-full text-[13px] font-semibold transition-all whitespace-nowrap",
                               isLinkActive("/our-work")
@@ -868,11 +939,8 @@ function TechInfinityHeader() {
                           {/* Blog Trigger with Dropdown */}
                           <div 
                             className="relative flex items-center h-9"
-                            onMouseEnter={() => {
-                              if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current);
-                              setBlogOpen(true);
-                            }}
-                            onMouseLeave={() => setBlogOpen(false)}
+                            onMouseEnter={handleBlogEnter}
+                            onMouseLeave={handleBlogLeave}
                           >
                             <Link
                               href="/blog"
@@ -896,44 +964,45 @@ function TechInfinityHeader() {
                             {/* Blog Dropdown with Glassmorphism */}
                             {blogOpen && (
                               <div 
-                                onMouseEnter={() => {
-                                  if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current);
-                                  setIsHovered(true);
-                                  setBlogOpen(true);
-                                }}
-                                className="absolute left-1/2 -translate-x-1/2 top-[calc(100%+14px)] w-72 p-3 rounded-2xl border border-white/20 backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-150 z-50 pointer-events-auto"
-                                style={{
-                                  background: "linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(168, 85, 247, 0.12) 25%, rgba(18, 14, 32, 0.85) 100%)",
-                                  boxShadow: "0 25px 70px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 0 25px rgba(168, 85, 247, 0.12)",
-                                }}
+                                onMouseEnter={handleBlogEnter}
+                                onMouseLeave={handleBlogLeave}
+                                className="absolute left-1/2 -translate-x-1/2 top-full pt-3.5 z-50 pointer-events-auto"
                               >
-                                <div className="flex flex-col gap-1.5">
-                                  {blogNavItems.map((item, idx) => (
-                                    <Link
-                                      key={idx}
-                                      href={item.href}
-                                      onClick={() => {
-                                        setBlogOpen(false);
-                                        setIsHovered(false);
-                                      }}
-                                      className={cn(
-                                        "group flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/5 transition-all",
-                                        pathname === item.href && "bg-white/5"
-                                      )}
-                                    >
-                                      <div className="mt-0.5 w-7 h-7 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-saas-cyan/50 transition-all">
-                                        {item.icon}
-                                      </div>
-                                      <div className="flex flex-col">
-                                        <span className="text-xs font-bold text-zinc-100 group-hover:text-saas-cyan transition-colors">
-                                          {item.title}
-                                        </span>
-                                        <span className="text-[11px] text-zinc-400 font-medium">
-                                          {item.desc}
-                                        </span>
-                                      </div>
-                                    </Link>
-                                  ))}
+                                <div
+                                  className="w-72 p-3 rounded-2xl border border-white/20 backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-150"
+                                  style={{
+                                    background: "linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(168, 85, 247, 0.12) 25%, rgba(18, 14, 32, 0.85) 100%)",
+                                    boxShadow: "0 25px 70px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 0 25px rgba(168, 85, 247, 0.12)",
+                                  }}
+                                >
+                                  <div className="flex flex-col gap-1.5">
+                                    {blogNavItems.map((item, idx) => (
+                                      <Link
+                                        key={idx}
+                                        href={item.href}
+                                        onClick={() => {
+                                          setBlogOpen(false);
+                                          setIsHovered(false);
+                                        }}
+                                        className={cn(
+                                          "group flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/5 transition-all",
+                                          pathname === item.href && "bg-white/5"
+                                        )}
+                                      >
+                                        <div className="mt-0.5 w-7 h-7 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-saas-cyan/50 transition-all">
+                                          {item.icon}
+                                        </div>
+                                        <div className="flex flex-col">
+                                          <span className="text-xs font-bold text-zinc-100 group-hover:text-saas-cyan transition-colors">
+                                            {item.title}
+                                          </span>
+                                          <span className="text-[11px] text-zinc-400 font-medium">
+                                            {item.desc}
+                                          </span>
+                                        </div>
+                                      </Link>
+                                    ))}
+                                  </div>
                                 </div>
                               </div>
                             )}
@@ -1376,57 +1445,63 @@ function ClassicNavbar() {
             </Link>
 
             {servicesOpen && (
-              <div className="absolute left-1/2 -translate-x-1/2 top-[calc(100%+14px)] w-[820px] max-w-[90vw] p-6 rounded-3xl border border-purple-200/90 dark:border-white/15 bg-card/98 dark:bg-zinc-950/98 backdrop-blur-2xl shadow-[0_20px_60px_rgba(147,51,234,0.2)] dark:shadow-[0_25px_70px_rgba(0,0,0,0.95)] animate-in fade-in zoom-in-95 duration-200 z-50 pointer-events-auto">
-                <div className="grid grid-cols-3 gap-6">
-                  {serviceCategories.map((category, idx) => (
-                    <div key={idx} className="space-y-3">
-                      <div className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-purple-800 dark:text-saas-cyan/90 border-b border-purple-100 dark:border-white/10 pb-2">
-                        {category.title}
+              <div 
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                className="absolute left-1/2 -translate-x-1/2 top-full pt-2.5 z-50 pointer-events-auto"
+              >
+                <div className="w-[820px] max-w-[90vw] p-6 rounded-3xl border border-purple-200/90 dark:border-white/15 bg-card/98 dark:bg-zinc-950/98 backdrop-blur-2xl shadow-[0_20px_60px_rgba(147,51,234,0.2)] dark:shadow-[0_25px_70px_rgba(0,0,0,0.95)] animate-in fade-in zoom-in-95 duration-200">
+                  <div className="grid grid-cols-3 gap-6">
+                    {serviceCategories.map((category, idx) => (
+                      <div key={idx} className="space-y-3">
+                        <div className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-purple-800 dark:text-saas-cyan/90 border-b border-purple-100 dark:border-white/10 pb-2">
+                          {category.title}
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          {category.items.map((item, itemIdx) => (
+                            <Link
+                              key={itemIdx}
+                              href={item.href}
+                              onClick={() => setServicesOpen(false)}
+                              className="group flex items-start gap-3 p-2 rounded-xl hover:bg-purple-50 dark:hover:bg-white/5 transition-all"
+                            >
+                              <div className="mt-0.5 w-7 h-7 rounded-lg bg-purple-100 dark:bg-zinc-900 border border-purple-200/70 dark:border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-purple-400 dark:group-hover:border-saas-cyan/50 transition-all">
+                                {item.icon}
+                              </div>
+                              <div className="flex flex-col">
+                                <span className="text-xs font-bold text-purple-950 dark:text-zinc-100 group-hover:text-purple-700 dark:group-hover:text-saas-cyan transition-colors">
+                                  {item.title}
+                                </span>
+                                <span className="text-[11px] text-purple-900/70 dark:text-zinc-400 font-medium line-clamp-1">
+                                  {item.desc}
+                                </span>
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                      <div className="flex flex-col gap-1.5">
-                        {category.items.map((item, itemIdx) => (
-                          <Link
-                            key={itemIdx}
-                            href={item.href}
-                            onClick={() => setServicesOpen(false)}
-                            className="group flex items-start gap-3 p-2 rounded-xl hover:bg-purple-50 dark:hover:bg-white/5 transition-all"
-                          >
-                            <div className="mt-0.5 w-7 h-7 rounded-lg bg-purple-100 dark:bg-zinc-900 border border-purple-200/70 dark:border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-purple-400 dark:group-hover:border-saas-cyan/50 transition-all">
-                              {item.icon}
-                            </div>
-                            <div className="flex flex-col">
-                              <span className="text-xs font-bold text-purple-950 dark:text-zinc-100 group-hover:text-purple-700 dark:group-hover:text-saas-cyan transition-colors">
-                                {item.title}
-                              </span>
-                              <span className="text-[11px] text-purple-900/70 dark:text-zinc-400 font-medium line-clamp-1">
-                                {item.desc}
-                              </span>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
 
-                <div className="mt-5 pt-4 border-t border-purple-100 dark:border-white/10 flex items-center justify-between text-xs">
-                  <Link
-                    href="/services"
-                    onClick={() => setServicesOpen(false)}
-                    className="inline-flex items-center gap-1.5 font-bold px-3 py-1.5 rounded-full bg-purple-100 dark:bg-white/10 hover:bg-purple-200 dark:hover:bg-white/15 text-purple-900 dark:text-saas-cyan transition-colors"
-                  >
-                    <Sparkles size={13} className="text-purple-600 dark:text-saas-cyan" />
-                    <span>View All 12 Services Hub</span>
-                    <ArrowRight size={12} />
-                  </Link>
-                  <Link
-                    href="/contact"
-                    onClick={() => setServicesOpen(false)}
-                    className="inline-flex items-center gap-1.5 font-bold text-purple-700 dark:text-saas-cyan hover:underline group"
-                  >
-                    <span>Schedule Strategy Audit</span>
-                    <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
-                  </Link>
+                  <div className="mt-5 pt-4 border-t border-purple-100 dark:border-white/10 flex items-center justify-between text-xs">
+                    <Link
+                      href="/services"
+                      onClick={() => setServicesOpen(false)}
+                      className="inline-flex items-center gap-1.5 font-bold px-3 py-1.5 rounded-full bg-purple-100 dark:bg-white/10 hover:bg-purple-200 dark:hover:bg-white/15 text-purple-900 dark:text-saas-cyan transition-colors"
+                    >
+                      <Sparkles size={13} className="text-purple-600 dark:text-saas-cyan" />
+                      <span>View All 12 Services Hub</span>
+                      <ArrowRight size={12} />
+                    </Link>
+                    <Link
+                      href="/contact"
+                      onClick={() => setServicesOpen(false)}
+                      className="inline-flex items-center gap-1.5 font-bold text-purple-700 dark:text-saas-cyan hover:underline group"
+                    >
+                      <span>Schedule Strategy Audit</span>
+                      <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             )}
@@ -1471,31 +1546,37 @@ function ClassicNavbar() {
             </Link>
 
             {blogOpen && (
-              <div className="absolute left-1/2 -translate-x-1/2 top-[calc(100%+14px)] w-72 p-3 rounded-2xl border border-purple-200/90 dark:border-white/15 bg-card/98 dark:bg-zinc-950/98 backdrop-blur-2xl shadow-[0_20px_50px_rgba(147,51,234,0.18)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.9)] animate-in fade-in zoom-in-95 duration-200 z-50 pointer-events-auto">
-                <div className="flex flex-col gap-1.5">
-                  {blogNavItems.map((item, idx) => (
-                    <Link
-                      key={idx}
-                      href={item.href}
-                      onClick={() => setBlogOpen(false)}
-                      className={cn(
-                        "group flex items-start gap-3 p-2.5 rounded-xl hover:bg-purple-50 dark:hover:bg-white/5 transition-all",
-                        pathname === item.href && "bg-purple-50 dark:bg-white/5"
-                      )}
-                    >
-                      <div className="mt-0.5 w-7 h-7 rounded-lg bg-purple-100 dark:bg-zinc-900 border border-purple-200/70 dark:border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-purple-400 dark:group-hover:border-saas-cyan/50 transition-all">
-                        {item.icon}
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="text-xs font-bold text-purple-950 dark:text-zinc-100 group-hover:text-purple-700 dark:group-hover:text-saas-cyan transition-colors">
-                          {item.title}
-                        </span>
-                        <span className="text-[11px] text-purple-900/70 dark:text-zinc-400 font-medium">
-                          {item.desc}
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
+              <div 
+                onMouseEnter={handleBlogMouseEnter}
+                onMouseLeave={handleBlogMouseLeave}
+                className="absolute left-1/2 -translate-x-1/2 top-full pt-2.5 z-50 pointer-events-auto"
+              >
+                <div className="w-72 p-3 rounded-2xl border border-purple-200/90 dark:border-white/15 bg-card/98 dark:bg-zinc-950/98 backdrop-blur-2xl shadow-[0_20px_50px_rgba(147,51,234,0.18)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.9)] animate-in fade-in zoom-in-95 duration-200">
+                  <div className="flex flex-col gap-1.5">
+                    {blogNavItems.map((item, idx) => (
+                      <Link
+                        key={idx}
+                        href={item.href}
+                        onClick={() => setBlogOpen(false)}
+                        className={cn(
+                          "group flex items-start gap-3 p-2.5 rounded-xl hover:bg-purple-50 dark:hover:bg-white/5 transition-all",
+                          pathname === item.href && "bg-purple-50 dark:bg-white/5"
+                        )}
+                      >
+                        <div className="mt-0.5 w-7 h-7 rounded-lg bg-purple-100 dark:bg-zinc-900 border border-purple-200/70 dark:border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-purple-400 dark:group-hover:border-saas-cyan/50 transition-all">
+                          {item.icon}
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-xs font-bold text-purple-950 dark:text-zinc-100 group-hover:text-purple-700 dark:group-hover:text-saas-cyan transition-colors">
+                            {item.title}
+                          </span>
+                          <span className="text-[11px] text-purple-900/70 dark:text-zinc-400 font-medium">
+                            {item.desc}
+                          </span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}

@@ -14,6 +14,7 @@ export function ServiceCtaCard() {
 
   // Compute and update arrow curve and arrowhead
   const updateArrow = useCallback((cursorX: number, cursorY: number) => {
+    if (typeof window !== "undefined" && window.innerWidth < 640) return;
     if (!cardRef.current || !buttonRef.current || !pathRef.current || !arrowHeadRef.current) {
       return;
     }
@@ -165,10 +166,10 @@ export function ServiceCtaCard() {
       <div className="absolute -top-24 -left-24 w-80 h-80 bg-purple-600/15 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute -bottom-24 -right-24 w-80 h-80 bg-fuchsia-600/15 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* SVG Canvas for Interactive Dynamic Pointing Arrow - behind text (z-0) and clipped inside card */}
+      {/* SVG Canvas for Interactive Dynamic Pointing Arrow - hidden on mobile screens, active on tab and desktop */}
       {mounted && (
         <svg
-          className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden"
+          className="hidden sm:block absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden"
           aria-hidden="true"
         >
           {/* Dashed Curving Arrow Path */}
