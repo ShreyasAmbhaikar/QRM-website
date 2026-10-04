@@ -6,9 +6,9 @@ export function Footer() {
   const gmbMapUrl = "https://www.google.com/maps/place/Quantum+Reach+Media,+Pune/data=!4m2!3m1!1s0x0:0xe9c0270609fb909b?sa=X&ved=1t:2428&hl=en&ictx=111";
 
   return (
-    <footer className="relative z-10 pt-16 pb-0 overflow-hidden transition-colors bg-gradient-to-b from-purple-50/80 via-purple-100/40 to-background dark:from-[#0d071d] dark:via-[#080413] dark:to-[#030107]">
+    <footer className="relative z-10 pt-16 pb-0 overflow-hidden transition-colors bg-gradient-to-b from-purple-50/80 via-purple-100/40 to-background dark:from-[#17062b] dark:via-[#0e031c] dark:to-[#040109]">
       {/* Luminous Top Gradient Horizon Divider Line */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-purple-500/70 via-saas-cyan/60 to-transparent shadow-[0_0_15px_rgba(168,85,247,0.6)]" />
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-purple-500/70 via-purple-400/60 to-transparent shadow-[0_0_15px_rgba(168,85,247,0.6)]" />
       
       {/* Ambient Top Glow Halo */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 max-w-4xl h-32 bg-gradient-to-b from-purple-600/20 via-purple-900/10 to-transparent blur-3xl pointer-events-none" />
@@ -139,7 +139,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/portfolio" className="text-purple-950/70 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-saas-cyan transition-colors font-medium">
+                <Link href="/our-work" className="text-purple-950/70 dark:text-zinc-400 hover:text-purple-950 dark:hover:text-saas-cyan transition-colors font-medium">
                   Our Work
                 </Link>
               </li>
@@ -212,7 +212,7 @@ export function Footer() {
                   <Star size={11} className="fill-amber-500" />
                 </div>
                 <span className="text-purple-950 dark:text-white font-bold">5.0</span>
-                <span className="text-purple-950/70 dark:text-zinc-400">(6 Google Reviews)</span>
+                <span className="text-purple-950/70 dark:text-zinc-400">(9 Google Reviews)</span>
               </a>
 
             </div>

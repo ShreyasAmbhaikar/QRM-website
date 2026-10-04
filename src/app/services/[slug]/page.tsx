@@ -212,7 +212,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   <ArrowRight size={15} />
                 </Link>
                 <Link
-                  href="/portfolio"
+                  href="/our-work"
                   className="px-6 py-3.5 rounded-full bg-card/80 border border-purple-200 dark:border-white/10 text-purple-950 dark:text-white font-bold text-sm hover:bg-purple-100/50 dark:hover:bg-white/10 transition-colors inline-flex items-center gap-2"
                 >
                   <span>View Case Studies</span>

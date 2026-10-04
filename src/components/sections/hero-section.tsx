@@ -97,7 +97,7 @@ export function HeroSection() {
               <ArrowRight size={16} className="shrink-0 inline-block" />
             </MagneticButton>
           </Link>
-          <Link href="/portfolio">
+          <Link href="/our-work">
             <MagneticButton className="px-8 py-3.5 rounded-full border border-purple-300 dark:border-white/20 text-purple-950 dark:text-white hover:bg-purple-100/60 dark:hover:bg-white/10 font-bold text-sm backdrop-blur-sm shadow-sm">
               View Client Results
             </MagneticButton>

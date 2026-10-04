@@ -4,7 +4,15 @@ import { cn } from "@/lib/utils";
 import { ReactNode, MouseEvent, useRef } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
-export function GlowCard({ children, className }: { children: ReactNode; className?: string }) {
+export function GlowCard({
+  children,
+  className,
+  innerClassName,
+}: {
+  children: ReactNode;
+  className?: string;
+  innerClassName?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -36,7 +44,7 @@ export function GlowCard({ children, className }: { children: ReactNode; classNa
           `,
         }}
       />
-      <div className="relative h-full w-full">{children}</div>
+      <div className={cn("relative h-full w-full", innerClassName)}>{children}</div>
     </div>
   );
 }

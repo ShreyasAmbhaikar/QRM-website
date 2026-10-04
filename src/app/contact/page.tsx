@@ -161,7 +161,7 @@ export default function ContactPage() {
                   <Star key={i} size={12} className="fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
-              <span className="text-[11px] font-mono text-zinc-400 font-bold">5.0 (6 Google Reviews)</span>
+              <span className="text-[11px] font-mono text-zinc-400 font-bold">5.0 (9 Google Reviews)</span>
             </div>
           </GlowCard>
         </div>

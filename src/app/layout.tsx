@@ -5,6 +5,7 @@ import { LenisProvider } from "@/components/providers/lenis-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
+import { BackToTop } from "@/components/ui/back-to-top";
 import { JsonLd } from "@/components/seo/json-ld";
 
 const inter = Inter({
@@ -92,8 +93,14 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/qrm-logo-transparent.webp",
-    apple: "/qrm-logo-transparent.webp",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 
@@ -114,6 +121,7 @@ export default function RootLayout({
             {children}
           </div>
           <Footer />
+          <BackToTop />
           <WhatsAppButton />
         </LenisProvider>
       </body>

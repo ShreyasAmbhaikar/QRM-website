@@ -56,13 +56,6 @@ const services = [
     description: "Intent-driven editorial clusters optimized for both human decision-makers and Google search NLP algorithms.",
     tag: "Topic Authority",
     icon: <FileText className="w-5 h-5 text-emerald-400" />
-  },
-  {
-    slug: "authority-building-in-pune",
-    title: "Authority Building & PR",
-    description: "Tier-1 editorial backlinks, digital PR outreach, and high-DA placements that permanently elevate domain trust.",
-    tag: "High-DA Backlinks",
-    icon: <TrendingUp className="w-5 h-5 text-yellow-400" />
   }
 ];
 
@@ -110,9 +103,12 @@ export function ServicesSection() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {services.map((service, i) => (
-            <Link key={i} href={`/services/${service.slug}`}>
-              <GlowCard className="p-6 service-card flex flex-col items-start group transition-all cursor-pointer h-full justify-between">
-                <div>
+            <Link key={i} href={`/services/${service.slug}`} className="h-full flex flex-col block">
+              <GlowCard
+                className="service-card group transition-all cursor-pointer h-full flex flex-col"
+                innerClassName="p-6 flex flex-col justify-between h-full flex-1"
+              >
+                <div className="flex-1 flex flex-col">
                   <div className="flex items-center justify-between w-full mb-5">
                     <div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-white/5 border border-purple-200 dark:border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
                       {service.icon}
@@ -124,27 +120,48 @@ export function ServicesSection() {
                   <h3 className="text-sm font-extrabold mb-2 text-purple-950 dark:text-zinc-100 group-hover:text-purple-700 dark:group-hover:text-saas-cyan transition-colors">{service.title}</h3>
                   <p className="text-purple-900/80 dark:text-zinc-400 text-xs leading-relaxed mb-4 font-medium">{service.description}</p>
                 </div>
-                <div className="flex items-center gap-1 text-[11px] font-bold text-purple-700 dark:text-saas-cyan group-hover:translate-x-1 transition-transform pt-2 border-t border-purple-100 dark:border-white/5 w-full">
+                <div className="mt-auto pt-3 border-t border-purple-100 dark:border-white/5 w-full flex items-center gap-1 text-[11px] font-bold text-purple-700 dark:text-saas-cyan group-hover:translate-x-1 transition-transform">
                   <span>Explore Technical Workflow</span>
                   <ArrowRight size={12} />
                 </div>
               </GlowCard>
             </Link>
           ))}
-        </div>
 
-        {/* Full Protocols Directory CTA */}
-        <div className="mt-14 text-center">
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold bg-purple-600 hover:bg-purple-700 text-white shadow-[0_0_25px_rgba(147,51,234,0.35)] transition-all group"
-          >
-            <span>Explore All 12 Growth Protocols &amp; Deliverables</span>
-            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+          {/* 8th Card: Creative Luminous Purple "Explore All Services" Gateway Card */}
+          <Link href="/services" className="h-full flex flex-col block group/gateway">
+            <div className="service-card relative h-full rounded-2xl overflow-hidden p-6 flex flex-col justify-between border border-purple-400/80 dark:border-purple-500/50 bg-gradient-to-br from-purple-700 via-purple-800 to-indigo-950 dark:from-[#1c0836] dark:via-[#110325] dark:to-[#070110] text-white shadow-[0_10px_30px_rgba(147,51,234,0.3)] dark:shadow-[0_0_35px_rgba(168,85,247,0.25)] hover:shadow-[0_15px_40px_rgba(147,51,234,0.45)] dark:hover:shadow-[0_0_45px_rgba(168,85,247,0.45)] hover:border-purple-300 dark:hover:border-purple-400 transition-all duration-300 cursor-pointer">
+              {/* Luminous Ambient Background Glows */}
+              <div className="absolute -top-12 -right-12 w-36 h-36 bg-purple-400/25 dark:bg-purple-500/20 rounded-full blur-[40px] pointer-events-none" />
+              <div className="absolute -bottom-12 -left-12 w-36 h-36 bg-fuchsia-500/20 dark:bg-fuchsia-600/15 rounded-full blur-[40px] pointer-events-none" />
+
+              <div className="relative z-10 flex-1 flex flex-col">
+                {/* Top Bar with Icon & 12 Protocols Badge */}
+                <div className="flex items-center justify-between w-full mb-5">
+                  <div className="w-10 h-10 rounded-lg bg-white/15 dark:bg-purple-500/20 border border-white/20 dark:border-purple-400/30 flex items-center justify-center group-hover/gateway:scale-110 transition-transform shadow-inner">
+                    <Sparkles className="w-5 h-5 text-white dark:text-purple-300" />
+                  </div>
+                  <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-white/20 dark:bg-purple-400/20 text-white dark:text-purple-200 border border-white/20 dark:border-purple-300/30">
+                    12 Protocols
+                  </span>
+                </div>
+
+                {/* Title & Description */}
+                <h3 className="text-sm font-extrabold mb-2 text-white group-hover/gateway:text-purple-200 transition-colors flex items-center gap-1.5">
+                  Explore All Services
+                </h3>
+                <p className="text-white/85 dark:text-purple-200/80 text-xs leading-relaxed mb-4 font-medium">
+                  Access our full directory of 12 full-stack SEO, web performance, and paid media architectures engineered for Pune.
+                </p>
+              </div>
+
+              {/* Bottom Bar: Pinned to bottom, perfectly matching other cards' baseline */}
+              <div className="relative z-10 mt-auto pt-3 border-t border-white/20 dark:border-purple-500/25 w-full flex items-center justify-between text-[11px] font-bold text-white group-hover/gateway:text-purple-200 transition-colors">
+                <span>View All 12 Services</span>
+                <ArrowRight size={13} className="group-hover/gateway:translate-x-1.5 transition-transform" />
+              </div>
+            </div>
           </Link>
-          <p className="text-xs text-purple-900/70 dark:text-zinc-400 mt-3 font-medium">
-            Next.js Web Speed Guarantee, GMB 3-Pack Framework, AEO / GEO AI Search, Meta CAPI &amp; GA4 Telemetry.
-          </p>
         </div>
       </div>
     </section>

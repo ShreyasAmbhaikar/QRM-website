@@ -687,7 +687,7 @@ export function AboutPageView() {
                 </Link>
 
                 <Link
-                  href="/portfolio"
+                  href="/our-work"
                   className="px-7 py-3 rounded-full bg-zinc-900/90 border border-white/15 text-white hover:bg-white/10 font-bold text-xs sm:text-sm transition-all shadow-sm"
                 >
                   View Verified Pune Case Studies ↗
